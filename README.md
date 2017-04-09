@@ -4,6 +4,8 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 > **Important** I have recently taken over this project from @djhi. Thank you to @djhi and other contributors for getting this package up to this point. I will try my best to make it even better.
 
+> **Important** This package supports AutoForm 6.0.0. Older versions of AutoForm are no longer supported. It has been tested with materialize:materialize@0.97.5, but not yet with poetic:materialize-scss.
+
 ## Setup
 
 1. `meteor add mozfet:autoform-materialize`
@@ -153,18 +155,4 @@ It also works for textarea:
 {{> afQuickField name='message' type='textarea' icon='person'}}
 ```
 
-# Troubleshooting
-
-## Extra carets on selects
-
-This happen when using materialize version `0.97.0`. A fix has been released with version `0.97.1` but there are other issues.
-
 You should use `poetic:materialize-scss` until those problems are corrected.
-
-## Contributors
-- Gildas Garcia (@djhi)
-- Razvan Teslaru (@rteslaru)
-- Chun Yang (@Chun-Yang)
-
-## License
-autoform-materialize is licensed under the [MIT Licence](LICENSE), courtesy of [marmelab](http://marmelab.com).
