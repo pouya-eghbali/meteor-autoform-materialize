@@ -45,10 +45,11 @@ Template.afFormGroup_materialize.rendered = function() {
             var type = AutoForm.getInputType(_this.data);
             var placeholder = _this.data.afFieldInputAtts.placeholder;
             var skipActiveLabelTypes = [
-                'select',
                 'checkbox',
                 'checkbox-group',
                 'boolean-checkbox',
+                'select',
+                'select-multiple',
                 'select-radio',
                 'select-checkbox-inline',
                 'select-radio-inline',
