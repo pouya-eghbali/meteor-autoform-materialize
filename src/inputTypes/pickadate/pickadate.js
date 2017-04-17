@@ -1,3 +1,9 @@
+/*jshint esversion: 6 */
+
+import { Template } from 'meteor/templating';
+import { AutoForm } from 'meteor/aldeed:autoform';
+import './pickadate.html';
+
 var DEFAULT_PICKADATE_FORMAT_SUBMIT = 'yyyy/mm/dd';
 
 AutoForm.addInputType('pickadate', {
@@ -67,41 +73,64 @@ AutoForm.addInputType('pickadate', {
   }
 });
 
-Template['afPickadate'].rendered = function() {
-  var input, opts, picker, userOptions;
-  userOptions = this.data.atts.pickadateOptions || {};
-  opts = _.defaults(userOptions, {
+Template.afPickadate.onRendered(() => {
+  const instance = Template.instance();
+
+
+
+  //jquery event handler
+  instance.$('input').on('change', function() {
+    return instance.$().pickadate('picker').close();
+  });
+  if (instance.data.value) {
+    instance.$('input').parent().find('label').addClass('active');
+  }
+
+  //init pickadate
+  const userOptions = instance.data.atts.pickadateOptions || {};
+  const opts = _.defaults(userOptions, {
     format: DEFAULT_PICKADATE_FORMAT_SUBMIT,
     hiddenName: true,
     closeOnSelect: true
   });
-  input = this.$('input').pickadate(opts);
-  picker = input.pickadate('picker');
-  this.$('input').on('change', function() {
-    return $(this).pickadate('picker').close();
-  });
-  if (this.data.value) {
-    this.$('input').parent().find('label').addClass('active');
-  }
-  this.autorun(function() {
-    var data;
-    data = Template.currentData();
+  const input = instance.$('input').pickadate(opts);
+
+  //get picker
+  const picker = input.pickadate('picker');
+
+  //autorun - reactive set picker to data value, min and max
+  instance.autorun(() => {
+
+    //when data changes
+    const data = Template.currentData();
+
+    //if data value is a date
     if (data.value instanceof Date) {
+
+      //set picker select to value
       picker.set('select', data.value);
     }
+
+    //if data min is a date
     if (data.min instanceof Date) {
+
+      //set picker min date
       picker.set('min', data.min);
     }
+
+    //if data max is a date
     if (data.max instanceof Date) {
+
+      //set picket max date
       return picker.set('max', data.max);
     }
   });
-};
+});
 
 Template.afPickadate.helpers({
-  atts: function() {
-    var atts;
-    atts = _.clone(this.atts);
+  atts: () => {
+    const instance = Template.instance();
+    const atts = _.clone(instance.atts);
     delete atts.dateTimePickerOptions;
     delete atts.pickadateOptions;
     return atts;

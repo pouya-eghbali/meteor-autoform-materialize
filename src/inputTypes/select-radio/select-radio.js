@@ -1,4 +1,11 @@
+/*jshint esversion: 6 */
+
+import { Template } from 'meteor/templating';
+import './select=radio.html';
+import { dsk } from '../../utilities/dsk';
+import { selectedAttsAdjust } from '../../utilities/selectedAttsAdjust';
+
 Template.afRadioGroup_materialize.helpers({
-  dsk:      Utility.dsk,
-  itemAtts: Utility.selectedAttsAdjust
-})
+  dsk:      dsk,
+  itemAtts: selectedAttsAdjust
+});

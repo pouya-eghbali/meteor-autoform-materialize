@@ -1,17 +1,17 @@
 /*jshint esversion: 6 */
 
 export const initializeSelect = () => {
-  var template = this;
-  var select = template.$('select');
+  const instance = Template.instance();
+  var select = instance.$('select');
   select.material_select();
 
-  var initialize = _.debounce(function () {
+  const initialize = _.debounce(() => {
     select.material_select();
   }, 500);
 
-  template.autorun(function () {
+  instance.autorun(() => {
     // reinitialize select when data changes
-    Template.currentData();
+    instance.currentData();
     initialize();
   });
 };

@@ -3,8 +3,9 @@
 import { attsToggleInvalidClass } from './atts-toggle-invalid-class';
 
 export const attsCheckSelected = () => {
-  var atts = attsToggleInvalidClass.call(this);
-  if (this.selected) {
+  const instance = Template.instance();
+  var atts = attsToggleInvalidClass.call(instance);
+  if (instance.selected) {
     atts.checked = '';
   }
   return atts;

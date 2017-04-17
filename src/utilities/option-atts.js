@@ -1,9 +1,9 @@
 /*jshint esversion: 6 */
 
 export const optionAtts = () => {
-  var atts, item;
-  item = this;
-  atts = {
+  const instance = Template.instance();
+  const item = instance;
+  const atts = {
     value: item.value
   };
   if (item.selected) {

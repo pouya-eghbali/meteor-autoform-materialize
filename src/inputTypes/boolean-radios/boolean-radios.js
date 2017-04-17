@@ -1,5 +1,11 @@
+/*jshint esversion: 6 */
+
+import { Template } from 'meteor/templating';
+import './boolean-radios.html';
+import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass';
+
 Template.afBooleanRadioGroup_materialize.helpers({
-  atts: Utility.attsToggleInvalidClass
+  atts: attsToggleInvalidClass
 });
 
 Template.afBooleanRadioGroup_materialize.helpers({

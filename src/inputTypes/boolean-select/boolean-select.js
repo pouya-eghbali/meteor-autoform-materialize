@@ -1,5 +1,11 @@
+/*jshint esversion: 6 */
+
+import { Template } from 'meteor/templating';
+import './boolean-select.html';
+import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass';
+
 Template.afBooleanSelect_materialize.helpers({
-  atts: Utility.attsToggleInvalidClass
+  atts: attsToggleInvalidClass
 });
 
 Template.afBooleanSelect_materialize.helpers({

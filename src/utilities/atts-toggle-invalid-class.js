@@ -3,7 +3,8 @@
 import { AutoFrom } from 'meteor/aldeed:autoform';
 
 export const attsToggleInvalidClass = () => {
-  var atts    = _.clone(this.atts);
+  const instance = Template.instance();
+  var atts    = _.clone(instance.atts);
   var context = AutoForm.getFormSchema().namedContext(AutoForm.getFormId());
 
   if (context.keyIsInvalid(atts.name)) {
