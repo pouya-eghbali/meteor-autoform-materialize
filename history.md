@@ -1,3 +1,6 @@
+# 1.2.0
+  - Minor version bump times two to skip previous faulty deployments
+
 # 1.0.2
  - Add support for NoUiSlider
 
