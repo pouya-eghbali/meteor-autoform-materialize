@@ -1,6 +1,11 @@
+# 1.0.2
+ - Add support for NoUiSlider
+
+# 1.0.1
+ - Add support for AutoForm 6.0.0
+
 # 0.0.25
  - Refactoring by @Chun-Yang
-
 
 # 0.0.22
  - Fixes #48 (thanks to @jholl)

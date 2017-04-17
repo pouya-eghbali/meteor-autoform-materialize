@@ -25,6 +25,14 @@ You can checkout [the playground](https://github.com/mozfet/meteor-autoform-mate
 
 ## Additional type
 
+### NoUiSlider support
+
+To add NoUiSlider (see [the playground](https://github.com/mozfet/meteor-autoform-materialize-playground)):
+
+```
+meteor add mozfet:autoform-materialize-nouislider
+```
+
 ### PickADate
 Materialize uses [pickadate](https://github.com/amsul/pickadate.js) for date inputs.
 
