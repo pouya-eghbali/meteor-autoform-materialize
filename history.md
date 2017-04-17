@@ -1,4 +1,5 @@
 # 1.2.0
+  - Fixes [#2](https://github.com/mozfet/meteor-autoform-materialize/issues/2)
   - Minor version bump times two to skip previous faulty deployments
 
 # 1.0.2
