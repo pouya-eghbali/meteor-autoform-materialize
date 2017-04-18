@@ -5,9 +5,8 @@ import './textarea.html';
 import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass';
 
 Template.afTextarea_materialize.helpers({
-  atts: () => {
-    const instance = Template.instance();
-    const atts = attsToggleInvalidClass.call(instance);
+  atts: function ()  {
+    const atts = attsToggleInvalidClass.call(this);
     return AutoForm.Utility.addClass(atts, "materialize-textarea");
   }
 });

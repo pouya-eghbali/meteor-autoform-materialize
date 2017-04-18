@@ -24,6 +24,7 @@ Template.afFormGroup_materialize.helpers({
     skipLabel: function() {
         var result, skipLabelTypes, type;
         skipLabelTypes = [
+            'medium',
             'checkbox',
             'checkbox-group',
             'boolean-checkbox',

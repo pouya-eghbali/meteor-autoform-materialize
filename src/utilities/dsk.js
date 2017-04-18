@@ -1,8 +1,7 @@
 /*jshint esversion: 6 */
 
-export const dsk = () => {
-  const instance = Template.instance();
+export const dsk = function () {
   return {
-    'data-schema-key': instance.atts['data-schema-key']
+    'data-schema-key': this.atts['data-schema-key']
   };
 };

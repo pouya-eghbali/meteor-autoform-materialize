@@ -2,7 +2,7 @@
 
 import { Template } from 'meteor/templating';
 import './boolean-radios.html';
-import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass';
+import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass.js';
 
 Template.afBooleanRadioGroup_materialize.helpers({
   atts: attsToggleInvalidClass

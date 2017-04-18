@@ -7,9 +7,7 @@ import { optionAtts } from '../../utilities/optionAtts';
 import { initializeSelect } from '../../utilities/initializeSelect';
 
 Template.afSelect_materialize.helpers({
-  atts: attsToggleInvalidClass
-});
-Template.afSelect_materialize.helpers({
+  atts: attsToggleInvalidClass,
   optionAtts: optionAtts
 });
 

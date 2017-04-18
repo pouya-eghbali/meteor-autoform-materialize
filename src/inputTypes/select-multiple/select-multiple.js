@@ -9,28 +9,27 @@ Template.afSelectMultiple_materialize.onRendered(function() {
   const instance = Template.instance();
 
   //init select
-  $('select').material_select();
+  instance.$('select').material_select();
 
   //get select wrapper
-  const select = $('#'+instance.data.atts.id);
+  const select = instance.$('#'+this.data.atts.id);
   const selectWrapper = select.parent();
 
   //if no value is defined and firstOption is defined
-  if ((instance.data.value.length===0) && (instance.data.atts.firstOption)) {
+  if ((this.data.value.length===0) && (this.data.atts.firstOption)) {
 
     //initialise value
-    instance.value.set(instance.data.atts.firstOption);
+    this.value.set(this.data.atts.firstOption);
     const input = selectWrapper.find('input.select-dropdown:first');
-    input.attr('value', instance.data.atts.firstOption);
+    input.attr('value', this.data.atts.firstOption);
   }
 });
 
 Template.afSelectMultiple_materialize.helpers({
   optionAtts: optionAtts,
   atts: attsToggleInvalidClass,
-  firstValueSelected: () => {
-    const instance = Template.instance();
-    if ((instance.value.length===0) && (instance.data.atts.firstOption)) {
+  firstValueSelected: function () {
+    if ((this.value.length===0) && (this.data.atts.firstOption)) {
       return true;
     }
     return false;

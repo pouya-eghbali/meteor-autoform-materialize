@@ -6,8 +6,9 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom("1.0");
+  api.versionsFrom("METEOR@1.4");
   api.use(["templating", "underscore"], "client");
+  api.use("ecmascript@0.7.2");
   api.use('momentjs:moment@2.10.6');
   api.use("aldeed:autoform@6.0.0");
   api.addFiles([

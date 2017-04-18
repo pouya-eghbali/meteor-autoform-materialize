@@ -1,8 +1,7 @@
 /*jshint esversion: 6 */
 
-export const optionAtts = () => {
-  const instance = Template.instance();
-  const item = instance;
+export const optionAtts = function () {
+  const item = this;
   const atts = {
     value: item.value
   };
