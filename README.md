@@ -2,9 +2,7 @@ Meteor Autoform Materialize templates
 =========================
 Adds [materialize](http://materializecss.com/) templates for autoform.
 
-> **Important** I have recently taken over this project from @djhi. Thank you to @djhi and other contributors for getting this package up to this point. I will try my best to make it even better.
-
-> **Important** This package supports AutoForm 6.0.0. Older versions of AutoForm are no longer supported. It has been tested with materialize:materialize@0.97.5, but not yet with poetic:materialize-scss.
+> **Important** This package supports Meteor 1.4, AutoForm 6.0.0 and ES6. Older versions of Meteor and AutoForm are no longer supported.
 
 ## Setup
 
@@ -17,8 +15,8 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 You must add materialize CSS and JavaScript yourself. Some packages can help:
 
-- [materialize:materialize](https://atmospherejs.com/materialize/materialize) `meteor add materialize:materialize`
-- [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `meteor add poetic:materialize-scss`
+- [materialize:materialize](https://atmospherejs.com/materialize/materialize) `meteor add materialize:materialize0.98.2`
+- [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `meteor add poetic:materialize-scss@1.97.6_1`
 
 ## Usage and demo
 
