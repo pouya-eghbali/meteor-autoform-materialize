@@ -8,6 +8,8 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 ## Setup
 
+Currently Atmosphere package is broken, I cannot get it to work..., for now work around is to install by cloning the github projects from this suit into your projects /packages folder.
+
 1. `meteor add mozfet:autoform-materialize`
 2. In a client file (ex: `/client/config/autoform.js`)
   ```
