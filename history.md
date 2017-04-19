@@ -1,5 +1,11 @@
-# 2.0.1 - 2.0.3
+# 2.0.5
+  - Address issue [#5](https://github.com/mozfet/meteor-autoform-materialize/issues/5) by adding pickatime input type
+  
+# 2.0.4
+  - It works on Atmosphere and in packages folder!
+  - HTML imports no longer an issue... probably due to use of imports folder
 
+# 2.0.1 - 2.0.3
   - It works in playground using packages folder, but not when its published to atmosphere!
   - In playground Server is picking up html imports!
   - Cannot find where server is loading the package ... $#%!

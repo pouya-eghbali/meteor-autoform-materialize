@@ -4,6 +4,13 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 > **Important** This package supports Meteor 1.4, AutoForm 6.0.0 and ES6. Older versions of Meteor and AutoForm are no longer supported.
 
+## This package is part of a suite
+[mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
+[mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
+[mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
+[mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
+[mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
+
 ## Setup
 
 1. `meteor add mozfet:autoform-materialize@2.0.4`
@@ -15,14 +22,14 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 You must add materialize CSS and JavaScript yourself. Some packages can help:
 
-- [materialize:materialize](https://atmospherejs.com/materialize/materialize) `meteor add materialize:materialize0.98.2`
+- [materialize:materialize](https://atmospherejs.com/materialize/materialize) `meteor add materialize:materialize@0.98.2`
 - [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `meteor add poetic:materialize-scss@1.97.6_1`
 
 ## Usage and demo
 
 You can checkout [the playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
-## Additional type
+## Additional types
 
 ### NoUiSlider support
 
