@@ -15,7 +15,7 @@ console.log('pickatime - add input type');
 AutoForm.addInputType('pickatime', {
   template: 'afInputPickatime_materialize',
   valueOut: function() {
-    console.log('pickatime: valueOut.this', this);
+    // console.log('pickatime: valueOut.this', this);
     return this.val();
   }
 });
@@ -23,7 +23,7 @@ AutoForm.addInputType('pickatime', {
 //when created
 Template.afInputPickatime_materialize.onCreated(() => {
   const instance = Template.instance();
-  console.log('pickatime.instance', instance);
+  // console.log('pickatime.instance', instance);
 
   //initialise value
   instance.value = new ReactiveVar();
@@ -35,11 +35,11 @@ Template.afInputPickatime_materialize.onRendered(() => {
 
   //get input on dom
   const qInput = $('#'+instance.data.atts.id);
-  console.log('pickatime.qInput', qInput);
+  // console.log('pickatime.qInput', qInput);
   const qParent = qInput.parent().parent().parent();
-  console.log('pickatime.qParent', qParent.html());
+  // console.log('pickatime.qParent', qParent.html());
   const qLabel = qParent.find('label');
-  console.log('pickatime.qLabel', qLabel);
+  // console.log('pickatime.qLabel', qLabel);
 
   //autorun when instance value change
   instance.autorun(() => {
