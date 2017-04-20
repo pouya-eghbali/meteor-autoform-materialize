@@ -73,10 +73,8 @@ AutoForm.addInputType('pickadate', {
   }
 });
 
-Template.afPickadate.onRendered(() => {
+Template.afPickadate.onRendered(function() {
   const instance = Template.instance();
-
-
 
   //jquery event handler
   instance.$('input').on('change', function() {
@@ -128,9 +126,9 @@ Template.afPickadate.onRendered(() => {
 });
 
 Template.afPickadate.helpers({
-  atts: () => {
+  atts: function () {
     const instance = Template.instance();
-    const atts = _.clone(instance.atts);
+    const atts = _.clone(instance.data.atts);
     delete atts.dateTimePickerOptions;
     delete atts.pickadateOptions;
     return atts;
