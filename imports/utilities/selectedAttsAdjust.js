@@ -1,14 +1,13 @@
 /*jshint esversion: 6 */
 
-export const selectedAttsAdjust = () => {
-  const instance = Template.instance();
-  const atts = _.clone(instance.atts);
+export const selectedAttsAdjust = function () {
+  const atts = _.clone(this.atts);
 
-  if (instance.selected) {
+  if (this.selected) {
     atts.checked = "";
   }
 
-  atts.id = atts.id + "_" + instance._id;
+  atts.id = atts.id + "_" + this._id;
   delete atts['data-schema-key'];
   return atts;
 };
