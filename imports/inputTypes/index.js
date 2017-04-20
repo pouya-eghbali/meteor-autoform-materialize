@@ -19,6 +19,7 @@ import './month';
 import './number';
 import './password';
 import './pickadate';
+import './pickatime';
 import './radio';
 import './range';
 import './reset';
