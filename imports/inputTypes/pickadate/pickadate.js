@@ -73,13 +73,10 @@ AutoForm.addInputType('pickadate', {
   }
 });
 
-Template.afPickadate.onRendered(function() {
+Template.afPickadate.onRendered(() => {
   const instance = Template.instance();
+  console.log('pickadate instance', instance);
 
-  //jquery event handler
-  instance.$('input').on('change', function() {
-    return instance.$().pickadate('picker').close();
-  });
   if (instance.data.value) {
     instance.$('input').parent().find('label').addClass('active');
   }
@@ -96,17 +93,29 @@ Template.afPickadate.onRendered(function() {
   //get picker
   const picker = input.pickadate('picker');
 
+  //get label
+  const qInput = $('#'+instance.data.atts.id);
+  // console.log('pickatime.qInput', qInput);
+  const qParent = qInput.parent().parent().parent();
+  // console.log('pickatime.qParent', qParent.html());
+  const qLabel = qParent.find('label');
+  // console.log('pickatime.qLabel', qLabel);
+
   //autorun - reactive set picker to data value, min and max
   instance.autorun(() => {
 
     //when data changes
     const data = Template.currentData();
+    console.log('datepicker data', data);
 
     //if data value is a date
     if (data.value instanceof Date) {
 
       //set picker select to value
       picker.set('select', data.value);
+
+      //add active class to label
+      qLabel.addClass('active');
     }
 
     //if data min is a date
@@ -126,7 +135,7 @@ Template.afPickadate.onRendered(function() {
 });
 
 Template.afPickadate.helpers({
-  atts: function () {
+  atts() {
     const instance = Template.instance();
     const atts = _.clone(instance.data.atts);
     delete atts.dateTimePickerOptions;
