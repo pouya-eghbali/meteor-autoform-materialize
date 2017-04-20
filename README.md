@@ -4,6 +4,8 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 > **Important** This package supports Meteor 1.4, AutoForm 6.0.0 and ES6. Older versions of Meteor and AutoForm are no longer supported.
 
+> **New Feature** Pickatime! See usage below and on in action on the [playground](https://github.com/mozfet/meteor-autoform-materialize-playground) usage details below...
+
 ## This package is part of a suite
 [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
 [mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
@@ -27,7 +29,7 @@ You must add materialize CSS and JavaScript yourself. Some packages can help:
 
 ## Usage and demo
 
-You can checkout [the playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
+You can checkout the [playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
 ## Additional types
 
@@ -59,6 +61,26 @@ MySchema = new SimpleSchema({
   }
 });
 ```
+
+### PickATime
+You can apply it directly in your template:
+
+```
+{{> afFieldInput name='dateFieldName' type="pickadate"}}
+```
+
+You can also specify it at the schema level:
+```
+MySchema = new SimpleSchema({
+  dateFieldName: {
+    type: String
+    autoform: {
+      type:"pickatime"
+    }
+  }
+});
+```
+
 #### Choosing a Timezone
 
 By default, the field's value will be a `Date` object representing the selected date and time in the browser's timezone (i.e., based on the user's computer time settings). In most cases, you probably want the `Date` object relative to some other timezone that you have previously stored. For example, if the form is setting the start date of an event, you want the date to be relative to the event venue's timezone. You can specify a different IANA timezone ID by adding a `timezoneId` attribute.
