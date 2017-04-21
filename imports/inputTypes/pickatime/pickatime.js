@@ -41,14 +41,12 @@ Template.afInputPickatime_materialize.onRendered(() => {
   const qLabel = qParent.find('label');
   // console.log('pickatime.qLabel', qLabel);
 
+
   //autorun when instance value change
   instance.autorun(() => {
 
-    //get instance value
-    const val = instance.value.get();
-
     //if value is set
-    if(val) {
+    if(instance.value.get()) {
 
       //add active class to label
       qLabel.addClass('active');
@@ -66,9 +64,6 @@ Template.afInputPickatime_materialize.onRendered(() => {
 
 //helpers
 Template.afInputPickatime_materialize.helpers({
-  reactiveValue() {
-    return Template.instance().reactiveValue.get();
-  },
   attr() {
     const instance = Template.instance();
     const atts = instance.data.atts;
