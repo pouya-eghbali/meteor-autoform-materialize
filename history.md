@@ -1,5 +1,6 @@
 # v2.0.10
  - Fixed pickadate [#15](https://github.com/mozfet/meteor-autoform-materialize/issues/15)
+ - use momentjs npm package [#7](https://github.com/mozfet/meteor-autoform-materialize/issues/7)
 
 # v2.0.6 - v2.0.9
  - Fix select-radio-inline [#6](https://github.com/mozfet/meteor-autoform-materialize/issues/6)
