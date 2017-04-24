@@ -30,9 +30,7 @@ AutoForm.addInputType('pickadate', {
     var picker = this.pickadate('picker');
     var item   = picker && picker.get('select');
     const value = item && item.obj;
-    console.log('picker value', value);
     const date = moment(value).format();
-    console.log('picker date', date);
     return date;
   },
   valueConverters: {
