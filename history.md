@@ -1,6 +1,13 @@
+# 2.0.6 - 2.0.9
+ - Fix select-radio-inline [#6](https://github.com/mozfet/meteor-autoform-materialize/issues/6)
+ - Fix pickadate label initialisation [#9](https://github.com/mozfet/meteor-autoform-materialize/issues/9)
+ - Added initToCurrentTime attribute to pickatime to easily initialise the time picker to the current time [#13](https://github.com/mozfet/meteor-autoform-materialize/issues/13)
+ - Fixed pickatime and pickadate examples in readme [#12](https://github.com/mozfet/meteor-autoform-materialize/issues/12)
+ - Fixed select and select multiple labels [#14](https://github.com/mozfet/meteor-autoform-materialize/issues/14)
+
 # 2.0.5
   - Address issue [#5](https://github.com/mozfet/meteor-autoform-materialize/issues/5) by adding pickatime input type
-  
+
 # 2.0.4
   - It works on Atmosphere and in packages folder!
   - HTML imports no longer an issue... probably due to use of imports folder

@@ -47,16 +47,21 @@ Materialize uses [pickadate](https://github.com/amsul/pickadate.js) for date inp
 You can apply it directly in your template:
 
 ```
-{{> afFieldInput name='dateFieldName' type="pickadate"}}
+{{> afFieldInput name="dateField" type="pickadate"}}
 ```
 
 You can also specify it at the schema level:
 ```
 MySchema = new SimpleSchema({
-  dateFieldName: {
-    type: Date
+  dateField: {
+    type: Date,
+    label: 'Pick a date with options',
     autoform: {
-      type:"pickadate"
+      type: 'pickadate',
+      pickadateOptions: {
+        closeOnSelect: true,
+        closeOnClear: true
+      }
     }
   }
 });
@@ -66,16 +71,17 @@ MySchema = new SimpleSchema({
 You can apply it directly in your template:
 
 ```
-{{> afFieldInput name='dateFieldName' type="pickadate"}}
+{{> afFieldInput name="timeField" type="pickatime"}}
 ```
 
 You can also specify it at the schema level:
 ```
 MySchema = new SimpleSchema({
-  dateFieldName: {
-    type: String
+  timeField: {
+    type: String,
     autoform: {
-      type:"pickatime"
+      type: 'pickatime',
+      initToCurrentTime: true
     }
   }
 });
