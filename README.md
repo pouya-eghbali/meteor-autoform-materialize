@@ -6,13 +6,6 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 > **New Feature** Pickatime! See usage below and on in action on the [playground](https://github.com/mozfet/meteor-autoform-materialize-playground) usage details below...
 
-## This package is part of a suite
-[mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
-[mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
-[mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
-[mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
-[mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
-
 ## Setup
 
 1. `meteor add mozfet:autoform-materialize`
@@ -26,6 +19,13 @@ You must add materialize CSS and JavaScript yourself. Some packages can help:
 
 - [materialize:materialize](https://atmospherejs.com/materialize/materialize) `meteor add materialize:materialize@0.98.2`
 - [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `meteor add poetic:materialize-scss@1.97.6_1`
+
+## This package is part of a suite
+[mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
+[mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
+[mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
+[mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
+[mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
 ## Usage and demo
 
