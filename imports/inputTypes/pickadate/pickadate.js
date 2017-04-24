@@ -3,6 +3,7 @@
 import { Template } from 'meteor/templating';
 import { AutoForm } from 'meteor/aldeed:autoform';
 import './pickadate.html';
+import moment from 'moment';
 
 var DEFAULT_PICKADATE_FORMAT_SUBMIT = 'yyyy/mm/dd';
 
@@ -28,7 +29,11 @@ AutoForm.addInputType('pickadate', {
   valueOut: function() {
     var picker = this.pickadate('picker');
     var item   = picker && picker.get('select');
-    return item && item.obj;
+    const value = item && item.obj;
+    console.log('picker value', value);
+    const date = moment(value).format();
+    console.log('picker date', date);
+    return date;
   },
   valueConverters: {
     'string': function(val) {
