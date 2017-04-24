@@ -5,6 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Blaze } from 'meteor/blaze';
 import moment from 'moment';
 import 'meteor/mozfet:materialize-time-picker';
+import { currentTime } from 'meteor/mozfet:materialize-time-picker/imports/picker';
 import './pickatime.html';
 
 const TIME_FORMAT = 'h:mm A';
@@ -23,24 +24,37 @@ AutoForm.addInputType('pickatime', {
 //when created
 Template.afInputPickatime_materialize.onCreated(() => {
   const instance = Template.instance();
-  // console.log('pickatime.instance', instance);
+  console.log('pickatime.instance', instance);
+
+  //if value was provided
+  let value;
+  if(instance.data.value) {
+
+    //use provided value as value
+    value = instance.data.value;
+  }
+
+  //else if initialising to current time - thus no value was provided
+  else if (instance.data.atts.initToCurrentTime) {
+
+    //use current time as value
+    value = currentTime();
+    console.log('currentTime', value);
+    value = currentTime();
+  }
 
   //initialise value
-  instance.value = new ReactiveVar();
+  instance.value = new ReactiveVar(value);
 });
 
 //when rendered
 Template.afInputPickatime_materialize.onRendered(() => {
   const instance = Template.instance();
 
-  //get input on dom
+  //get label query
   const qInput = $('#'+instance.data.atts.id);
-  // console.log('pickatime.qInput', qInput);
   const qParent = qInput.parent().parent().parent();
-  // console.log('pickatime.qParent', qParent.html());
   const qLabel = qParent.find('label');
-  // console.log('pickatime.qLabel', qLabel);
-
 
   //autorun when instance value change
   instance.autorun(() => {
