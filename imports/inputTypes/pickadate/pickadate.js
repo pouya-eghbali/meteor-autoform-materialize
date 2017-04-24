@@ -82,7 +82,7 @@ Template.afPickadate.onRendered(() => {
 
   //init pickadate
   const userOptions = instance.data.atts.pickadateOptions || {};
-  console.log('pickadate user options', userOptions);
+  // console.log('pickadate user options', userOptions);
   const opts = _.defaults(userOptions, {
     format: DEFAULT_PICKADATE_FORMAT_SUBMIT,
     hiddenName: true,

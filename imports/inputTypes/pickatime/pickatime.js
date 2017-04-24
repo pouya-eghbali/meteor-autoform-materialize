@@ -24,7 +24,7 @@ AutoForm.addInputType('pickatime', {
 //when created
 Template.afInputPickatime_materialize.onCreated(() => {
   const instance = Template.instance();
-  console.log('pickatime.instance', instance);
+  // console.log('pickatime.instance', instance);
 
   //if value was provided
   let value;

@@ -21,11 +21,11 @@ You must add materialize CSS and JavaScript yourself. Some packages can help:
 - [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `meteor add poetic:materialize-scss@1.97.6_1`
 
 ## This package is part of a suite
-[mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
-[mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
-[mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
-[mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
-[mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
+- [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
+- [mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
+- [mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
+- [mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
+- [mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
 ## Usage and demo
 
