@@ -1,52 +1,55 @@
-# 2.0.6 - 2.0.9
+# v2.0.10
+ - Fixed pickadate [#15](https://github.com/mozfet/meteor-autoform-materialize/issues/15)
+
+# v2.0.6 - v2.0.9
  - Fix select-radio-inline [#6](https://github.com/mozfet/meteor-autoform-materialize/issues/6)
  - Fix pickadate label initialisation [#9](https://github.com/mozfet/meteor-autoform-materialize/issues/9)
  - Added initToCurrentTime attribute to pickatime to easily initialise the time picker to the current time [#13](https://github.com/mozfet/meteor-autoform-materialize/issues/13)
  - Fixed pickatime and pickadate examples in readme [#12](https://github.com/mozfet/meteor-autoform-materialize/issues/12)
  - Fixed select and select multiple labels [#14](https://github.com/mozfet/meteor-autoform-materialize/issues/14)
 
-# 2.0.5
+# v2.0.5
   - Address issue [#5](https://github.com/mozfet/meteor-autoform-materialize/issues/5) by adding pickatime input type
 
-# 2.0.4
+# v2.0.4
   - It works on Atmosphere and in packages folder!
   - HTML imports no longer an issue... probably due to use of imports folder
 
-# 2.0.1 - 2.0.3
+# v2.0.1 - v2.0.3
   - It works in playground using packages folder, but not when its published to atmosphere!
   - In playground Server is picking up html imports!
   - Cannot find where server is loading the package ... $#%!
   - Renamed src folder to imports folder - now nothing works! ... great...
 
-# 2.0.0
+# v2.0.0
   - ES6 Support
   - Fixes [#3](https://github.com/mozfet/meteor-autoform-materialize/issues/3)
 
-# 1.2.0
+# v1.2.0
   - Fixes [#2](https://github.com/mozfet/meteor-autoform-materialize/issues/2)
   - Minor version bump times two to skip previous faulty deployments
 
-# 1.0.2
+# v1.0.2
  - Add support for NoUiSlider
 
-# 1.0.1
+# v1.0.1
  - Add support for AutoForm 6.0.0
 
-# 0.0.25
+# v0.0.25
  - Refactoring by @Chun-Yang
 
-# 0.0.22
+# v0.0.22
  - Fixes #48 (thanks to @jholl)
 
-# 0.0.21
+# v0.0.21
  - Fixes #43
 
-# 0.0.20
+# v0.0.20
  - Lots of fixes (haven't tracked the bugs numbers this time...)
 
 Thanks to @coniel for his contribution
 
-# 0.0.19
+# v0.0.19
 
 - Fix #18 (see [playground](http://autoform-materialize-playground.meteor.com/))
 - Fix #29 (thanks to @coniel)
