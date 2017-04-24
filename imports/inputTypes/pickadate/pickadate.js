@@ -83,6 +83,7 @@ Template.afPickadate.onRendered(() => {
 
   //init pickadate
   const userOptions = instance.data.atts.pickadateOptions || {};
+  console.log('pickadate user options', userOptions);
   const opts = _.defaults(userOptions, {
     format: DEFAULT_PICKADATE_FORMAT_SUBMIT,
     hiddenName: true,
@@ -93,13 +94,13 @@ Template.afPickadate.onRendered(() => {
   //get picker
   const picker = input.pickadate('picker');
 
-  //get label
-  const qInput = $('#'+instance.data.atts.id);
+  //get label - seems not to be needed anymore
+  // const qInput = $('#'+instance.data.atts.id);
   // console.log('pickatime.qInput', qInput);
-  const qParent = qInput.parent().parent().parent();
+  // const qParent = qInput.parent().parent().parent();
   // console.log('pickatime.qParent', qParent.html());
-  const qLabel = qParent.find('label');
-  // console.log('pickatime.qLabel', qLabel);
+  // const qLabel = qParent.find('label');
+  //console.log('pickatime.qLabel', qLabel);
 
   //autorun - reactive set picker to data value, min and max
   instance.autorun(() => {
@@ -114,8 +115,8 @@ Template.afPickadate.onRendered(() => {
       //set picker select to value
       picker.set('select', data.value);
 
-      //add active class to label
-      qLabel.addClass('active');
+      //add active class to label - this seems not to be needed anymore
+      // qLabel.addClass('active');
     }
 
     //if data min is a date
