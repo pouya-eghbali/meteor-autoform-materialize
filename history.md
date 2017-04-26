@@ -1,3 +1,7 @@
+# v2.0.11
+ - Added new modals package to the suite, old package will be sunset.
+ - Updated pickatime.
+
 # v2.0.10
  - Fixed pickadate [#15](https://github.com/mozfet/meteor-autoform-materialize/issues/15)
  - use momentjs npm package [#7](https://github.com/mozfet/meteor-autoform-materialize/issues/7)
