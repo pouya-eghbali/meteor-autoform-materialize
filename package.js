@@ -1,7 +1,7 @@
 Package.describe({
   name: 'mozfet:autoform-materialize',
   summary: 'Materialize theme for Autoform',
-  version: '2.0.10',
+  version: '2.0.11',
   git: 'https://github.com/mozfet/meteor-autoform-materialize.git'
 });
 
@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   api.use(['templating', 'underscore'], 'client');
   api.use('ecmascript@0.7.2');
   api.use('aldeed:autoform@6.0.0');
-  api.use('mozfet:materialize-time-picker@0.1.1');
+  api.use('mozfet:materialize-time-picker@0.1.2');
   api.addFiles([
     'index.js'
   ], 'client');
