@@ -4,12 +4,10 @@ import { Template } from 'meteor/templating';
 import './select-multiple.html';
 import { optionAtts } from '../../utilities/optionAtts';
 import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass';
+import { initializeSelect } from '../../utilities/initializeSelect';
 
 Template.afSelectMultiple_materialize.onRendered(function() {
   const instance = Template.instance();
-
-  //init select
-  instance.$('select').material_select();
 
   //get select wrapper
   const select = instance.$('#'+this.data.atts.id);
@@ -24,6 +22,8 @@ Template.afSelectMultiple_materialize.onRendered(function() {
     input.attr('value', this.data.atts.firstOption);
   }
 });
+
+Template.afSelectMultiple_materialize.onRendered(initializeSelect);
 
 Template.afSelectMultiple_materialize.helpers({
   optionAtts: optionAtts,

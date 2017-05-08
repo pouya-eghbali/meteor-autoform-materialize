@@ -1,3 +1,6 @@
+#v 2.0.12
+ - Fixed reactivity of select-multiple
+
 # v2.0.11
  - Added new modals package to the suite, old package will be sunset.
  - Updated pickatime.

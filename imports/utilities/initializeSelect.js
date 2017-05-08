@@ -13,7 +13,8 @@ export const initializeSelect = function () {
 
   instance.autorun(function () {
     // reinitialize select when data changes
-    Template.currentData();
+    const currentData = Template.currentData();
+    console.log('init select', currentData);
     initialize();
   });
 };
