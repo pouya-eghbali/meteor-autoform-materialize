@@ -1,3 +1,6 @@
+#v 2.0.13
+ - Added Flowtext input type for mobile friendly pieces of text.
+
 #v 2.0.12
  - Fixed reactivity of select-multiple
 

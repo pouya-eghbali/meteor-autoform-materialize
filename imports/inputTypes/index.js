@@ -11,6 +11,7 @@ import './datetime';
 import './datetime-local';
 import './email';
 import './file';
+import './flowtext';
 import './hidden';
 import './icon';
 import './image';

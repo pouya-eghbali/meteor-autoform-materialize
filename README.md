@@ -89,6 +89,27 @@ MySchema = new SimpleSchema({
 });
 ```
 
+### FlowText ###
+You can apply it directly in your template:
+
+```
+{{> afFieldInput name="someTextToDisplay" type="flowtext"}}
+```
+
+You can also specify it at the schema level:
+```
+MySchema = new SimpleSchema({
+  someTextToDisplay: {
+    type: String,
+    autoform: {
+      type: 'flowtext'      
+    }
+  }
+});
+```
+
+
+
 #### Choosing a Timezone ####
 
 By default, the field's value will be a `Date` object representing the selected date and time in the browser's timezone (i.e., based on the user's computer time settings). In most cases, you probably want the `Date` object relative to some other timezone that you have previously stored. For example, if the form is setting the start date of an event, you want the date to be relative to the event venue's timezone. You can specify a different IANA timezone ID by adding a `timezoneId` attribute.
