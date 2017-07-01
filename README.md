@@ -5,6 +5,8 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 > **Shiny Modals** Introducing the new AutoForm Materialize Modals module, rewritten from scratch! Learn more at [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals). The old modals package still works, however will not be maintained going forward. The new package is not backward compatible with the old package and client code will need to change to make use of the new package.
 
+> **Mobile friendly text** In some case you just want to display a piece of text, instead of asking the user to input something; introducing cleartext support from Materialize CSS; see usage below.
+
 ## Setup ##
 
 1. `meteor add mozfet:autoform-materialize`
@@ -14,7 +16,7 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
   ```
 /OR/ Install by cloning the github projects from this theme suite into your project's /packages folder.
 
-You must add materialize CSS and JavaScript yourself. Some packages can help:
+You must add Materialize CSS and JavaScript yourself. Some packages can help:
 
 - [materialize:materialize](https://atmospherejs.com/materialize/materialize) `meteor add materialize:materialize@0.98.2`
 - [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `meteor add poetic:materialize-scss@1.97.6_1`

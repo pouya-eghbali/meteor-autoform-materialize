@@ -7,7 +7,7 @@ import './flowtext.html';
 AutoForm.addInputType('flowtext', {
   template: 'afInputFlowtext_materialize',
   valueOut: function() {
-    // console.log('pickatime: valueOut.this', this);
+    console.log('flowtext: valueOut.this', this);
     return this.val();
   }
 });
@@ -15,5 +15,9 @@ AutoForm.addInputType('flowtext', {
 Template.afInputFlowtext_materialize.helpers({
   atts: {
     class: 'flow-text'
+  },
+  value() {
+    const instance = Template.instance();
+    console.log('flowtext.instance:', instance);
   }
 });
