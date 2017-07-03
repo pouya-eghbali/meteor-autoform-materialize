@@ -7,7 +7,7 @@ import './flowtext.html';
 AutoForm.addInputType('flowtext', {
   template: 'afInputFlowtext_materialize',
   valueOut: function() {
-    console.log('flowtext: valueOut.this', this);
+    // console.log('flowtext: valueOut.this', this);
     return this.val();
   }
 });
@@ -18,6 +18,7 @@ Template.afInputFlowtext_materialize.helpers({
   },
   value() {
     const instance = Template.instance();
-    console.log('flowtext.instance:', instance);
+    // console.log('flowtext.instance:', instance);
+    return instance.data.value;
   }
 });

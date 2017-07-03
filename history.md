@@ -1,5 +1,5 @@
-#v 2.0.13
- - Added Flowtext input type for mobile friendly pieces of text.
+#v 2.0.13 - 2.0.18
+ - Added Flowtext input type for mobile friendly pieces of text inline with form and generated using doc values.
 
 #v 2.0.12
  - Fixed reactivity of select-multiple
