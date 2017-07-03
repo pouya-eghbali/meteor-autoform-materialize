@@ -6,44 +6,62 @@ import './switch.html';
 AutoForm.addInputType('switch', {
   template: 'afSwitch',
   valueIn: (value) => {
+    // console.log('valueIn.value:', value);
     return value;
   },
   valueOut: function() {
-    var ref, ref1, result;
+    // console.log('valueOut.this:', this);
+    let ref, result;
     const input = this[0];
     const checked = input.checked;
     if (checked) {
-      result = ((ref = input.attributes.trueValue) !== null ? ref.value : void 0) || true;
-    } else {
-      result = ((ref1 = input.attributes.falseValue) !== null ? ref1.value : void 0) || false;
+      if(_.isUndefined(input.attributes.truevalue)) {
+        result = true;
+      }
+      else {
+        result = input.attributes.truevalue.nodeValue;
+      }
     }
+    else {
+      if(_.isUndefined(input.attributes.falsevalue)) {
+        result = false;
+      }
+      else {
+        result = input.attributes.falsevalue.nodeValue;
+      }
+    }
+    // console.log('result:', result);
+
+    //return
     return result;
   }
 });
 
 Template.afSwitch.onRendered(() => {
   const instance = Template.instance();
+  // console.log('afSwitch.onRendered.instance:', instance);
 
   //get input
   const input = instance.$('input');
 
   //autorun
   instance.autorun(() => {
-    return function() {
-      var data, trueValue;
-      data = Template.currentData();
-      trueValue = _this.data.atts.trueValue || true;
-      return input.prop('checked', data.value === trueValue);
-    };
+
+    //reactive update the input based on the input data
+    // console.log('afSwitch.onRendered.autorun.instance.data.value:', instance.data.value);
+    const data = Template.currentData();
+    const trueValue = instance.data.atts.trueValue || true;
+    const checked = instance.data.value === trueValue;
+    input.prop('checked', checked);
   });
-  return;
 });
 
 Template.afSwitch.helpers({
   atts: () => {
     const instance = Template.instance();
-    return _.extend(instance.atts, {
-      id: instance.atts.name
+    console.log('afSwitch.instance:', instance);
+    return _.extend(instance.data.atts, {
+      id: instance.data.atts.name
     });
   }
 });
