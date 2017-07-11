@@ -4,19 +4,14 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Blaze } from 'meteor/blaze';
 import moment from 'moment';
-import 'meteor/mozfet:materialize-time-picker';
-import { currentTime } from 'meteor/mozfet:materialize-time-picker/imports/picker';
 import './pickatime.html';
 
 const TIME_FORMAT = 'h:mm A';
-
-console.log('pickatime - add input type');
 
 //add autoform input
 AutoForm.addInputType('pickatime', {
   template: 'afInputPickatime_materialize',
   valueOut: function() {
-    // console.log('pickatime: valueOut.this', this);
     return this.val();
   }
 });
@@ -24,7 +19,6 @@ AutoForm.addInputType('pickatime', {
 //when created
 Template.afInputPickatime_materialize.onCreated(() => {
   const instance = Template.instance();
-  // console.log('pickatime.instance', instance);
 
   //if value was provided
   let value;
@@ -32,15 +26,6 @@ Template.afInputPickatime_materialize.onCreated(() => {
 
     //use provided value as value
     value = instance.data.value;
-  }
-
-  //else if initialising to current time - thus no value was provided
-  else if (instance.data.atts.initToCurrentTime) {
-
-    //use current time as value
-    value = currentTime();
-    console.log('currentTime', value);
-    value = currentTime();
   }
 
   //initialise value
@@ -51,56 +36,63 @@ Template.afInputPickatime_materialize.onCreated(() => {
 Template.afInputPickatime_materialize.onRendered(() => {
   const instance = Template.instance();
 
-  //get label query
-  const qInput = $('#'+instance.data.atts.id);
-  const qParent = qInput.parent().parent().parent();
-  const qLabel = qParent.find('label');
+  //get value
+  const value = instance.value.get();
 
-  //autorun when instance value change
-  instance.autorun(() => {
-
-    //if value is set
-    if(instance.value.get()) {
-
-      //add active class to label
-      qLabel.addClass('active');
+  //initialise timepicker
+  let options;
+  if(instance.data.atts.timepickerOptions) {
+    options = _.clone(instance.data.atts.timepickerOptions);
+    if(value) {
+      options.default = value;
+      delete options.fromnow;
+      instance.$('input').val(value);
+      instance.$('input').parent().find('label').addClass('active');
     }
+  }
+  else {
+    options = {};
+    if(value) {
+      options.default = value;
+      instance.$('input').val(value);
+      instance.$('input').parent().find('label').addClass('active');
+    }
+  }
 
-    //else - no value
+  $('.timepicker').pickatime(options);
+
+  //use jquery to detect the change since nothing else seems to work...
+  instance.$('.timepicker').on('change', function () {
+    const value = instance.$('.timepicker').val();
+    instance.value.set(value);
+    if(value) {
+      instance.$('.timepicker').parent().find('label').addClass('active');
+    }
     else {
-
-      //remove active class from label
-      qLabel.removeClass('active');
+      instance.$('input').parent().find('label').removeClass('active');
     }
-
   });
 });
 
 //helpers
 Template.afInputPickatime_materialize.helpers({
-  attr() {
+  atts() {
     const instance = Template.instance();
     const atts = instance.data.atts;
     const val = instance.value.get();
     return {
       'id'                : atts.id,
       'data-schema-key'   : atts['data-schema-key'],
-      'class'             : 'js-timepicker-trigger',
-      'type'              : 'text',
       'data-value'        : val,
       'value'             : val
     };
   },
   value() {
     const instance = Template.instance();
-    return instance.value;
+    return instance.value.get();
   },
   id() {
     const instance = Template.instance();
     return instance.id;
   }
-});
-
-//events
-Template.afInputPickatime_materialize.events({
 });

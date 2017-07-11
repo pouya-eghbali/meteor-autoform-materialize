@@ -6,11 +6,9 @@ import './switch.html';
 AutoForm.addInputType('switch', {
   template: 'afSwitch',
   valueIn: (value) => {
-    // console.log('valueIn.value:', value);
     return value;
   },
   valueOut: function() {
-    // console.log('valueOut.this:', this);
     let ref, result;
     const input = this[0];
     const checked = input.checked;
@@ -59,7 +57,6 @@ Template.afSwitch.onRendered(() => {
 Template.afSwitch.helpers({
   atts: () => {
     const instance = Template.instance();
-    console.log('afSwitch.instance:', instance);
     return _.extend(instance.data.atts, {
       id: instance.data.atts.name
     });

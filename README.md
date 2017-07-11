@@ -1,11 +1,15 @@
 # Meteor Autoform Materialize templates #
 Adds [materialize](http://materializecss.com/) templates for autoform.
 
-> **Important** This package supports Meteor 1.4, AutoForm 6.0.0 and ES6. Older versions of Meteor and AutoForm are no longer supported.
+> **Important** It seems the poetic:materialize-scss package is no longer maintained and preventing users from upgrading to newer versions of fourseven:scss package. I will try to revive the materialize-scss project and add it to this suite, but need some time to do it, in the mean time this version of the package may not play nicely with poetic:materialize-scss... see Issue #18.
+
+> **Dependancies** This package supports Meteor 1.4 and up, AutoForm 6.0.0 and ES6 and Materialize 0.99.0. This package is not tested against older versions of dependancies, let us know if you have compatibility problems by creating or commenting on an issue on this repo.
+
+> **Revamped Pickatime** The Materialize team introduced a timepicker for materialize! See below how to use!
 
 > **Shiny Modals** Introducing the new AutoForm Materialize Modals module, rewritten from scratch! Learn more at [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals). The old modals package still works, however will not be maintained going forward. The new package is not backward compatible with the old package and client code will need to change to make use of the new package.
 
-> **Mobile friendly text** In some case you just want to display a piece of text, instead of asking the user to input something; introducing cleartext support from Materialize CSS; see usage below.
+> **Reponsive Text** In some case you just want to display a piece of text, instead of asking the user to input something; introducing cleartext support from Materialize CSS; see usage below.
 
 ## Setup ##
 
@@ -22,14 +26,15 @@ You must add Materialize CSS and JavaScript yourself. Some packages can help:
 - [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `meteor add poetic:materialize-scss@1.97.6_1`
 
 ## This package is part of a suite ##
-- [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
-- [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals)
-- [mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
-- [mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
-- [mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
+[mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
+[mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals)
+[mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
+[mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
+[mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
 No longer maintained
-[mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
+- [mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
+- [mozfet:meteor-materialize-time-picker](https://github.com/mozfet/meteor-autoform-modals-materialize)
 
 ## Usage and demo ##
 
@@ -83,13 +88,25 @@ You can also specify it at the schema level:
 MySchema = new SimpleSchema({
   timeField: {
     type: String,
+    label: 'Pick a time',
     autoform: {
-      type: 'pickatime',
-      initToCurrentTime: true
+      type: 'pickatime',      
+      timepickerOptions: {
+        default: 'now',       // Set default time
+        fromnow: 0,           // set default time to * milliseconds from now (using with default = 'now')
+        twelvehour: false,    // Use AM/PM or 24-hour format
+        donetext: 'OK',       // text for done-button
+        cleartext: 'Clear',   // text for clear-button
+        canceltext: 'Cancel', // Text for cancel-button
+        autoclose: false,     // automatic close timepicker
+        ampmclickable: true,  // make AM PM clickable        
+      }
     }
   }
 });
 ```
+
+Note that when using PickATime with an initialised value from a doc, that the default time and fromnow is overwritten with the value from the doc.
 
 ### FlowText ###
 You can apply it directly in your template:
