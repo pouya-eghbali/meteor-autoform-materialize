@@ -1,5 +1,11 @@
+#v 2.1.1
+ - Made arrays prettier using icons [#17](https://github.com/mozfet/meteor-autoform-materialize/issues/17)
+
+#v 2.1.0
+ - Refactored to support MaterializeCSS as npm package
+
 #v 2.0.20 - 2.0.24
- - Fixed flowtext 
+ - Fixed flowtext
 
 #v 2.0.19
  - Fixed Switch input type [#16](https://github.com/mozfet/meteor-autoform-materialize/issues/16)

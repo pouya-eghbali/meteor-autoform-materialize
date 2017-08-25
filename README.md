@@ -3,7 +3,7 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
 
 > **Important** It seems the poetic:materialize-scss package is no longer maintained and preventing users from upgrading to newer versions of fourseven:scss package. I will try to revive the materialize-scss project and add it to this suite, but need some time to do it, in the mean time this version of the package may not play nicely with poetic:materialize-scss... see Issue #18.
 
-> **Dependancies** This package supports Meteor 1.4 and up, AutoForm 6.0.0 and ES6 and Materialize 0.99.0. This package is not tested against older versions of dependancies, let us know if you have compatibility problems by creating or commenting on an issue on this repo.
+> **Dependancies** This package has been tested in the playground using Meteor 1.5, AutoForm 6.2.0 and Materialize 0.99.0.
 
 > **Revamped Pickatime** The Materialize team introduced a timepicker for materialize! See below how to use!
 
@@ -20,10 +20,11 @@ Adds [materialize](http://materializecss.com/) templates for autoform.
   ```
 /OR/ Install by cloning the github projects from this theme suite into your project's /packages folder.
 
-You must add Materialize CSS and JavaScript yourself. Some packages can help:
+You must add Materialize CSS and JavaScript yourself. Some node and atmosphere packages that can help:
 
-- [materialize:materialize](https://atmospherejs.com/materialize/materialize) `meteor add materialize:materialize@0.98.2`
-- [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `meteor add poetic:materialize-scss@1.97.6_1`
+- [Dogfalo/materialize](https://github.com/Dogfalo/materialize) `$ meteor npm install materialize-css --save`
+- [materialize:materialize](https://atmospherejs.com/materialize/materialize) `$ meteor add materialize:materialize@0.99.0`
+- [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `$ meteor add poetic:materialize-scss@1.97.6_1`
 
 ## This package is part of a suite ##
 [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
