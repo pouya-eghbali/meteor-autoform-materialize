@@ -1,32 +1,68 @@
 # Meteor Autoform Materialize templates #
-Adds [materialize](http://materializecss.com/) templates for autoform.
 
-> **Important** It seems the poetic:materialize-scss package is no longer maintained and preventing users from upgrading to newer versions of fourseven:scss package. I will try to revive the materialize-scss project and add it to this suite, but need some time to do it, in the mean time this version of the package may not play nicely with poetic:materialize-scss... see Issue #18.
+[Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
+
+> **SASS** The poetic:materialize-scss package is no longer maintained and preventing users from upgrading to newer versions of fourseven:scss package. This package no longer supports poetic:materialize-scss. If you need SASS support, please see installation instructions for Materialize-css on Meteor using NPM (below).
 
 > **Dependancies** This package has been tested in the playground using Meteor 1.5, AutoForm 6.2.0 and Materialize 0.99.0.
 
 > **Revamped Pickatime** The Materialize team introduced a timepicker for materialize! See below how to use!
 
-> **Shiny Modals** Introducing the new AutoForm Materialize Modals module, rewritten from scratch! Learn more at [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals). The old modals package still works, however will not be maintained going forward. The new package is not backward compatible with the old package and client code will need to change to make use of the new package.
+> **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
 > **Reponsive Text** In some case you just want to display a piece of text, instead of asking the user to input something; introducing cleartext support from Materialize CSS; see usage below.
 
-## Setup ##
+## Install Materialize-css
+
+### Install Materialize-css (CSS only) using Atmosphere ###
+
+```
+meteor add materialize:materialize@0.98.2
+```
+### Install Materialize-css (CSS & SASS) using NPM ###
+
+1. install dependancies
+```
+$ meteor npm install hammerjs --save
+$ meteor npm install materialize-css --save
+$ meteor add fourseven-scss
+```
+2. create init script to import JavaScript in file `/imports/startup/client/materialize.js`
+```
+import 'hammerjs';
+import 'materialize-css/dist/js/materialize.js';
+import 'materialize-css/extras/noUISlider/nouislider.js';
+```
+3. import init script in file `/imports/startup/client/index.js`
+```
+import 'materialize.js'
+```
+4. import SASS in file `/client/main.scss`
+```
+@import "../node_modules/materialize-css/sass/components/_color.scss";
+
+$primary-color: color("blue", "base") !default;
+$primary-color-light: color("blue", "lighten-4") !default;
+$primary-color-dark: color("blue", "darken-4") !default;
+$secondary-color: color("orange", "lighten-1") !default;
+$success-color: color("green", "base") !default;
+$error-color: color("red", "base") !default;
+$link-color: color("light-blue", "darken-1") !default;
+
+@import "../node_modules/materialize-css/sass/materialize.scss";
+```
+
+## Install Autoform-Materialize ##
 
 1. `meteor add mozfet:autoform-materialize`
-2. In a client file (ex: `/client/config/autoform.js`)
+2. In a client file (ex: `/imports/startup/client/autoform.js`)
   ```
   AutoForm.setDefaultTemplate('materialize');
   ```
 /OR/ Install by cloning the github projects from this theme suite into your project's /packages folder.
 
-You must add Materialize CSS and JavaScript yourself. Some node and atmosphere packages that can help:
-
-- [Dogfalo/materialize](https://github.com/Dogfalo/materialize) `$ meteor npm install materialize-css --save`
-- [materialize:materialize](https://atmospherejs.com/materialize/materialize) `$ meteor add materialize:materialize@0.99.0`
-- [poetic:materialize-scss](https://atmospherejs.com/poetic/materialize-scss) `$ meteor add poetic:materialize-scss@1.97.6_1`
-
 ## This package is part of a suite ##
+
 [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
 [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals)
 [mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
@@ -52,6 +88,7 @@ meteor add mozfet:autoform-materialize-nouislider
 ```
 
 ### PickADate ##
+
 Materialize uses [pickadate](https://github.com/amsul/pickadate.js) for date inputs.
 
 You can apply it directly in your template:
@@ -127,8 +164,6 @@ MySchema = new SimpleSchema({
   }
 });
 ```
-
-
 
 #### Choosing a Timezone ####
 
