@@ -17,7 +17,7 @@
 ### Install Materialize-css (CSS only) using Atmosphere ###
 
 ```
-meteor add materialize:materialize@0.98.2
+meteor add materialize:materialize
 ```
 ### Install Materialize-css (CSS & SASS) using NPM ###
 
@@ -51,6 +51,7 @@ $link-color: color("light-blue", "darken-1") !default;
 
 @import "../node_modules/materialize-css/sass/materialize.scss";
 ```
+5. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to '/public'
 
 ## Install Autoform-Materialize ##
 
@@ -62,16 +63,12 @@ $link-color: color("light-blue", "darken-1") !default;
 /OR/ Install by cloning the github projects from this theme suite into your project's /packages folder.
 
 ## This package is part of a suite ##
-
-[mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
-[mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals)
-[mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
-[mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
-[mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
-
-No longer maintained
-- [mozfet:meteor-autoform-modals-materialize](https://github.com/mozfet/meteor-autoform-modals-materialize)
-- [mozfet:meteor-materialize-time-picker](https://github.com/mozfet/meteor-autoform-modals-materialize)
+- [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
+- [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals)
+- [mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
+- [mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
+- [mozfet:materialize-icons](https://github.com/mozfet/meteor-materialize-icons)
+- [mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
 ## Usage and demo ##
 
