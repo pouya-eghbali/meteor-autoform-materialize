@@ -4,7 +4,7 @@
 
 > **SASS** The poetic:materialize-scss package is no longer maintained and preventing users from upgrading to newer versions of fourseven:scss package. This package no longer supports poetic:materialize-scss. If you need SASS support, please see installation instructions for Materialize-css on Meteor using NPM (below).
 
-> **Dependancies** This package has been tested in the playground using Meteor 1.5, AutoForm 6.2.0 and Materialize 0.99.0.
+> **Dependancies** This package has been tested in the playground using Meteor 1.5.1, AutoForm 6.2.0 and Materialize-css 0.100.0.
 
 > **Revamped Pickatime** The Materialize team introduced a timepicker for materialize! See below how to use!
 
