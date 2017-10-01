@@ -25,7 +25,7 @@ meteor add materialize:materialize
 ```
 $ meteor npm install hammerjs --save
 $ meteor npm install materialize-css --save
-$ meteor add fourseven-scss
+$ meteor add fourseven:scss
 ```
 2. create init script to import JavaScript in file `/imports/startup/client/materialize.js`
 ```
