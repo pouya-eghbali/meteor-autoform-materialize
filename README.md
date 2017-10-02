@@ -33,11 +33,19 @@ import 'hammerjs';
 import 'materialize-css/dist/js/materialize.js';
 import 'materialize-css/extras/noUISlider/nouislider.js';
 ```
-3. import init script in file `/imports/startup/client/index.js`
+3. create scss include paths in file '/scss-config.json'
+```
+{
+  "includePaths": [
+    "{}/node_modules/materialize-css/sass/"
+  ]
+}
+```
+4. import init script in file `/imports/startup/client/index.js`
 ```
 import 'materialize.js'
 ```
-4. import SASS in file `/client/main.scss`
+5. import SASS in file `/client/main.scss`
 ```
 @import "../node_modules/materialize-css/sass/components/_color.scss";
 
@@ -51,7 +59,7 @@ $link-color: color("light-blue", "darken-1") !default;
 
 @import "../node_modules/materialize-css/sass/materialize.scss";
 ```
-5. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to '/public'
+6. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to '/public'
 
 ## Install Autoform-Materialize ##
 

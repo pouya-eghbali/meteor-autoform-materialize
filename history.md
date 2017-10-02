@@ -1,3 +1,8 @@
+#v 3.0.0 - 3.0.3
+ - Remove support for poetic:scss and support MaterializeCSS from NPM directly [#18](https://github.com/mozfet/meteor-autoform-materialize/issues/18)
+ - Fixed bugs on switch [#16](https://github.com/mozfet/meteor-autoform-materialize/issues/16)
+ - Improvement of tutorials [#19](https://github.com/mozfet/meteor-autoform-materialize/issues/19)
+
 #v 2.1.1
  - Made arrays prettier using icons [#17](https://github.com/mozfet/meteor-autoform-materialize/issues/17)
 
