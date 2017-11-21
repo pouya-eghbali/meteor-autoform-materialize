@@ -1,3 +1,6 @@
+#v 3.1.0
+ - Upgraded to Meteor 1.6
+
 #v 3.0.0 - 3.0.3
  - Remove support for poetic:scss and support MaterializeCSS from NPM directly [#18](https://github.com/mozfet/meteor-autoform-materialize/issues/18)
  - Fixed bugs on switch [#16](https://github.com/mozfet/meteor-autoform-materialize/issues/16)
