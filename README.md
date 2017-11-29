@@ -2,15 +2,13 @@
 
 [Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
 
-> **SASS** The poetic:materialize-scss package is no longer maintained and preventing users from upgrading to newer versions of fourseven:scss package. This package no longer supports poetic:materialize-scss. If you need SASS support, please see installation instructions for Materialize-css on Meteor using NPM (below).
+> **Thank You** This suite of packages is maintained by ExpertBox.com as a thank you to the Open Source community.
 
-> **Dependancies** This package has been tested in the playground using Meteor 1.5.1, AutoForm 6.2.0 and Materialize-css 0.100.0.
+> **Whats New(ish)** Responsive Text, Timepicker, Improved arrays in forms
 
-> **Revamped Pickatime** The Materialize team introduced a timepicker for materialize! See below how to use!
+> **Dependancies** Version 3.1.0 of this package was manual smoke tested and seemed to work ok on Playground 3.1.0 on 21 Nov 2017 using Meteor 1.6, Simple Schema 0.5, Autoform 6.2.0, Materialize CSS 0.100.0, and Autoform Materialize Modals 1.1.0.
 
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
-
-> **Reponsive Text** In some case you just want to display a piece of text, instead of asking the user to input something; introducing cleartext support from Materialize CSS; see usage below.
 
 ## Install Materialize-css
 
@@ -279,3 +277,7 @@ It also works for textarea:
 ```
 {{> afQuickField name='message' type='textarea' icon='person'}}
 ```
+
+## Contributors
+
+If you use this package and find it useful, why not help improve it? We want your feature requests, bug reports, and pull requests.

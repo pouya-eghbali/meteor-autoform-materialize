@@ -1,3 +1,6 @@
+#v 3.1.1
+ - Upgrade to AutoForm 6.2
+
 #v 3.1.0
  - Upgraded to Meteor 1.6
 
