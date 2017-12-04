@@ -1,12 +1,13 @@
 Package.describe({
   name: 'mozfet:autoform-materialize',
   summary: 'Materialize theme for Autoform',
-  version: '3.1.1',
+  version: '3.2.0',
   git: 'https://github.com/mozfet/meteor-autoform-materialize.git'
 });
 
 Npm.depends({
-  'moment': '2.18.0'
+  'moment': '2.18.0',
+  'materialize-autocomplete': '1.0.7'
 });
 
 Package.onUse(function(api) {

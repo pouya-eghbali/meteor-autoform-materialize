@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 
+import './auto-complete';
 import './boolean-checkbox';
 import './boolean-radios';
 import './boolean-select';

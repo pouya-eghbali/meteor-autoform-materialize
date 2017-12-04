@@ -4,9 +4,9 @@
 
 > **Thank You** This suite of packages is maintained by ExpertBox.com as a thank you to the Open Source community.
 
-> **Whats New(ish)** Responsive Text, Timepicker, Improved arrays in forms
+> **Whats New(ish)** Auto Complete, Responsive Text, Timepicker, Improved arrays in forms
 
-> **Dependancies** Version 3.1.0 of this package was manual smoke tested and seemed to work ok on Playground 3.1.0 on 21 Nov 2017 using Meteor 1.6, Simple Schema 0.5, Autoform 6.2.0, Materialize CSS 0.100.0, and Autoform Materialize Modals 1.1.0.
+> **Dependancies** Version 3.2.0 of this package was manual smoke tested and seemed to work ok on Playground 3.2.0 on 4 Dec 2017 using Meteor 1.6, Simple Schema 0.5, Materialize Autocomplete 1.0.7, Autoform 6.2.0, Materialize CSS 0.100.2, and Autoform Materialize Modals 1.1.2.
 
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
@@ -82,12 +82,51 @@ You can checkout the [playground](https://github.com/mozfet/meteor-autoform-mate
 
 ## Additional types ##
 
+### Auto Complete ###
+
+MaterializeCSS is adding support for Auto Complete, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For these reasons this package makes use of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
+
+The current implementation does not yet (coming soon) support multiple.
+
+In your project folder
+```
+meteor npm install materialize-autocomplete --save
+```
+
+In your schema definition
+```
+autoCompleteField: {
+  type: String,
+  optional: true,
+  label: 'Auto Complete With Display Limit of 3',
+  allowedValues: ['Alpha', 'Animal', 'Always', 'Anytime'],
+  autoform: {
+    type: 'autocomplete',
+    placeholder: 'Placeholder'
+    autoComplete: {
+      displayLimit: 3
+    }
+  }
+}
+```
+
 ### NoUiSlider support ##
 
 To add NoUiSlider (see [the playground](https://github.com/mozfet/meteor-autoform-materialize-playground)):
 
 ```
 meteor add mozfet:autoform-materialize-nouislider
+```
+
+You can apply it directly in your template:
+
+```
+{{> afFieldInput name="dateField" type="pickadate"}}
+```
+
+You can also specify it at the schema level:
+```
+TODO
 ```
 
 ### PickADate ##

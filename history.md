@@ -1,3 +1,6 @@
+#v 3.2.0
+ - Added Auto Complete Input Type [#20](https://github.com/mozfet/meteor-autoform-materialize/issues/20)
+
 #v 3.1.1
  - Upgrade to AutoForm 6.2
 
