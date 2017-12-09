@@ -86,29 +86,76 @@ You can checkout the [playground](https://github.com/mozfet/meteor-autoform-mate
 
 ### Auto Complete ###
 
-MaterializeCSS is adding support for Auto Complete, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For these reasons this package makes use of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
+MaterializeCSS is adding support for Auto Complete, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For these reasons this package makes use of a modified hard fork of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
 
-The current implementation does not yet (coming soon) support multiple.
-
-In your project folder
+In your schema definition, for example (see playground for extensive list of examples)
 ```
-meteor npm install materialize-autocomplete --save
-```
-
-In your schema definition
-```
-autoCompleteField: {
+autoCompleteSingular: {
   type: String,
   optional: true,
-  label: 'Auto Complete With Display Limit of 3',
-  allowedValues: ['Alpha', 'Animal', 'Always', 'Anytime'],
+  label: 'Auto Complete Singular',
+  allowedValues:  ['Alpha', 'Animal', 'Brave', 'Butter', 'Better', 'Charlie'],
   autoform: {
     type: 'autocomplete',
-    placeholder: 'Placeholder'
-    autoComplete: {
-      displayLimit: 3
-    }
   }
+},
+
+autoCompleteDisplayLimit: {
+ type: String,
+ optional: true,
+ label: 'Auto Complete With Display Limit of 3',
+ allowedValues: ['Alpha', 'Animal', 'Always', 'Anytime'],
+ autoform: {
+   type: 'autocomplete',
+   autoComplete: {
+     displayLimit: 3
+   }
+ }
+},
+
+autoCompleteMultipleInitialized: {
+ type: Array,
+ label: 'Auto Complete Multiple Initialized',
+ autoform: {
+   type: 'autocomplete',
+   options: () => {
+     return [
+       {
+         label: 'Alpha',
+         value: 'ALPHA'
+       },
+       {
+         label: 'Animal',
+         value: 'ANIMAL'
+       },
+       {
+         label: 'Always',
+         value: 'ALWAYS'
+       },
+       {
+         label: 'Anytime',
+         value: 'ANYTIME'
+       },
+       {
+         label: 'Bravo',
+         value: 'BRAVO'
+       },
+       {
+         label: 'Bedtime',
+         value: 'BEDTIME'
+       }
+     ];
+   },
+   autoComplete: {
+     displayLimit: 3,
+     multiple: true,
+     minSize: 1, // for some unknown reason simple schema min is not propaged to auto complete input, thus we define it here
+     maxSize: 3  // for some unknown reason simple schema max is not propaged to auto complete input, thus we define it here
+   }
+ }
+},
+'autoCompleteMultipleInitialized.$': {
+   type: String
 }
 ```
 

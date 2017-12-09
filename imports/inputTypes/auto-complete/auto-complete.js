@@ -21,11 +21,8 @@ const activate = (instance) => {
   // add active class to label
   let acInput = instance.$('#acInput_'+instance.data.atts.id);
   if(acInput.length >= 1) {
-    // console.log('acInput[0]', acInput[0]);
     const acInputGreatGrandParent = acInput.parent().parent().parent();
-    // console.log('acInputGreatGrandParent', acInputGreatGrandParent[0]);
     const label = acInputGreatGrandParent.find('label');
-    // console.log('label', label[0]);
     label.addClass('active');
   }
 };
@@ -35,9 +32,7 @@ const deactivate = (instance) => {
   if(acInput.length >= 1) {
     // console.log('acInput[0]', acInput[0]);
     const acInputGreatGrandParent = acInput.parent().parent().parent();
-    // console.log('acInputGreatGrandParent', acInputGreatGrandParent[0]);
     const label = acInputGreatGrandParent.find('label');
-    // console.log('label', label[0]);
     label.removeClass('active');
   }
 };
@@ -45,7 +40,6 @@ const deactivate = (instance) => {
 //when created
 Template.afAutoComplete_materialize.onCreated(() => {
   const instance = Template.instance();
-  // console.log('AutoComplete.onCreated.instance.data', instance.data);
 
   //if value was provided
   let value;
@@ -70,7 +64,6 @@ Template.afAutoComplete_materialize.onRendered(() => {
 
   // if multiple is enabled
   if (attsAc.multiple) {
-    // console.log('AutoComplete.onRendered.multiple: set hidden select attr');
 
     // set hidden select multiple attribute
     instance.$('.ac-hidden').attr('multiple', 'multiple');
@@ -213,10 +206,10 @@ Template.afAutoComplete_materialize.helpers({
       'data-schema-key'   : atts['data-schema-key'],
       'data-value'        : val,
       'value'             : val,
-      'type'              : "text",
+      'type'              : 'text',
       'data-activates'    : 'acDropdown_'+atts.id,
-      'data-beloworigin'  : "true",
-      'autocomplete'      : "off"
+      'data-beloworigin'  : 'true',
+      'autocomplete'      : 'off'
     };
     if (atts.placeholder) {
       result.placeholder = atts.placeholder;
@@ -226,12 +219,9 @@ Template.afAutoComplete_materialize.helpers({
   hiddenAtts() {
     const instance = Template.instance();
     const atts = instance.data.atts;
-    const val = instance.value.get();
     const result = {
       'id'                : atts.id,
       'data-schema-key'   : atts['data-schema-key'],
-      'data-value'        : val,
-      'value'             : val,
       'type'              : 'hidden',
       'class'             : 'validate ac-hidden'
     };
@@ -239,21 +229,6 @@ Template.afAutoComplete_materialize.helpers({
       result.placeholder = atts.placeholder;
     }
     return result;
-  },
-  hiddenOptions() {
-
-  },
-  value() {
-    const instance = Template.instance();
-    return instance.value.get();
-  },
-  inputId() {
-    const instance = Template.instance();
-    return instance.data.atts.id;
-  },
-  autoCompleteId() {
-    const instance = Template.instance();
-    return 'autoComplete_'+instance.data.atts.id;
   },
   dropdownId() {
     const instance = Template.instance();
@@ -272,6 +247,11 @@ Template.afAutoComplete_materialize.events({
     activate(instance);
   },
 
+  // when hidden select changes
+  'change select'(event, instance) {
+    console.log('change', instance.data.atts.id);
+  },
+
   // when focus is lost
   'blur .ac-input'(event, instance) {
     console.log('blur', instance.data.atts.id);
@@ -284,7 +264,17 @@ Template.afAutoComplete_materialize.events({
     if(hidden.length >= 1) {
 
       // get the hidden value
-      const value = hidden.val();
+      let value = hidden.val();
+      console.log('hidden value:', value);
+
+      // if value is an array
+      if (_.isArray(value)) {
+
+        // get values without empty value
+        value = _.filter(value, (val) => {
+          return !_.isEmpty(val);
+        });
+      }
 
       // if there is no value
       if (_.isUndefined(value) || _.isEmpty(value)) {

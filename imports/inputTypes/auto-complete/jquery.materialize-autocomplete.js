@@ -379,7 +379,7 @@
 
         },
         setValue: function (item) {
-            console.console.log('setValue:');
+            console.log('setValue:', item);
             var self = this;
 
             if (self.options.multiple.enable) {
@@ -391,7 +391,12 @@
             if(self.options.hidden.enable) {
               self.$hidden.find('option[value="'+item.id+'"]').attr('selected',
                 true);
+              console.log('HIDDEN VAL:', self.$hidden.val());
             }
+
+            const acInputGreatGrandParent = self.$wrapper.parent().parent();
+            const label = acInputGreatGrandParent.find('label');
+            label.addClass('active');
         },
         append: function (item) {
             console.log('APPEND item', item);
@@ -469,7 +474,7 @@
 
         },
         select: function (item) {
-            console.console.log('select:', item);
+            console.log('select:', item);
             var self = this;
 
             self.value = item.text;

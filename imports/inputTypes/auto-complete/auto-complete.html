@@ -5,8 +5,8 @@
       <input {{atts}}>
     </div>
     <ul id={{dropdownId}} class="dropdown-content ac-dropdown"></ul>
-    <!-- <input {{hiddenAtts}}> -->
     <select {{hiddenAtts}}>
+      <option style="display:none"></option>
       {{#each option in this.selectOptions}}
         <option value={{option.value}}>{{option.label}}</option>
       {{/each}}
