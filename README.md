@@ -4,7 +4,9 @@
 
 > **Thank You** This suite of packages is maintained by ExpertBox.com as a thank you to the Open Source community.
 
-> **Whats New(ish)** Auto Complete, Responsive Text, Timepicker, Improved arrays in forms
+> **Cash for Issues** ExpertBox.com will pay you to close issues! You set your own place and time, you do it at your own pace, you make an estimate for your own work, and set your own price (be gentle please, we are a small startup, Ts&Cs apply). As long as it works, not break anything else, and looks good, we are happy. Interested? Please drop us a mail at info@expertbox.com.
+
+> **Whats New(ish)** Auto Complete (Single and Multiple), Responsive Text, Timepicker, Improved arrays in forms
 
 > **Dependancies** Version 3.2.0 of this package was manual smoke tested and seemed to work ok on Playground 3.2.0 on 4 Dec 2017 using Meteor 1.6, Simple Schema 0.5, Materialize Autocomplete 1.0.7, Autoform 6.2.0, Materialize CSS 0.100.2, and Autoform Materialize Modals 1.1.2.
 

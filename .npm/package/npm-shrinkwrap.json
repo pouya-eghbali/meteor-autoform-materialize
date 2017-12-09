@@ -1,10 +1,10 @@
 {
   "lockfileVersion": 1,
   "dependencies": {
-    "materialize-autocomplete": {
-      "version": "1.0.7",
-      "resolved": "https://registry.npmjs.org/materialize-autocomplete/-/materialize-autocomplete-1.0.7.tgz",
-      "integrity": "sha1-bFs0Tn+b8reQsI/vrLrG4iksiaQ="
+    "materialize-autocomplete-meteor-autoform": {
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/materialize-autocomplete-meteor-autoform/-/materialize-autocomplete-meteor-autoform-2.0.1.tgz",
+      "integrity": "sha1-KAqvISMvtNJPEfnQkl5ZFmb0Woc="
     },
     "moment": {
       "version": "2.18.0",

@@ -1,9 +1,15 @@
 <template name="afAutoComplete_materialize">
-  <!-- <input type="text" value="{{value}}" {{atts}} data-activates="singleDropdown" data-beloworigin="true" autocomplete="off"/> -->
   <div class="autocomplete" id={{autoCompleteId}}>
+    <div class='ac-append valign-wrapper'></div>
     <div class="ac-input">
       <input {{atts}}>
     </div>
     <ul id={{dropdownId}} class="dropdown-content ac-dropdown"></ul>
+    <!-- <input {{hiddenAtts}}> -->
+    <select {{hiddenAtts}}>
+      {{#each option in this.selectOptions}}
+        <option value={{option.value}}>{{option.label}}</option>
+      {{/each}}
+    </select>
   </div>
 </template>
