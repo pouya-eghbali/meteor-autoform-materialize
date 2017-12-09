@@ -1,5 +1,5 @@
 #v 3.3.0
- - Extended Auto Complete to support Multiple Options. This required a hard fork and change in dependencies for the previous AutoComplete package. [#20](https://github.com/mozfet/meteor-autoform-materialize/issues/20)
+ - Extended Auto Complete to support Multiple Options [#20](https://github.com/mozfet/meteor-autoform-materialize/issues/20)
 
 #v 3.2.0
  - Added Auto Complete Input Type [#20](https://github.com/mozfet/meteor-autoform-materialize/issues/20)
