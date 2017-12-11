@@ -1,5 +1,8 @@
+#v 3.3.2
+ - Added support for default number
+
 #v 3.3.1
- - Fixed defaults for text fields and auto complete
+ - Added support for default text, select and auto complete
 
 #v 3.3.0
  - Extended Auto Complete to support Multiple Options [#20](https://github.com/mozfet/meteor-autoform-materialize/issues/20)

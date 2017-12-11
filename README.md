@@ -2,13 +2,13 @@
 
 [Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
 
-> **Whats New(ish)** Auto Complete (Single and Multiple), Responsive Text, Timepicker, Improved arrays in forms
+> **Whats New(ish)** Auto Complete (Single and Multiple), Easy Defaults, Responsive Text, Timepicker, Improved arrays in forms
 
 > **Thank You** This suite of packages is maintained by [ExpertBox.com](https://www.ExpertBox.com/home) as a thank you to the Open Source community.
 
 > **Cash for Issues** We will pay you cash to close issues on this suite of projects! See contributions section below for info.
 
-> **Dependancies** Version 3.3.1 of this package was manual smoke tested and seemed to work ok on Playground 3.3.1 on 11 Dec 2017 using Meteor 1.6, Simple Schema 0.5, Materialize Autocomplete 1.0.7, Autoform 6.2.0, Materialize CSS 0.100.2, and Autoform Materialize Modals 1.1.2.
+> **Dependancies** Version 3.3.2 of this package was manual smoke tested and seemed to work ok on Playground 3.3.2 on 11 Dec 2017 using Meteor 1.6, Simple Schema 0.5, Materialize Autocomplete 1.0.7, Autoform 6.2.0, Materialize CSS 0.100.2, and Autoform Materialize Modals 1.1.2.
 
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
@@ -367,7 +367,7 @@ It also works for textarea:
 ```
 
 ### Default Values ###
-You can add a default value to a select, text or autocomplete (more coming soon) input in the schema.
+You can easily add a default value to a select, text, number, autocomplete (more coming soon) input in the schema.
 ```
 selectWithDefault: {
   type: String,
