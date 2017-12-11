@@ -9,9 +9,6 @@ import './jquery.materialize-autocomplete';
 AutoForm.addInputType('autocomplete', {
   template: 'afAutoComplete_materialize',
   valueOut: function() {
-
-    // get the options
-    console.log('valueOut.this', this);
     return this.val();
   }
 });
@@ -41,22 +38,15 @@ const deactivate = (instance) => {
 Template.afAutoComplete_materialize.onCreated(() => {
   const instance = Template.instance();
 
-  //if value was provided
-  let value;
-  if(instance.data.value) {
-
-    //use provided value as value
-    value = instance.data.value;
-  }
-
   //initialise value
+  const value = instance.data.value?instance.data.value:
+      instance.data.atts.default;
   instance.value = new ReactiveVar(value);
 });
 
 //when rendered
 Template.afAutoComplete_materialize.onRendered(() => {
   const instance = Template.instance();
-  console.log('AutoComplete.onRendered.instance.data', instance.data);
 
   // normalise autoComplete attributes
   const attsAc = instance.data.atts.autoComplete?
@@ -87,15 +77,12 @@ Template.afAutoComplete_materialize.onRendered(() => {
   else {
     options = {};
   }
-  // console.log('AutoComplete.onRendered.options:', options);
 
   // if there is a value
   if(value) {
-    // console.log('AutoComplete.onRendered.value:', value);
 
     // if multiple
     if (attsAc.multiple && _.isArray(value)) {
-      // console.log('AutoComplete.onRendered: multiple with array value');
 
       // select each option in value in the hidden select
       _.each(value, (val) => {
@@ -106,7 +93,6 @@ Template.afAutoComplete_materialize.onRendered(() => {
 
     // else - singular or non array
     else {
-      // console.log('AutoComplete.onRendered: singular');
 
       // select the option matching value in the hidden select
       const selector = '.ac-hidden option[value="'+value+'"]';
@@ -233,6 +219,10 @@ Template.afAutoComplete_materialize.helpers({
   dropdownId() {
     const instance = Template.instance();
     return 'acDropdown_'+instance.data.atts.id;
+  },
+  value() {
+    const instance = Template.instance();
+    return instance.data.value?instance.data.value:instance.data.atts.default;
   }
 });
 

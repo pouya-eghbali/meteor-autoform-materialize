@@ -2,13 +2,13 @@
 
 [Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
 
-> **Thank You** This suite of packages is maintained by ExpertBox.com as a thank you to the Open Source community.
-
-> **Cash for Issues** ExpertBox.com will pay you to close issues! You set your own place and time, you do it at your own pace, you make an estimate for your own work, and set your own price (be gentle please, we are a small startup, Ts&Cs apply). As long as it works, not break anything else, and looks good, we are happy. Interested? Please drop us a mail at info@expertbox.com.
-
 > **Whats New(ish)** Auto Complete (Single and Multiple), Responsive Text, Timepicker, Improved arrays in forms
 
-> **Dependancies** Version 3.2.0 of this package was manual smoke tested and seemed to work ok on Playground 3.2.0 on 4 Dec 2017 using Meteor 1.6, Simple Schema 0.5, Materialize Autocomplete 1.0.7, Autoform 6.2.0, Materialize CSS 0.100.2, and Autoform Materialize Modals 1.1.2.
+> **Thank You** This suite of packages is maintained by [ExpertBox.com](https://www.ExpertBox.com/home) as a thank you to the Open Source community.
+
+> **Cash for Issues** We will pay you cash to close issues on this suite of projects! See contributions section below for info.
+
+> **Dependancies** Version 3.3.1 of this package was manual smoke tested and seemed to work ok on Playground 3.3.1 on 11 Dec 2017 using Meteor 1.6, Simple Schema 0.5, Materialize Autocomplete 1.0.7, Autoform 6.2.0, Materialize CSS 0.100.2, and Autoform Materialize Modals 1.1.2.
 
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
@@ -59,7 +59,7 @@ $link-color: color("light-blue", "darken-1") !default;
 
 @import "../node_modules/materialize-css/sass/materialize.scss";
 ```
-6. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to '/public'
+6. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to '/public'. Or alternatively use a CDN; if you manage to get the CDN working, please let us know how so we can add it here.
 
 ## Install Autoform-Materialize ##
 
@@ -86,9 +86,9 @@ You can checkout the [playground](https://github.com/mozfet/meteor-autoform-mate
 
 ### Auto Complete ###
 
-MaterializeCSS is adding support for Auto Complete, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For these reasons this package makes use of a modified hard fork of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
+MaterializeCSS is busy adding support for Auto Complete in V1, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For this reason this package makes use of a modified hard fork of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
 
-In your schema definition, for example (see playground for extensive list of examples)
+In your schema definition (see playground for extensive list of examples):
 ```
 autoCompleteSingular: {
   type: String,
@@ -96,7 +96,7 @@ autoCompleteSingular: {
   label: 'Auto Complete Singular',
   allowedValues:  ['Alpha', 'Animal', 'Brave', 'Butter', 'Better', 'Charlie'],
   autoform: {
-    type: 'autocomplete',
+    type: 'autocomplete'
   }
 },
 
@@ -366,6 +366,29 @@ It also works for textarea:
 {{> afQuickField name='message' type='textarea' icon='person'}}
 ```
 
-## Contributors
+### Default Values ###
+You can add a default value to a select, text or autocomplete (more coming soon) input in the schema.
+```
+selectWithDefault: {
+  type: String,
+  allowedValues: ['VALUE1', 'VALUE2'],
+  autoform: {
+    type: 'select',
+    default: 'VALUE1'
+  }
+},
 
+stringDefault: {
+  type: String,
+  max: 1000,
+  label: 'Simple text field with default value',
+  autoform: {
+    default: 'default text'
+  }
+}
+```
+
+## Contributors
 If you use this package and find it useful, why not help improve it? We want your feature requests, bug reports, and pull requests.
+
+> **Cash for Issues** We will pay you to close issues on this suite! You pick your own issues, set your own place and time, you do it at your own pace, you make an estimate for your own work, and set your own price (be gentle please, we are a small startup, Ts&Cs apply). As long as it works, not break anything else, and looks good, we are happy. Payments are made to your PayPal account after pull request is approved. Interested? Please drop us a mail at info@expertbox.com.
