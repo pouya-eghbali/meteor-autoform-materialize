@@ -17,6 +17,7 @@ AutoForm.addInputType('autocomplete', {
 //when created
 Template.afAutoComplete_materialize.onCreated(() => {
   const instance = Template.instance();
+  console.log('autoComplete.onCreated.instance:', instance);
 
   // initialise multiple
   const multiple = instance.data.atts && instance.data.atts.autoComplete &&
@@ -32,7 +33,8 @@ Template.afAutoComplete_materialize.onCreated(() => {
   instance.value = new ReactiveVar(value);
 
   // initialise input value
-  const inputValue = instance.data.atts.multiple?'':value;
+  // const inputValue = instance.data.atts.multiple?'':value;
+  const inputValue = '';
   instance.inputValue = new ReactiveVar(inputValue);
   console.log('autoComplete.onCreated.inputValue:', inputValue);
 
@@ -89,23 +91,26 @@ Template.afAutoComplete_materialize.onRendered(() => {
 
     const value = instance.value.get();
     const placeholder = instance.placeholder.get();
-    console.log('autocomplete.onRendered.autorun1.value:', value);
-    console.log('autocomplete.onRendered.autorun1.placeholder:', placeholder);
+    // console.log('autocomplete.onRendered.autorun1.value:', value);
+    // console.log('autocomplete.onRendered.autorun1.placeholder:', placeholder);
+
+    const hasNoValue = _.isUndefined(value) || _.isEmpty(value);
+    // console.log('autocomplete.onRendered.autorun1.hasNoValue:', hasNoValue);
 
     // if there is no value and no placeholder
-    if((_.isUndefined(value) || _.isEmpty(value)) || !_.isEmpty(placeholder)) {
-      console.log('autocomplete.onRendered.autorun1.activate');
+    if(hasNoValue && _.isEmpty(placeholder)) {
 
       // remove active class from label
-      instance.$label.addClass('active');
+      // console.log('autocomplete.onRendered.autorun1.deactivate');
+      instance.$label.removeClass('active');
     }
 
     // else - value or placeholder exists
     else {
-      console.log('autocomplete.onRendered.autorun1.activate');
 
       // add active class to label
-      instance.$label.removeClass('active');
+      // console.log('autocomplete.onRendered.autorun1.activate');
+      instance.$label.addClass('active');
     }
   });
 
@@ -120,7 +125,7 @@ Template.afAutoComplete_materialize.onRendered(() => {
 
       // if there is a input value
       if (!_.isUndefined(inputValue) && !_.isEmpty(inputValue)) {
-        // console.log('autocomplete.onRendered.autorun2.inputValuePresent');
+        console.log('autocomplete.onRendered.autorun2.inputValuePresent:', inputValue);
 
         // get instance options
         const options = instance.options;
@@ -165,6 +170,7 @@ Template.afAutoComplete_materialize.onRendered(() => {
       }
       //else - no input value
       else {
+        console.log('autocomplete.onRendered.autorun2.noInputValuePresent:', inputValue);
 
         // clear the instance items
         instance.items.clear();
@@ -184,15 +190,35 @@ Template.afAutoComplete_materialize.helpers({
   inputAtts() {
     const instance = Template.instance();
     const atts = instance.data.atts;
-    const val = instance.value.get();
+
     const result = {
       'class'             : 'auto-complete-input',
-      'value'             : val,
       'type'              : 'text',
       'data-activates'    : 'auto-complete-dropdown-'+atts.id,
       'data-beloworigin'  : 'true',
       'autocomplete'      : 'off'
     };
+
+    // if singular
+    if (!instance.multiple) {
+
+      // get value
+      const value = instance.value.get();
+      console.log('autoComplete.helpers.inputAtts.value:', value);
+
+      if (!_.isUndefined(value) && !_.isEmpty(value)) {
+
+        // find option for value
+        console.log('autoComplete.helpers.inputAtts.options:', instance.options);
+        const option = _.find(instance.options, (opt) => {
+          return value === opt.value;
+        });
+
+        // set input value attribute to label
+        result.value = option.label;
+      }
+    }
+
     if (atts.placeholder) {
       result.placeholder = atts.placeholder;
     }
@@ -209,7 +235,7 @@ Template.afAutoComplete_materialize.helpers({
       'type'              : 'hidden',
       'class'             : 'auto-complete-hidden-select validate'
     };
-    if (atts.multiple) {
+    if (instance.multiple) {
       result.multiple = 'multiple';
     }
     return result;
@@ -222,7 +248,7 @@ Template.afAutoComplete_materialize.helpers({
 
   // helper for options to determine if they are selected in the hidden select
   selectedOption(option) {
-    console.log('autoComplete.helpers.selectedOption.option:', option);
+    // console.log('autoComplete.helpers.selectedOption.option:', option);
 
     //get value
     const instance = Template.instance();
@@ -230,25 +256,23 @@ Template.afAutoComplete_materialize.helpers({
 
     // normalise value as an array
     value = value?value:[];
-    const values = _.isArray(value)?value:[{value: value}];
-    console.log('autoComplete.helpers.selectedOption.values:', values);
+    const values = _.isArray(value)?value:[value];
+    // console.log('autoComplete.helpers.selectedOption.values:', values);
 
     // if value contains this option
     const valueHasOption = _.find(values, (val) => {
-      return val.value === option.value;
+      return val === option.value;
     });
-    console.log('autoComplete.helpers.selectedOption.valueHasOption:',
-        valueHasOption);
     if (valueHasOption) {
-      console.log('autoComplete.helpers.selectedOption.valueHasOption');
+      console.log('autoComplete.helpers.selectedOption.valueHasOption:', valueHasOption);
 
-      // return selected
-      return 'selected';
+      // return selected true
+      return true;
     }
     else {
 
-      // return empty string
-      return '';
+      // return selected false
+      return false;
     }
   },
 
@@ -256,8 +280,6 @@ Template.afAutoComplete_materialize.helpers({
   dropdownAtts() {
     const instance = Template.instance();
     const atts = instance.data.atts;
-    const inputValue = instance.inputValue.get();
-    console.log('autoComplete.helpers.selectedOption.inputValue:', inputValue);
     const result = {
       'id'                : 'auto-complete-dropdown-'+atts.id,
       'data-schema-key'   : atts['data-schema-key'],
@@ -269,6 +291,23 @@ Template.afAutoComplete_materialize.helpers({
   // the list of items for the dropdown list
   items() {
     return Template.instance().items.list();
+  },
+
+  // true if auto complete is multiple
+  multiple() {
+    return Template.instance().multiple;
+  },
+
+  value() {
+    return Template.instance().value.get();
+  },
+
+  label(value) {
+    const instance = Template.instance();
+    const option = _.find(instance.options, (opt) => {
+      return value === opt.value;
+    });
+    return option.label;
   }
 });
 
@@ -277,24 +316,18 @@ Template.afAutoComplete_materialize.events({
 
   // when focus on auto complete input
   'focus .auto-complete-input'(event, instance) {
-    // console.log('focus', instance.data.atts.name);
+    console.log('focus', instance.data.atts.name);
+    instance.$label.addClass('active');
   },
 
   // when key is pressed
   'keydown .auto-complete-input' (event, instance) {
-    console.log('autoComplete.events.keydown:', event);
+    // console.log('autoComplete.events.keydown:', event);
     // if key is enter
     if ( event.which === 13) {
       console.log('autoComplete.events.keydown.key.enter');
 
-      // if there is an item selected
-        // if instance.multiple
-          // add
-          // clear input val
-          // set the first item in the list as selected
-        // else - singular
-          // set instance.value to the selected item
-          // set $select.val to the selected item label
+      //TODO select item
 
       console.log('autoComplete.events.keydown.key.enter.stopPropagation');
       event.stopPropagation();
@@ -304,7 +337,7 @@ Template.afAutoComplete_materialize.events({
 
   // when input is updated
   'input .auto-complete-input' (event, instance) {
-    console.log('autoComplete.events.input:', event);
+    // console.log('autoComplete.events.input:', event);
     event.preventDefault();
 
     // get the input value
@@ -354,6 +387,8 @@ Template.afAutoComplete_materialize.events({
     console.log('autoComplete.events.click.li', event.currentTarget);
     const value = $(event.currentTarget).data('value');
     console.log('autoComplete.events.click.li.value:', value);
+    const label = $(event.currentTarget).data('label');
+    console.log('autoComplete.events.click.li.lable:', label);
 
     // if multiple
     if (instance.multiple) {
@@ -369,8 +404,11 @@ Template.afAutoComplete_materialize.events({
       // set the instance value
       instance.value.set(instanceValue);
 
-      // clear the input value
-      instance.$('.auto-complete-input').val();
+      // clear the input element value
+      instance.$('.auto-complete-input').val('');
+
+      // set the instance value to empty string
+      instance.inputValue.set('');
     }
     // else - singular
     else {
@@ -379,9 +417,22 @@ Template.afAutoComplete_materialize.events({
       // set the instance value
       instance.value.set(value);
 
-      // set the input value
-      instance.inputValue.set(value);
+      // set the input element value to the label
+      instance.$('.auto-complete-input').val(label);
+
+      // set the instance value to the label
+      instance.inputValue.set(label);
     }
+  },
+
+  // when click on tag icon
+  'click .tags i'(event, instance) {
+    console.log('autoComplete.events.click.closeTag');
+    const value = $(event.currentTarget).data('value');
+    console.log('autoComplete.events.click.closeTag.value:', value);
+    const instanceValue = instance.value.get();
+    const newValue = _.without(instanceValue, value);
+    instance.value.set(newValue);
   }
 
 });

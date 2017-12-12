@@ -2,8 +2,16 @@
   <div class="auto-complete">
 
     <!-- tags -->
-    <div class='tags valign-wrapper'>
-    </div>
+    {{#if multiple}}
+      <div class='tags valign-wrapper'>
+        {{#each val in value}}
+          <div class="chip">
+            {{label val}}
+            <i class="close material-icons" data-value={{val}}>close</i>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
 
     <!-- text input -->
     <div class="auto-complete-input-wrapper">
@@ -13,7 +21,8 @@
     <!-- dropdown -->
     <ul {{dropdownAtts}}>
       {{#each item in items}}
-        <li class="auto-complete-dropdown-item" data-value={{item.value}}>{{item.label}}</li>
+        <li class="auto-complete-dropdown-item" data-label={{item.label}}
+            data-value={{item.value}}>{{item.label}}</li>
       {{/each}}
     </ul>
 
@@ -21,7 +30,8 @@
     <select {{hiddenAtts}}>
       <option style="display:none"></option>
       {{#each option in options}}
-        <option value={{option.value}} {{selectedOption option}}>{{option.label}}</option>
+        <option value={{option.value}} selected={{selectedOption option}}>
+            {{option.label}}</option>
       {{/each}}
     </select>
   </div>
