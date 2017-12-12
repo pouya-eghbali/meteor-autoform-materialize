@@ -1,14 +1,27 @@
 <template name="afAutoComplete_materialize">
-  <div class="autocomplete" id={{autoCompleteId}}>
-    <div class='ac-append valign-wrapper'></div>
-    <div class="ac-input">
-      <input {{atts}}>
+  <div class="auto-complete">
+
+    <!-- tags -->
+    <div class='tags valign-wrapper'>
     </div>
-    <ul id={{dropdownId}} class="dropdown-content ac-dropdown"></ul>
+
+    <!-- text input -->
+    <div class="auto-complete-input-wrapper">
+      <input {{inputAtts}}>
+    </div>
+
+    <!-- dropdown -->
+    <ul {{dropdownAtts}}>
+      {{#each item in items}}
+        <li class="auto-complete-dropdown-item" data-value={{item.value}}>{{item.label}}</li>
+      {{/each}}
+    </ul>
+
+    <!-- hidden select -->
     <select {{hiddenAtts}}>
       <option style="display:none"></option>
-      {{#each option in this.selectOptions}}
-        <option value={{option.value}}>{{option.label}}</option>
+      {{#each option in options}}
+        <option value={{option.value}} {{selectedOption option}}>{{option.label}}</option>
       {{/each}}
     </select>
   </div>

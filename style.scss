@@ -1,34 +1,38 @@
-.autocomplete {
+.auto-complete {
     display: -ms-flexbox;
     display: flex;
 }
 
-.autocomplete .ac-users {
-    padding-top: 10px;
-}
+// .autocomplete {
+//     padding-top: 10px;
+// }
 
-.autocomplete .ac-users .chip {
+.auto-complete .chip {
     -ms-flex: auto;
     flex: auto;
     margin-top: 5px;
     margin-right: 10px;
 }
 
-.autocomplete .ac-users .chip:last-child {
+.auto-complete li {
+    padding: 13px;    
+}
+
+.auto-complete .chip:last-child {
     margin-right: 5px;
 }
 
-.autocomplete .ac-dropdown .ac-hover {
+.auto-complete .auto-complete-dropdown .ac-hover {
     background: #eee;
 }
 
-.autocomplete .ac-input {
+.auto-complete .auto-complete-input-wrapper {
     -ms-flex: 1;
     flex: 1;
     min-width: 150px;
     padding-top: 0.6rem;
 }
 
-.autocomplete .ac-input input {
+.auto-complete .auto-complete-input input {
     height: 2.4rem;
 }

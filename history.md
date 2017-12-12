@@ -1,3 +1,6 @@
+#v 3.3.3
+ - Fixed autocomplete singular default to show label instead of value if there is a label.
+ - Fixed autocomplete multiple default
 #v 3.3.2
  - Added support for default number
 
