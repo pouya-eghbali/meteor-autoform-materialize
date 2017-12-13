@@ -1,38 +1,52 @@
-.auto-complete {
-    display: -ms-flexbox;
-    display: flex;
+@import "{}/node_modules/materialize-css/sass/materialize.scss";
+
+@media #{$small-and-down} {
+
+  .auto-complete .chip {
+    margin-top: 5px;
+    margin-right: 5px;
+  }
+
+  .auto-complete li {
+    padding: 13px;
+  }
+
+  .auto-complete .auto-complete-dropdown .ac-hover {
+    background: #eee;
+  }
 }
 
-// .autocomplete {
-//     padding-top: 10px;
-// }
+@media #{$medium-and-up} {
 
-.auto-complete .chip {
+  .auto-complete {
+    display: -ms-flexbox;
+    display: flex;
+    padding-top: 10px;
+  }
+
+  .auto-complete .chip {
     -ms-flex: auto;
     flex: auto;
     margin-top: 5px;
-    margin-right: 10px;
-}
-
-.auto-complete li {
-    padding: 13px;    
-}
-
-.auto-complete .chip:last-child {
     margin-right: 5px;
-}
+  }
 
-.auto-complete .auto-complete-dropdown .ac-hover {
+  // .auto-complete .chip:last-child {
+  //   margin-right: 5px;
+  // }
+
+  .auto-complete li {
+    padding: 13px;
+  }
+
+  .auto-complete .auto-complete-dropdown .ac-hover {
     background: #eee;
-}
+  }
 
-.auto-complete .auto-complete-input-wrapper {
+  .auto-complete .auto-complete-input-wrapper {
     -ms-flex: 1;
     flex: 1;
     min-width: 150px;
-    padding-top: 0.6rem;
-}
-
-.auto-complete .auto-complete-input input {
-    height: 2.4rem;
+    // padding-top: 0.6rem;
+  }
 }

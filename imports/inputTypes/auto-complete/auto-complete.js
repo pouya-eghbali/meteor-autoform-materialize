@@ -114,71 +114,97 @@ Template.afAutoComplete_materialize.onRendered(() => {
     }
   });
 
-  // when input value changes
+  // generate items for the dropdown when input value changes
   instance.autorun(() => {
     const instance = Template.instance();
     const inputValue = instance.inputValue.get();
     // console.log('autocomplete.onRendered.autorun2.inputValue:', inputValue);
 
-    // fuck knows why, but apparently there is some reactive listing going on
-    Tracker.nonreactive(() => {
+    // get instance options
+    const options = instance.options;
+    // console.log('autocomplete.onRendered.autorun2.options:', options);
 
-      // if there is a input value
-      if (!_.isUndefined(inputValue) && !_.isEmpty(inputValue)) {
-        console.log('autocomplete.onRendered.autorun2.inputValuePresent:', inputValue);
+    // if there are options
+    if (!_.isEmpty(options)) {
 
-        // get instance options
-        const options = instance.options;
-        // console.log('autocomplete.onRendered.autorun2.options:', options);
+      // TODO dont know why this has to be nonreactive, but apparently there is some reactive listing going on causing an infinate loop
+      Tracker.nonreactive(() => {
 
-        // get display limit
-        const displayLimit = instance.displayLimit;
-        // console.log('autocomplete.onRendered.autorun2.displayLimit:', displayLimit);
+        // if there is a input value
+        if (!_.isUndefined(inputValue) && !_.isEmpty(inputValue)) {
+          console.log('autocomplete.onRendered.autorun.generateItems.inputValuePresent:', inputValue);
 
-        // format the value to upper case for comparison
-        const upperCaseInputValue = inputValue.toUpperCase();
+          // get display limit
+          const displayLimit = instance.displayLimit;
+          // console.log('autocomplete.onRendered.autorun2.displayLimit:', displayLimit);
 
-        // clear the instance items
-        instance.items.clear();
+          // format the value to upper case for comparison
+          const upperCaseInputValue = inputValue.toUpperCase();
 
-        // open the dropdown
-        instance.$('.auto-complete-input').dropdown('open');
+          // clear the instance items
+          instance.items.clear();
 
-        // loop while number of items is less than display limit
-        let index = 0;
-        while (instance.items.list().length < displayLimit) {
+          // open the dropdown
+          instance.$('.auto-complete-input').dropdown('open');
 
-          // get the option at index
-          const option = options[index];
-          // console.log('autocomplete.onRendered.autorun2.while.option:', option);
+          // loop while number of items is less than display limit
+          let index = 0;
+          while (instance.items.list().length < displayLimit) {
 
-          // if option upper case label matches upper case value
-          if (option.upperCaseLabel.startsWith(upperCaseInputValue)) {
-            instance.items.push(option);
-          }
+            // get the option at index
+            const option = options[index];
+            // console.log('autocomplete.onRendered.autorun2.while.option:', option);
 
-          // increment index
-          index++;
+            // if option upper case label matches upper case value
+            if (option.upperCaseLabel.startsWith(upperCaseInputValue)) {
 
-          // if index is out of bounds
-          if (index === options.length) {
+              // if multiple
+              if (instance.multiple) {
 
-            //break from the while loop
-            break;
+                // if option is not in value
+                const valueExists = _.find(instance.value.get(), (val) => {
+                  return val === option.value;
+                });
+                if (!valueExists) {
+
+                  // push option to items
+                  instance.items.push(option);
+                }
+              }
+
+              // else - singular
+              else {
+
+                // push option to items
+                instance.items.push(option);
+              }
+            }
+
+            // increment index
+            index++;
+
+            // if index is out of bounds
+            if (index === options.length) {
+
+              //break from the while loop
+              break;
+            }
           }
         }
-      }
-      //else - no input value
-      else {
-        console.log('autocomplete.onRendered.autorun2.noInputValuePresent:', inputValue);
+        //else - no input value
+        else {
+          console.log('autocomplete.onRendered.autorun.generateItems.noInputValuePresent:', inputValue);
 
-        // clear the instance items
-        instance.items.clear();
+          // clear the instance items
+          instance.items.clear();
 
-        // close the dropdown
-        instance.$('.auto-complete-input').dropdown('close');
-      }
-    });
+          // close the dropdown
+          instance.$('.auto-complete-input').dropdown('close');
+        }
+      });
+    }
+
+
 
   });
 });
@@ -394,11 +420,11 @@ Template.afAutoComplete_materialize.events({
     if (instance.multiple) {
       console.log('autoComplete.events.click.li.multiple:', instance.multiple);
 
-      // get the value
-      const instanceValue = instance.value.get();
-      console.log('autoComplete.events.click.li.instanceValue:', instanceValue);
+      // get the instance value
+      let instanceValue = instance.value.get();
+      // console.log('autoComplete.events.click.li.instanceValue:', instanceValue);
 
-      // push the value
+      // push the value onto the instance value
       instanceValue.push(value);
 
       // set the instance value

@@ -1,3 +1,6 @@
+#v 3.4.0
+ - Complete rewrite of auto complete from scratch. Integration with 3rd party plugins is to complex and or restricting for tight integration with auto form.
+
 #v 3.3.3
  - Fixed autocomplete singular default to show label instead of value if there is a label.
  - Fixed autocomplete multiple default
