@@ -1,3 +1,6 @@
+#v 3.5.0
+ - Breaking changes to auto complete input to get the schema definition more inline with SimpleSchema and AutoForm.
+
 #v 3.4.0
  - Complete rewrite of auto complete from scratch. Integration with 3rd party plugins is to complex and or restricting for tight integration with auto form.
 

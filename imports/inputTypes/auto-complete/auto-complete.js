@@ -20,9 +20,8 @@ Template.afAutoComplete_materialize.onCreated(() => {
   console.log('autoComplete.onCreated.instance:', instance);
 
   // initialise multiple
-  const multiple = instance.data.atts && instance.data.atts.autoComplete &&
-      instance.data.atts.autoComplete.multiple?
-      instance.data.atts.autoComplete.multiple:false;
+  const multiple = instance.data.atts && instance.data.atts.multiple?
+      instance.data.atts.multiple:false;
   console.log('autoComplete.onCreated.multiple:', multiple);
   instance.multiple = multiple;
 
@@ -55,9 +54,8 @@ Template.afAutoComplete_materialize.onCreated(() => {
   instance.items = new ReactiveArray([]);
 
   // initialise display limit
-  const displayLimit = instance.data.atts && instance.data.atts.autoComplete &&
-      instance.data.atts.autoComplete.displayLimit?
-      instance.data.atts.autoComplete.displayLimit:20;
+  const displayLimit = instance.data.atts && instance.data.atts.displayLimit?
+      instance.data.atts.displayLimit:20;
   console.log('autoComplete.onCreated.displayLimit:', displayLimit);
   instance.displayLimit = displayLimit;
 

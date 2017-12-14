@@ -2,31 +2,34 @@
 
 [Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
 
-> **Whats New(ish)** Auto Complete (Single and Multiple), Easy Defaults, Responsive Text, Timepicker
+> **Whats New(ish)** Auto Complete, Easy Defaults, Responsive Text, Timepicker
 
 > **Thank You** This suite of packages is maintained by [ExpertBox.com](https://www.ExpertBox.com/home) as a thank you to the Open Source community.
 
 > **Cash for Issues** We will pay you cash to close issues on this suite of projects! See contributions section below for info.
 
-> **Dependancies**
-Version 3.4.0 of this package was manual smoke tested in Playground 3.4.0 and seemed to work ok using:
+> **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
+
+## Dependancies
+Version 3.5.0 of this package was manual smoke tested in Playground 3.5.0 and seemed to work ok using:
 + Chrome Version 62.0.3202.94 (Official Build) (64-bit)
 + Meteor 1.6
 + Simple Schema 0.5
 + Materialize CSS 0.100.2
 + Autoform 6.2.0
 + Autoform Materialize Modals 1.1.2
++ FourSeven SCSS 4.5.4
 
-> **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
+# Installation
 
-## Install Materialize-css
+## Install Materialize CSS
 
-### Install Materialize-css (CSS only) using Atmosphere ###
+### Install Materialize CSS (CSS only) using Atmosphere ###
 
 ```
 meteor add materialize:materialize
 ```
-### Install Materialize-css (CSS & SASS) using NPM ###
+### Install Materialize CSS (CSS & SASS) using NPM ###
 
 1. install dependancies
 ```
@@ -107,66 +110,65 @@ autoCompleteSingular: {
   }
 },
 
-autoCompleteDisplayLimit: {
+autoCompleteSingularDisplayLimit: {
  type: String,
  optional: true,
- label: 'Auto Complete With Display Limit of 3',
+ label: 'Auto Complete With Placeholder and Display Limit of 3',
  allowedValues: ['Alpha', 'Animal', 'Always', 'Anytime'],
  autoform: {
    type: 'autocomplete',
-   autoComplete: {
-     displayLimit: 3
-   }
+   placeholder: 'Type something',
+   displayLimit: 3
  }
 },
 
-autoCompleteMultipleInitialized: {
- type: Array,
- label: 'Auto Complete Multiple Initialized',
- autoform: {
-   type: 'autocomplete',
-   options: () => {
-     return [
-       {
-         label: 'Alpha',
-         value: 'ALPHA'
-       },
-       {
-         label: 'Animal',
-         value: 'ANIMAL'
-       },
-       {
-         label: 'Always',
-         value: 'ALWAYS'
-       },
-       {
-         label: 'Anytime',
-         value: 'ANYTIME'
-       },
-       {
-         label: 'Bravo',
-         value: 'BRAVO'
-       },
-       {
-         label: 'Bedtime',
-         value: 'BEDTIME'
-       }
-     ];
-   },
-   autoComplete: {
-     displayLimit: 3,
-     multiple: true,
-     minSize: 1, // for some unknown reason simple schema min is not propaged to auto complete input, thus we define it here
-     maxSize: 3  // for some unknown reason simple schema max is not propaged to auto complete input, thus we define it here
-   }
- }
+autoCompleteMultipleMinMaxDefault: {
+  type: Array,
+  label: 'Auto Complete Multiple with count between 1 and 3',
+  minCount: 1,
+  maxCount: 3,
+  autoform: {
+    type: 'autocomplete',
+    multiple: true,
+    options: () => {
+      return [
+        {
+          label: 'Alpha',
+          value: 'ALPHA'
+        },
+        {
+          label: 'Animal',
+          value: 'ANIMAL'
+        },
+        {
+          label: 'Always',
+          value: 'ALWAYS'
+        },
+        {
+          label: 'Anytime',
+          value: 'ANYTIME'
+        },
+        {
+          label: 'Bravo',
+          value: 'BRAVO'
+        },
+        {
+          label: 'Bedtime',
+          value: 'BEDTIME'
+        }
+      ];
+    },
+    displayLimit: 3,
+    default: ['ALPHA', 'ANIMAL']
+  }
 },
-'autoCompleteMultipleInitialized.$': {
-   type: String
+'autoCompleteMultipleMinMax.$': {
+    type: String,
+    allowedValues: ['ALPHA', 'ANIMAL', 'ALWAYS', 'ANYTIME', 'BRAVO', 'BEDTIME']
 }
 ```
 
-### NoUiSlider support ##
+### NoUiSlider ##
 
 To add NoUiSlider (see [the playground](https://github.com/mozfet/meteor-autoform-materialize-playground)):
 
@@ -395,7 +397,7 @@ stringDefault: {
 }
 ```
 
-## Contributors
+# Contributors
 If you use this package and find it useful, why not help improve it? We want your feature requests, bug reports, and pull requests.
 
 > **Cash for Issues** We will pay you to close issues on this suite! You pick your own issues, set your own place and time, you do it at your own pace, you make an estimate for your own work, and set your own price (be gentle please, we are a small startup, Ts&Cs apply). As long as it works, not break anything else, and looks good, we are happy. Payments are made to your PayPal account after pull request is approved. Interested? Please drop us a mail at info@expertbox.com.
