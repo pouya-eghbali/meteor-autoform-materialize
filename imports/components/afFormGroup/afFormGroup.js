@@ -52,6 +52,8 @@ Template.afFormGroup_materialize.rendered = function() {
             var inputValue = AutoForm.getInputValue(_this.find('input'));
             var type = AutoForm.getInputType(_this.data);
             var placeholder = _this.data.afFieldInputAtts.placeholder;
+
+            // do not auto activate labels for the following types
             var skipActiveLabelTypes = [
                 'autocomplete',
                 'checkbox',
@@ -68,13 +70,34 @@ Template.afFormGroup_materialize.rendered = function() {
                 'switch'
             ];
 
-            if (!_.contains(skipActiveLabelTypes, type)) {
-                console.log('skip active label');
-                if (!!value || !!inputValue || inputValue === 0 || !!placeholder) {
-                    return _this.$('.input-field > label:not(:focus)').addClass('active');
-                } else {
-                    return _this.$('.input-field > label:not(:focus)').removeClass('active');
-                }
+            // always activate labels for the following types
+            var alwaysActiveLabelTypes = [
+              'noUiSlider2'
+            ];
+
+            // if the input always has an active label
+            if (_.contains(alwaysActiveLabelTypes, type)) {
+
+              // activate the label
+              return _this.$('.input-field > label:not(:focus)').addClass('active');
+            }
+
+            // else, if the input is an active type
+            else if (!_.contains(skipActiveLabelTypes, type)) {
+
+              // if value or inputValue number 0 or placeholder
+              if (!!value || !!inputValue || inputValue === 0 || !!placeholder)
+              {
+
+                // activate the label
+                return _this.$('.input-field > label:not(:focus)').addClass('active');
+
+              // else
+              } else {
+
+                // deactivate the label
+                return _this.$('.input-field > label:not(:focus)').removeClass('active');
+              }
             }
         };
     })(this));
