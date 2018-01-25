@@ -2,6 +2,8 @@
 
 [Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
 
+> **Important** This package no longer supports the Atmosphere Materialize wrapper package. Please migrate to using the NPM Materialize package. See installation instructions below.
+
 > **Whats New(ish)** Auto Complete, Easy Defaults, Responsive Text, Timepicker
 
 > **Thank You** This suite of packages is maintained by [ExpertBox.com](https://www.ExpertBox.com/home) as a thank you to the Open Source community.
@@ -14,22 +16,15 @@
 Version 3.5.0 of this package was manual smoke tested in Playground 3.5.0 and seemed to work ok using:
 + Chrome Version 62.0.3202.94 (Official Build) (64-bit)
 + Meteor 1.6
-+ Simple Schema 0.5
-+ Materialize CSS 0.100.2
-+ Autoform 6.2.0
-+ Autoform Materialize Modals 1.1.2
-+ FourSeven SCSS 4.5.4
++ Simple Schema 0.5 (NPM Package)
++ Materialize CSS 0.100.2 (NPM Package)
++ Autoform 6.2.0 (Atmosphere Package)
++ Autoform Materialize Modals 1.1.2 (Atmosphere Package)
++ FourSeven SCSS 4.5.4 (Atmosphere Package)
 
 # Installation
 
-## Install Materialize CSS
-
-### Install Materialize CSS (CSS only) using Atmosphere ###
-
-```
-meteor add materialize:materialize
-```
-### Install Materialize CSS (CSS & SASS) using NPM ###
+## Install Materialize CSS (CSS & SASS) using NPM ##
 
 1. install dependancies
 ```
@@ -69,16 +64,7 @@ $link-color: color("light-blue", "darken-1") !default;
 
 @import "../node_modules/materialize-css/sass/materialize.scss";
 ```
-6. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to '/public'. Or alternatively use a CDN; if you manage to get the CDN working, please let us know how so we can add it here.
-
-## Install Autoform-Materialize ##
-
-1. `meteor add mozfet:autoform-materialize`
-2. In a client file (ex: `/imports/startup/client/autoform.js`)
-  ```
-  AutoForm.setDefaultTemplate('materialize');
-  ```
-/OR/ Install by cloning the github projects from this theme suite into your project's /packages folder.
+6. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to your Meteor project's ```/public/fonts/roboto``` folder. Or alternatively use a CDN; if you manage to get the CDN working, please let us know how so we can add it here.
 
 ## This package is part of a suite ##
 - [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
@@ -88,9 +74,9 @@ $link-color: color("light-blue", "darken-1") !default;
 - [mozfet:materialize-icons](https://github.com/mozfet/meteor-materialize-icons)
 - [mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
-## Usage and demo ##
+## Demo, Examples, Detailed Usage and Smoke Testing ##
 
-You can checkout the [playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
+Have a look at the [playground](https://github.com/mozfet/meteor-autoform-materialize-playground) for demo, examples, detailed usage and smoke testing.
 
 ## Additional types ##
 
