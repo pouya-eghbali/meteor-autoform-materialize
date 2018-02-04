@@ -13,13 +13,13 @@
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
 ## Dependancies
-Version 3.5.0 of this package was manual smoke tested in Playground 3.5.0 and seemed to work ok using:
+Version 3.5.4 of this package was manual smoke tested in Playground 3.5.2 and seemed to work ok using:
 + Chrome Version 62.0.3202.94 (Official Build) (64-bit)
 + Meteor 1.6
 + Simple Schema 0.5 (NPM Package)
 + Materialize CSS 0.100.2 (NPM Package)
 + Autoform 6.2.0 (Atmosphere Package)
-+ Autoform Materialize Modals 1.1.2 (Atmosphere Package)
++ Autoform Materialize Modals 1.1.5 (Atmosphere Package)
 + FourSeven SCSS 4.5.4 (Atmosphere Package)
 
 # Installation
