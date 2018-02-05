@@ -1,3 +1,9 @@
+#v 3.5.5
+ - Fixed file inputs
+
+#v 3.5.4
+ - Fixed excessive SCSS imports
+
 #v 3.5.0
  - Breaking changes to auto complete input to get the schema definition more inline with SimpleSchema and AutoForm.
 

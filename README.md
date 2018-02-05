@@ -4,7 +4,7 @@
 
 > **Important** This package no longer supports the Atmosphere Materialize wrapper package. Please migrate to using the NPM Materialize package. See installation instructions below.
 
-> **Whats New(ish)** Auto Complete, Easy Defaults, Responsive Text, Timepicker
+> **Whats New(ish)** File Uploads with Meteor-Files, Auto Complete, Easy Defaults, Responsive Text, Timepicker
 
 > **Thank You** This suite of packages is maintained by [ExpertBox.com](https://www.ExpertBox.com/home) as a thank you to the Open Source community.
 
@@ -13,6 +13,7 @@
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
 ## Dependancies
+
 Version 3.5.4 of this package was manual smoke tested in Playground 3.5.2 and seemed to work ok using:
 + Chrome Version 62.0.3202.94 (Official Build) (64-bit)
 + Meteor 1.6
@@ -20,6 +21,7 @@ Version 3.5.4 of this package was manual smoke tested in Playground 3.5.2 and se
 + Materialize CSS 0.100.2 (NPM Package)
 + Autoform 6.2.0 (Atmosphere Package)
 + Autoform Materialize Modals 1.1.5 (Atmosphere Package)
++ Autoform Materialize File 2.0.5 (Atmosphere Package)
 + FourSeven SCSS 4.5.4 (Atmosphere Package)
 
 # Installation
@@ -39,7 +41,7 @@ import 'materialize-css/dist/js/materialize.js';
 import 'materialize-css/extras/noUISlider/nouislider.js';
 ```
 3. create scss include paths in file '/scss-config.json'
-```
+```json
 {
   "includePaths": [
     "{}/node_modules/materialize-css/sass/"
@@ -47,7 +49,7 @@ import 'materialize-css/extras/noUISlider/nouislider.js';
 }
 ```
 4. import init script in file `/imports/startup/client/index.js`
-```
+```javascript
 import 'materialize.js'
 ```
 5. import SASS in file `/client/main.scss`
@@ -66,11 +68,59 @@ $link-color: color("light-blue", "darken-1") !default;
 ```
 6. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to your Meteor project's ```/public/fonts/roboto``` folder. Or alternatively use a CDN; if you manage to get the CDN working, please let us know how so we can add it here.
 
+## Install Autoform Materialize
+
+Using the command line in the project folder:
+```
+$ meteor add mozfet:autoform-materialize
+```
+
+Optionally add the extras (if needed)
+```
+$ meteor add mozfet:autoform-materialize-modals
+$ mozfet:autoform-medium
+$ mozfet:autoform-materialize-nouislider
+$ mozfet:autoform-materialize-files
+```
+
+In client startup code, e.g. project/imports/startup/client/autoform.js
+```js
+import AutoFrom from 'meteor/aldeed:autoform';
+AutoForm.setDefaultTemplate('materialize');
+```
+
+In client view js, e.g. project/imports/gui/views/insertBook.js
+```js
+Books = new Mongo.Collection("books");
+Books.attachSchema(new SimpleSchema({
+  title: {
+    type: String,
+    label: "Title",
+    max: 200
+  },
+  author: {
+    type: String,
+    label: "Author"
+  }
+}, { tracker: Tracker }));
+```
+
+In client view html, e.g. project/imports/gui/views/insertBook.html
+```html
+<template name="insertBookForm">
+  {{> quickForm collection="Books" id="insertBookForm" type="insert"}}
+</template>
+```
+
+See [Autoform documentation](https://github.com/aldeed/meteor-autoform) for more form examples.
+
 ## This package is part of a suite ##
+
 - [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
 - [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals)
 - [mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
 - [mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
+- [mozfet:meteor-autoform-file](https://github.com/mozfet/meteor-autoform-file)
 - [mozfet:materialize-icons](https://github.com/mozfet/meteor-materialize-icons)
 - [mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
@@ -85,7 +135,7 @@ Have a look at the [playground](https://github.com/mozfet/meteor-autoform-materi
 MaterializeCSS is busy adding support for Auto Complete in V1, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For this reason this package makes use of a modified hard fork of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
 
 In your schema definition (see playground for extensive list of examples):
-```
+```js
 autoCompleteSingular: {
   type: String,
   optional: true,
@@ -164,7 +214,7 @@ meteor add mozfet:autoform-materialize-nouislider
 
 You can apply it directly in your template:
 
-```
+```html
 {{> afFieldInput name="dateField" type="pickadate"}}
 ```
 
@@ -179,12 +229,12 @@ Materialize uses [pickadate](https://github.com/amsul/pickadate.js) for date inp
 
 You can apply it directly in your template:
 
-```
+```html
 {{> afFieldInput name="dateField" type="pickadate"}}
 ```
 
 You can also specify it at the schema level:
-```
+```js
 MySchema = new SimpleSchema({
   dateField: {
     type: Date,
@@ -201,14 +251,15 @@ MySchema = new SimpleSchema({
 ```
 
 ### PickATime ###
+
 You can apply it directly in your template:
 
-```
+```javascript
 {{> afFieldInput name="timeField" type="pickatime"}}
 ```
 
 You can also specify it at the schema level:
-```
+```js
 MySchema = new SimpleSchema({
   timeField: {
     type: String,
@@ -232,25 +283,6 @@ MySchema = new SimpleSchema({
 
 Note that when using PickATime with an initialised value from a doc, that the default time and fromnow is overwritten with the value from the doc.
 
-### FlowText ###
-You can apply it directly in your template:
-
-```
-{{> afFieldInput name="someTextToDisplay" type="flowtext"}}
-```
-
-You can also specify it at the schema level:
-```
-MySchema = new SimpleSchema({
-  someTextToDisplay: {
-    type: String,
-    autoform: {
-      type: 'flowtext'      
-    }
-  }
-});
-```
-
 #### Choosing a Timezone ####
 
 By default, the field's value will be a `Date` object representing the selected date and time in the browser's timezone (i.e., based on the user's computer time settings). In most cases, you probably want the `Date` object relative to some other timezone that you have previously stored. For example, if the form is setting the start date of an event, you want the date to be relative to the event venue's timezone. You can specify a different IANA timezone ID by adding a `timezoneId` attribute.
@@ -269,7 +301,7 @@ By default, the field's value will be a `Date` object representing the selected 
 
 Or:
 
-```js
+```html
 {{> afFieldInput name="typeTest" type="pickadate" timezoneId="America/New_York"}}
 ```
 
@@ -284,17 +316,36 @@ This input type is intended to be used with `type: Date` schema keys, but it als
 
 To provide pickadate options, set a `pickadateOptions` attribute equal to a helper that returns the options object.
 
+### FlowText ###
+You can apply it directly in your template:
+
+```html
+{{> afFieldInput name="someTextToDisplay" type="flowtext"}}
+```
+
+You can also specify it at the schema level:
+```js
+MySchema = new SimpleSchema({
+  someTextToDisplay: {
+    type: String,
+    autoform: {
+      type: 'flowtext'      
+    }
+  }
+});
+```
+
 ### Switch ####
 
 You an also use [switches](http://materializecss.com/forms.html#switches)
 
 At the template level:
-```
+```html
 {{> afFieldInput name='dateFieldName' type="switch"}}
 ```
 
 At the schema level:
-```
+```js
 MySchema = new SimpleSchema({
   booleanFieldName: {
     type: Boolean
@@ -308,12 +359,12 @@ MySchema = new SimpleSchema({
 You may specify the `trueLabel` or `falseLabel` options to customize the switch.
 
 At the template level:
-```
+```html
 {{> afFieldInput name='dateFieldName' type="switch" trueLabel="Online" falseLabel="Offline"}}
 ```
 
 At the schema level:
-```
+```js
 MySchema = new SimpleSchema({
   booleanFieldName: {
     type: Boolean
@@ -328,12 +379,12 @@ MySchema = new SimpleSchema({
 If you need other values than boolean, you may specify the `trueValue` or `falseValue` options to customize the switch.
 
 At the template level:
-```
+```html
 {{> afFieldInput name='dateFieldName' type="switch" trueValue="online" falseValue="offline"}}
 ```
 
 At the schema level:
-```
+```js
 MySchema = new SimpleSchema({
   booleanFieldName: {
     type: Boolean
@@ -346,24 +397,29 @@ MySchema = new SimpleSchema({
 });
 ```
 
+### File Upload ###
+
+See [mozfet:autoform-materialize-file](https://github.com/mozfet/meteor-autoform-file)
+
 ### Input with prepended icon ###
+
 You can add icon to any field like this:
-```
+```html
 {{> afQuickField name='subject' icon='person'}}
 ```
 For blank space in place of icon, just use "none":
-```
+```html
 {{> afQuickField name='subject' icon='none'}}
 ```
 
 It also works for textarea:
-```
+```html
 {{> afQuickField name='message' type='textarea' icon='person'}}
 ```
 
 ### Default Values ###
 You can easily add a default value to a select, text, number, autocomplete (more coming soon) input in the schema.
-```
+```js
 selectWithDefault: {
   type: String,
   allowedValues: ['VALUE1', 'VALUE2'],

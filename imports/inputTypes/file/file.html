@@ -1,3 +1,11 @@
 <template name="afInputFile_materialize">
-  <input type="file" value="{{this.value}}" {{atts}}/>
+  <div class="file-field input-field">
+    <div class="btn">
+      <span>File</span>
+      <input type="file" value="{{this.value}}" {{atts}}/>
+    </div>
+    <div class="file-path-wrapper">
+      <input class="file-path validate" type="text">
+    </div>
+  </div>  
 </template>
