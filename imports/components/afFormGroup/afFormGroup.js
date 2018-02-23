@@ -74,7 +74,8 @@ Template.afFormGroup_materialize.rendered = function() {
             var alwaysActiveLabelTypes = [
               'noUiSlider2',
               'file',
-              'fileUpload'
+              'fileUpload',
+              'date'
             ];
 
             // if the input always has an active label
