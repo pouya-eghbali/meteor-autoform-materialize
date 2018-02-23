@@ -1,4 +1,4 @@
-#v 3.5.6
+#v 3.5.7
  - Fixed date label [#31](https://github.com/mozfet/meteor-autoform-materialize/issues/31)
  - Fixed Pickadate validation fails if field is optional [#29](https://github.com/mozfet/meteor-autoform-materialize/issues/29)
 
