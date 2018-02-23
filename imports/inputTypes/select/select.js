@@ -11,7 +11,6 @@ Template.afSelect_materialize.helpers({
   optionAtts: optionAtts,
   value() {
     const instance = Template.instance();
-    console.log('SELECT.DATA', instance.data);
     return instance.data.value?instance.data.value:instance.data.atts.default;
   }
 });
