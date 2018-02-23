@@ -17,16 +17,12 @@ export const initializeSelect = function () {
     if (!_.isUndefined(instance.data.value) && !_.isEmpty(instance.data.value) && !_.isArray(instance.data.value)) {
 
         // init value for multiple select
-        console.log('initialize select option jquery selector = "option[value="'+instance.data.value+'"]');
-        console.log('initialize select instance options =', $('#'+instance.data.atts.id+' option'));
-        console.log('initialize select option element =', $('#'+instance.data.atts.id+' option[value="'+instance.data.value+'"]'));
+        // console.log('initialize select option jquery selector = "option[value="'+instance.data.value+'"]');
+        // console.log('initialize select instance options =', $('#'+instance.data.atts.id+' option'));
+        // console.log('initialize select option element =', $('#'+instance.data.atts.id+' option[value="'+instance.data.value+'"]'));
         // find the option for value and select it
         $('#'+instance.data.atts.id+' option[value="'+instance.data.value+'"]').attr('selected', true);
     }
-
-    // if placeholder is defined
-
-    // else  - no placeholder
 
     // init materialize form component
     select.material_select();
