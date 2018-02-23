@@ -5,8 +5,8 @@ export const optionAtts = function () {
   const atts = {
     value: option.value,
   };
-  console.log('option:', option);
 
+  // if option is first empty option
   if (option._id === 'AUTOFORM_EMPTY_FIRST_OPTION') {
 
     // change label to placeholder if it exists
