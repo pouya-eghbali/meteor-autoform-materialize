@@ -1,6 +1,6 @@
 <template name="afArrayField_materialize">
-  <div class="collection">
-    <div class="collection-item">
+  <div class="collection dragContainer">
+    <div class="collection-item dragHeader">
       {{afFieldLabelText name=atts.name}}
 
       {{#if afArrayFieldHasLessThanMaximum name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
@@ -19,15 +19,16 @@
       {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
         <div class="collection-item">
 
-          <!-- <div> -->
-          <div style="width: calc(100% - 3rem);">
+          <div class="primary-content" style="width: calc(100% - 5rem);">
             {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
           </div>
 
-          <!-- <div> -->
-          <div class="right autoform-remove-item" style="width: 3rem; margin-top: -4rem">
-            <a href="#" class="secondary-content">
+          <div class="right" style="width: 4rem; margin-top: -4rem">
+            <a href="#" class="secondary-content autoform-remove-item">
               {{> tooltippedIcon icon="delete" iconClass="" text="Remove" position="left"}}
+            </a>
+            <a href="#" class="secondary-content">
+              {{> tooltippedIcon icon="drag_handle" iconClass="dragHandle" text="Drag" position="left"}}
             </a>
           </div>
         </div>

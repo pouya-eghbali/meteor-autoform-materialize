@@ -1,12 +1,13 @@
 Package.describe({
   name: 'mozfet:autoform-materialize',
   summary: 'Materialize theme for Autoform',
-  version: '3.5.8',
+  version: '3.5.9',
   git: 'https://github.com/mozfet/meteor-autoform-materialize.git'
 });
 
 Npm.depends({
-  'moment': '2.18.0'
+  'moment': '2.18.0',
+  'dragula': '3.7.2'
 });
 
 Package.onUse(function(api) {
@@ -18,4 +19,5 @@ Package.onUse(function(api) {
   api.use('fourseven:scss@4.5.4');
   api.use('manuel:reactivearray@1.0.6');
   api.addFiles(['index.js', 'style.scss'], 'client');
+  api.addFiles('.npm/package/node_modules/dragula/dist/dragula.css', 'client');
 });

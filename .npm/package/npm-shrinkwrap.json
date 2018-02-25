@@ -1,15 +1,40 @@
 {
   "lockfileVersion": 1,
   "dependencies": {
-    "materialize-autocomplete-meteor-autoform": {
-      "version": "2.0.1",
-      "resolved": "https://registry.npmjs.org/materialize-autocomplete-meteor-autoform/-/materialize-autocomplete-meteor-autoform-2.0.1.tgz",
-      "integrity": "sha1-KAqvISMvtNJPEfnQkl5ZFmb0Woc="
+    "atoa": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/atoa/-/atoa-1.0.0.tgz",
+      "integrity": "sha1-DMDpGkgOc4+SPrwQNnZHF3mzSkk="
+    },
+    "contra": {
+      "version": "1.9.4",
+      "resolved": "https://registry.npmjs.org/contra/-/contra-1.9.4.tgz",
+      "integrity": "sha1-9TveQtfltZhcrk2ZqNYQUm3o8o0="
+    },
+    "crossvent": {
+      "version": "1.5.4",
+      "resolved": "https://registry.npmjs.org/crossvent/-/crossvent-1.5.4.tgz",
+      "integrity": "sha1-2ixPj0DJR4JRe/K+7BBEFIGUq5I="
+    },
+    "custom-event": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/custom-event/-/custom-event-1.0.0.tgz",
+      "integrity": "sha1-LkYovhncSyFLXAJjDFlx6BFhgGI="
+    },
+    "dragula": {
+      "version": "3.7.2",
+      "resolved": "https://registry.npmjs.org/dragula/-/dragula-3.7.2.tgz",
+      "integrity": "sha1-SjXJ05gf+sGpScKcpyhQWOhzk84="
     },
     "moment": {
       "version": "2.18.0",
       "resolved": "https://registry.npmjs.org/moment/-/moment-2.18.0.tgz",
       "integrity": "sha1-bP7GpJXsqRXQJgCmcCDtmUk3JSw="
+    },
+    "ticky": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/ticky/-/ticky-1.0.1.tgz",
+      "integrity": "sha1-t8+nHnaPHJAAxJe5FRswlHxQ5G0="
     }
   }
 }
