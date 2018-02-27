@@ -7,7 +7,8 @@ Package.describe({
 
 Npm.depends({
   'moment': '2.18.0',
-  'dragula': '3.7.2'
+  'dragula': '3.7.2',
+  'underscore': '1.8.3'
 });
 
 Package.onUse(function(api) {

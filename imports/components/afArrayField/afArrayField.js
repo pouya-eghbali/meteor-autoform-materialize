@@ -1,64 +1,103 @@
 /*jshint esversion: 6 */
 import './afArrayField.html';
 import dragula from 'dragula';
+import { _ } from 'underscore';
 
-const createLoopCtx = (formId, field, index, childKeys, overrideMinCount, overrideMaxCount) => {
-  const loopCtx = {
-    formId:         formId,
-    arrayFieldName: field,
-    name:           field + '.' + index,
-    index:          index,
-    minCount:       overrideMinCount,
-    maxCount:       overrideMaxCount
-  };
-
-  // if this is an array of objects
-  if (childKeys.length) {
-
-    // add child key names under loopCtx.current[childName] = fullKeyName
-    loopCtx.current = {};
-    _.each(childKeys, function (k) {
-      loopCtx.current[k] = field + '.' + index + '.' + k;
-    });
-  }
-
-  return loopCtx;
+const compArray = array => {
+  return _.map(array, item => {
+    const result = {
+      name: item.name,
+      index: item.index
+    };
+    if (!_.isUndefined(array.removed)) {result.removed = array.removed;}
+    if (!_.isUndefined(array.value)) {result.value = array.value;}
+    return result;
+  });
 };
 
-const moveFieldAtIndex = (formId, fieldName, sourceIndex, targetIndex, schema) => {
+const moveFieldInArray = (formId, fieldName, schema, fromIndex, toIndex) => {
   const info = AutoForm.arrayTracker.info;
+  const field = info[formId][fieldName];
+  const array = field.array;
+  const fieldValue = AutoForm.getFieldValue(fieldName, formId);
 
-  // if the array is not defined - do nothing
-  if (!info[formId][field].array) return;
+  // define new array to delete than add
+  const repack = [];
 
-  // jf this is an array of objects
-  var childKeys = [];
-  if (AutoForm.Utility.getFieldDefinition(ss, field + '.$').type === Object) {
+  // pack field being moved
+  repack.push(_.clone(array[fromIndex]));
 
-    // collect names of object props
-    childKeys = schema.objectKeys(AutoForm.Utility.makeKeyGeneric(field) + '.$');
+  // pack field being replaced
+  repack.push(_.clone(array[toIndex]));
+
+  // for each item after toIndex
+  for (let i = toIndex+1; i < array.length; i++) {
+
+    // if item is not fromIndex
+    if (i !== fromIndex) {
+
+      // pack remainder item
+      repack.push(_.clone(array[i]));
+    }
   }
 
-  var loopCtx = createLoopCtx(formId, field, i, childKeys, overrideMinCount, overrideMaxCount);
+  // for every item being repacked
+  for (let i = 0; i < repack.length; i++) {
 
-  self.info[formId][field].array.push(loopCtx);
+    // get the array item to repack
+    const r = repack[i];
 
-  info[formId][field].array[sourceIndex].removed = true;
-  info[formId][field].deps.changed();
+    // assign the array item value
+    r.value = fieldValue[r.index];
 
+    // clone the item to repack
+    const c = _.clone(r);
+
+    // mark the original item in array tracker as removed
+    array[r.index].removed = true;
+
+    // rework clone item index and name
+    c.index = array.length;
+    c.name = c.arrayFieldName+'.'+c.index;
+    r.newIndex = c.index;
+
+    // push array item to array tracker
+    array.push(c);
+  }
+  console.log('move: array', array);
+  console.log('move: repack', repack);
+
+  // mark the array as changed
+  field.deps.changed();
+
+  // for each repacked value
+  for(let r of repack) {
+
+    // set the value of the new field
+
+  }
 };
 
 Template.afArrayField_materialize.onCreated(() => {
   const instance = Template.instance();
-  const context = AutoForm.Utility.getComponentContext(instance.data.atts, "afEachArrayItem");
-  instance.formId = AutoForm.getFormId();
-  instance.fieldName = context.atts.name;
-  const array = AutoForm.arrayTracker.getField(instance.formId, instance.fieldName);
-  console.log('Initial array:', array);
 });
 
 Template.afArrayField_materialize.onRendered(() => {
   const instance = Template.instance();
+
+  const context = AutoForm.Utility.getComponentContext(instance.data.atts, "afEachArrayItem");
+  instance.formId = AutoForm.getFormId();
+  console.log('Form Id:', instance.formId);
+  instance.form = AutoForm.getCurrentDataForForm(instance.formId);
+  console.log('Form:', instance.form);
+  instance.schema = AutoForm.getFormSchema(instance.formId);
+  console.log('Schema:', instance.schema);
+  instance.fieldName = context.atts.name;
+  console.log('Field Name:', instance.fieldName);
+
+  const array = AutoForm.arrayTracker.getField(instance.formId, instance.fieldName);
+  console.log('Initial array:', _.pluck(array, 'name'));
+
   const dragContainer = instance.$('.dragContainer').get()[0];
   instance.drake = dragula([dragContainer], {
     moves(el, container, handle) {
@@ -69,8 +108,7 @@ Template.afArrayField_materialize.onRendered(() => {
     }
   });
   instance.drake.on('drop', (element, target, source, sibling) => {
-   console.log('Dropped', element, 'before', sibling);
-
+   console.log('Dropped element', element, 'before sibling', sibling);
 
    // if element is dragged to the end
    if (sibling === null) {
@@ -78,22 +116,25 @@ Template.afArrayField_materialize.onRendered(() => {
      // AutoForm.arrayTracker.addOneToField(formId, field, ss, overrideMinCount, overrideMaxCount);
    }
    else {
-     console.log('Drag container:', target);
-     console.log('Drag container children:', target.children);
 
-     // get children as array
-     const targetArray = Array.from(target.children);
+     // get element data-schema-key
+     const elementName = instance.$(element).find('input').attr('name');
+     console.log('Element Name:', elementName);
 
+     // get array from array tracker
      const array = AutoForm.arrayTracker.getField(instance.formId, instance.fieldName);
-     console.log('AutoForm array:', array);
+     console.log('AutoForm array:', _.pluck(array, 'name'));
 
-     // find the index of element in array tracker
-     const elementIndex = targetArray.indexOf(element)-1;
-     console.log('Element index:', elementIndex);
+     // find the move from and move to index of element
+     const fromIndex = _.findIndex(array, (el) => {
+       return el.name === elementName;
+     });
+     const toIndex = instance.$(target).children().index(element)-1;
+     console.log('Move element from index',fromIndex,'to',toIndex);
 
-     // find the index of sibling in array tracker
-     const siblingIndex = targetArray.indexOf(sibling)-1;
-     console.log('Sibling index:', siblingIndex);
+     // move the element in the array tracker
+     moveFieldInArray(instance.formId, instance.fieldName, instance.schema,
+        fromIndex, toIndex);
    }
   });
 });
