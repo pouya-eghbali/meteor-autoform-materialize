@@ -2,6 +2,85 @@
 import './afArrayField.html';
 import dragula from 'dragula';
 import { _ } from 'underscore';
+import { awaitSelector } from '../../utilities/awaitSelector';
+
+// recursive helper
+const flattenField = (decendantFields, fieldName, fieldValue) => {
+  // console.log('flatten: fieldName', fieldName);
+  // console.log('flatten: fieldValue', fieldValue);
+  const childrenKeys = _.keys(fieldValue);
+  for (let childKey of childrenKeys) {
+    // console.log('flatten: child key', childKey);
+    const childFieldName = fieldName+'.'+childKey;
+    // console.log('flatten: child field name', childFieldName);
+    const child = fieldValue[childKey];
+    // console.log('flatten: child object', child);
+    if (!_.isObject(child) && !_.isArray(child)) {
+      // console.log('flatten: child is simple, add to decendant fields');
+      decendantFields.push({name: childFieldName, value: child});
+    }
+    else {
+      // console.log('flatten: child is complex, recurse');
+      flattenField(decendantFields, fieldName+'.'+childKey, child);
+    }
+  }
+};
+
+// recursive helper
+const setElementValue = (instance, element, fieldName, value) => {
+  // console.log('setElementValue: element', element);
+  // console.log('setElementValue: fieldName', fieldName);
+  // console.log('setElementValue: value', value);
+
+  // recursive flatten field value to array of decendant fields
+  const decendantFields = [];
+  flattenField(decendantFields, fieldName, value);
+  console.log('setElementValue: decendantFields', decendantFields);
+
+  // update each decendant field value on the DOM
+  for (let decendantField of decendantFields) {
+
+    // promise to await the selector in element
+    const selector = 'input[name="'+decendantField.name+'"]';
+    console.log('await selector', selector);
+    awaitSelector(selector, element, 250)
+
+        // then
+        .then((elements) => {
+          const el = elements[0];
+          console.log('resolved element', el);
+
+          // set the value of the input
+          qInput = instance.$(el);
+          qInput.val(decendantField.value);
+          console.log('set input', qInput.attr('name'), 'value to',
+              decendantField.value);
+        })
+
+        // catch
+        .catch(error => {
+          console.error(error);
+        });
+  }
+
+};
+
+const isArrayOfObjects = (schema, fieldName) => {
+  // console.log('field name', fieldName);
+  const fieldDefinition = schema.getDefinition(fieldName);
+  // console.log('field definition', fieldDefinition);
+  const childDefinition = schema.getDefinition(fieldName+'.$');
+  // console.log('child definition', childDefinition);
+  let result = false;
+  for (let t of childDefinition.type) {
+    if (t.type === Object) {
+      result = true;
+      break;
+    }
+  }
+  // console.log('child is object', result);
+  return result;
+};
 
 const compArray = array => {
   return _.map(array, item => {
@@ -15,7 +94,7 @@ const compArray = array => {
   });
 };
 
-const moveFieldInArray = (formId, fieldName, schema, fromIndex, toIndex) => {
+const moveFieldInArray = (instance, formId, fieldName, schema, fromIndex, toIndex) => {
   const info = AutoForm.arrayTracker.info;
   const field = info[formId][fieldName];
   const array = field.array;
@@ -24,17 +103,21 @@ const moveFieldInArray = (formId, fieldName, schema, fromIndex, toIndex) => {
   // define new array to delete than add
   const repack = [];
 
+  // sort indexes
+  const firstIndex = fromIndex>toIndex?fromIndex:toIndex;
+  const secondIndex = fromIndex<toIndex?fromIndex:toIndex;
+
   // pack field being moved
-  repack.push(_.clone(array[fromIndex]));
+  repack.push(_.clone(array[firstIndex]));
 
   // pack field being replaced
-  repack.push(_.clone(array[toIndex]));
+  repack.push(_.clone(array[secondIndex]));
 
   // for each item after toIndex
   for (let i = toIndex+1; i < array.length; i++) {
 
     // if item is not fromIndex
-    if (i !== fromIndex) {
+    if (i !== secondIndex) {
 
       // pack remainder item
       repack.push(_.clone(array[i]));
@@ -60,21 +143,46 @@ const moveFieldInArray = (formId, fieldName, schema, fromIndex, toIndex) => {
     c.index = array.length;
     c.name = c.arrayFieldName+'.'+c.index;
     r.newIndex = c.index;
+    r.newName = c.name;
+
+    // cleanup repack item
+    delete r.index;
+    delete r.minCount;
+    delete r.maxCount;
+    delete r.formId;
+    delete r.current;
 
     // push array item to array tracker
     array.push(c);
   }
-  console.log('move: array', array);
-  console.log('move: repack', repack);
+  console.log('move: array:', array);
+  console.log('move: repack:', repack);
 
   // mark the array as changed
   field.deps.changed();
 
   // for each repacked value
-  for(let r of repack) {
+  for (let item of repack) {
+    console.log('move: repack item under new name:', item.name);
 
-    // set the value of the new field
+    // promise to find new array item
+    const rootNode = instance.$('.dragContainer').get()[0];
+    console.log('await', item.newName, 'in', rootNode);
+    awaitSelector("[name='"+item.newName+"']", rootNode, 250)
 
+        // then
+        .then((elements) => {
+          const element = elements[0];
+          console.log('resolved element:', element);
+
+          // recursively set value for new array item
+          setElementValue(instance, element, item.newName, item.value);
+        })
+
+        // catch
+        .catch(error => {
+          console.error(error);
+        });
   }
 };
 
@@ -117,8 +225,18 @@ Template.afArrayField_materialize.onRendered(() => {
    }
    else {
 
-     // get element data-schema-key
-     const elementName = instance.$(element).find('input').attr('name');
+     // if element is an object
+     let elementName;
+     if (isArrayOfObjects(instance.schema, instance.fieldName)) {
+
+       // get the card name attribute
+       elementName = instance.$(element).find('.card-panel').attr('name');
+     }
+     // else - element is literal or array
+     else {
+       // get the input name attribute
+       elementName = instance.$(element).find('input').attr('name');
+     }
      console.log('Element Name:', elementName);
 
      // get array from array tracker
@@ -133,7 +251,7 @@ Template.afArrayField_materialize.onRendered(() => {
      console.log('Move element from index',fromIndex,'to',toIndex);
 
      // move the element in the array tracker
-     moveFieldInArray(instance.formId, instance.fieldName, instance.schema,
+     moveFieldInArray(instance, instance.formId, instance.fieldName, instance.schema,
         fromIndex, toIndex);
    }
   });
