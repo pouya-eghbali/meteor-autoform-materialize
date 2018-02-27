@@ -6,31 +6,36 @@ import { awaitSelector } from '../../utilities/awaitSelector';
 
 // recursive helper
 const flattenField = (decendantFields, fieldName, fieldValue) => {
-  // console.log('flatten: fieldName', fieldName);
-  // console.log('flatten: fieldValue', fieldValue);
-  const childrenKeys = _.keys(fieldValue);
-  for (let childKey of childrenKeys) {
-    // console.log('flatten: child key', childKey);
-    const childFieldName = fieldName+'.'+childKey;
-    // console.log('flatten: child field name', childFieldName);
-    const child = fieldValue[childKey];
-    // console.log('flatten: child object', child);
-    if (!_.isObject(child) && !_.isArray(child)) {
-      // console.log('flatten: child is simple, add to decendant fields');
-      decendantFields.push({name: childFieldName, value: child});
+  console.log('flatten: fieldName', fieldName);
+  console.log('flatten: fieldValue', fieldValue);
+  if(_.isObject(fieldValue)) {
+    const childrenKeys = _.keys(fieldValue);
+    for (let childKey of childrenKeys) {
+      console.log('flatten: child key', childKey);
+      const childFieldName = fieldName+'.'+childKey;
+      console.log('flatten: child field name', childFieldName);
+      const child = fieldValue[childKey];
+      console.log('flatten: child object', child);
+      if (!_.isObject(child) && !_.isArray(child)) {
+        console.log('flatten: child is simple, add to decendant fields');
+        decendantFields.push({name: childFieldName, value: child});
+      }
+      else {
+        console.log('flatten: child is complex, recurse');
+        flattenField(decendantFields, fieldName+'.'+childKey, child);
+      }
     }
-    else {
-      // console.log('flatten: child is complex, recurse');
-      flattenField(decendantFields, fieldName+'.'+childKey, child);
-    }
+  }
+  else {
+    decendantFields.push({name: fieldName, value: fieldValue});
   }
 };
 
 // recursive helper
 const setElementValue = (instance, element, fieldName, value) => {
-  // console.log('setElementValue: element', element);
-  // console.log('setElementValue: fieldName', fieldName);
-  // console.log('setElementValue: value', value);
+  console.log('setElementValue: element', element);
+  console.log('setElementValue: fieldName', fieldName);
+  console.log('setElementValue: value', value);
 
   // recursive flatten field value to array of decendant fields
   const decendantFields = [];
@@ -78,7 +83,6 @@ const isArrayOfObjects = (schema, fieldName) => {
       break;
     }
   }
-  // console.log('child is object', result);
   return result;
 };
 
@@ -99,6 +103,7 @@ const moveFieldInArray = (instance, formId, fieldName, schema, fromIndex, toInde
   const field = info[formId][fieldName];
   const array = field.array;
   const fieldValue = AutoForm.getFieldValue(fieldName, formId);
+  const fieldIsComplex = isArrayOfObjects(schema, fieldName);
 
   // define new array to delete than add
   const repack = [];
@@ -130,11 +135,11 @@ const moveFieldInArray = (instance, formId, fieldName, schema, fromIndex, toInde
     // get the array item to repack
     const r = repack[i];
 
-    // assign the array item value
-    r.value = fieldValue[r.index];
-
     // clone the item to repack
     const c = _.clone(r);
+
+    // assign the array item value
+    r.value = fieldValue[r.index];
 
     // mark the original item in array tracker as removed
     array[r.index].removed = true;
@@ -163,7 +168,7 @@ const moveFieldInArray = (instance, formId, fieldName, schema, fromIndex, toInde
 
   // for each repacked value
   for (let item of repack) {
-    console.log('move: repack item under new name:', item.name);
+    console.log('move: repack item',item.name,'under new name',item.newName);
 
     // promise to find new array item
     const rootNode = instance.$('.dragContainer').get()[0];
@@ -175,14 +180,26 @@ const moveFieldInArray = (instance, formId, fieldName, schema, fromIndex, toInde
           const element = elements[0];
           console.log('resolved element:', element);
 
-          // recursively set value for new array item
-          setElementValue(instance, element, item.newName, item.value);
+          // if field is complex
+          if (fieldIsComplex) {
+
+            // recursively set value for new array item
+            setElementValue(instance, element, item.newName, item.value);
+          }
+
+          // else - field is elementary
+          else {
+
+            // set value for new array item
+            instance.$(element).val(item.value);
+          }
         })
 
         // catch
         .catch(error => {
           console.error(error);
         });
+
   }
 };
 
@@ -257,10 +274,6 @@ Template.afArrayField_materialize.onRendered(() => {
       // find the move to index of element
       toIndex = instance.$(target).children().index(element)-1;
     }
-    console.log('Move element from index',fromIndex,'to',toIndex);    
-
-    // find the move to index of element
-    toIndex = instance.$(target).children().index(element)-1;
     console.log('Move element from index',fromIndex,'to',toIndex);
 
     // move the element in the array tracker
@@ -268,6 +281,3 @@ Template.afArrayField_materialize.onRendered(() => {
        fromIndex, toIndex);
   });
 });
-
-// Template.afArrayField_materialize.events({
-// });
