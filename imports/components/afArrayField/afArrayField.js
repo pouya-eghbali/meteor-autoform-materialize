@@ -116,8 +116,8 @@ const moveFieldInArray = (instance, formId, fieldName, schema, fromIndex, toInde
   // for each item after toIndex
   for (let i = toIndex+1; i < array.length; i++) {
 
-    // if item is not fromIndex
-    if (i !== secondIndex) {
+    // if item is not firstIndex or secondIndex
+    if ((i !== firstIndex) && (i !== secondIndex)) {
 
       // pack remainder item
       repack.push(_.clone(array[i]));
@@ -216,44 +216,56 @@ Template.afArrayField_materialize.onRendered(() => {
     }
   });
   instance.drake.on('drop', (element, target, source, sibling) => {
-   console.log('Dropped element', element, 'before sibling', sibling);
+    console.log('Dropped element', element, 'before sibling', sibling);
 
-   // if element is dragged to the end
-   if (sibling === null) {
-     // remove the element from the array tracker
-     // AutoForm.arrayTracker.addOneToField(formId, field, ss, overrideMinCount, overrideMaxCount);
-   }
-   else {
+    // get the array tracker value
+    const array = AutoForm.arrayTracker.getField(instance.formId, instance.fieldName);
+    console.log('AutoForm array:', _.pluck(array, 'name'));
 
-     // if element is an object
-     let elementName;
-     if (isArrayOfObjects(instance.schema, instance.fieldName)) {
+    // if element is an object
+    let elementName;
+    if (isArrayOfObjects(instance.schema, instance.fieldName)) {
 
-       // get the card name attribute
-       elementName = instance.$(element).find('.card-panel').attr('name');
-     }
-     // else - element is literal or array
-     else {
-       // get the input name attribute
-       elementName = instance.$(element).find('input').attr('name');
-     }
-     console.log('Element Name:', elementName);
+      // get the card name attribute
+      elementName = instance.$(element).find('.card-panel').attr('name');
+    }
 
-     // get array from array tracker
-     const array = AutoForm.arrayTracker.getField(instance.formId, instance.fieldName);
-     console.log('AutoForm array:', _.pluck(array, 'name'));
+    // else - element is literal or array
+    else {
 
-     // find the move from and move to index of element
-     const fromIndex = _.findIndex(array, (el) => {
-       return el.name === elementName;
-     });
-     const toIndex = instance.$(target).children().index(element)-1;
-     console.log('Move element from index',fromIndex,'to',toIndex);
+      // get the input name attribute
+      elementName = instance.$(element).find('input').attr('name');
+    }
+    console.log('Element Name:', elementName);
 
-     // move the element in the array tracker
-     moveFieldInArray(instance, instance.formId, instance.fieldName, instance.schema,
-        fromIndex, toIndex);
-   }
+    // find the move from index
+    const fromIndex = _.findIndex(array, (el) => {
+      return el.name === elementName;
+    });
+
+    // if element is dragged to the end
+    let toIndex;
+    if (sibling === null) {
+
+      // to index is the end of the array
+      toIndex = array.length-1;
+    }
+
+    // else - element is dragged before another element
+    else {
+
+      // find the move to index of element
+      toIndex = instance.$(target).children().index(element)-1;
+    }
+    console.log('Move element from index',fromIndex,'to',toIndex);    
+
+    // find the move to index of element
+    toIndex = instance.$(target).children().index(element)-1;
+    console.log('Move element from index',fromIndex,'to',toIndex);
+
+    // move the element in the array tracker
+    moveFieldInArray(instance, instance.formId, instance.fieldName, instance.schema,
+       fromIndex, toIndex);
   });
 });
 
