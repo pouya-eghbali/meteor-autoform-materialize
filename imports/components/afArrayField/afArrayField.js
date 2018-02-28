@@ -4,70 +4,117 @@ import dragula from 'dragula';
 import { _ } from 'underscore';
 import { awaitSelector } from '../../utilities/awaitSelector';
 
-// recursive helper
-const flattenField = (decendantFields, fieldName, fieldValue) => {
-  console.log('flatten: fieldName', fieldName);
-  console.log('flatten: fieldValue', fieldValue);
-  if(_.isObject(fieldValue)) {
-    const childrenKeys = _.keys(fieldValue);
-    for (let childKey of childrenKeys) {
-      console.log('flatten: child key', childKey);
-      const childFieldName = fieldName+'.'+childKey;
-      console.log('flatten: child field name', childFieldName);
-      const child = fieldValue[childKey];
-      console.log('flatten: child object', child);
-      if (!_.isObject(child) && !_.isArray(child)) {
-        console.log('flatten: child is simple, add to decendant fields');
-        decendantFields.push({name: childFieldName, value: child});
-      }
-      else {
-        console.log('flatten: child is complex, recurse');
-        flattenField(decendantFields, fieldName+'.'+childKey, child);
-      }
+
+// repack the fields on the DOM
+const repackFields = (instance, fields) => {
+  console.log('repackFields: fields', fields);
+
+  // stamp every field
+  for (let field of fields) {
+    console.log('repackFields: stamping: field old name', field.oldName);
+
+    // find all inputs with name starting with field name
+    const inputs = instance.$(`[name^="${field.oldName}"]`).get();
+    console.log(`repackFields: stamping: found ${inputs.length} inputs`);
+
+    // for each input
+    for (let input of inputs) {
+
+      // get input query
+      const qInput = instance.$(input);
+
+      // get name of input
+      const name = qInput.attr('name');
+      console.log('repackFields: stamping: adding old name', name);
+
+      // add old name attribute to each input
+      qInput.attr('old-name', name);
+
+      // get the id of input
+      const id = qInput.attr('id');
+      console.log('repackFields: stamping: adding old id', id);
+
+      // add old name attribute to each input
+      qInput.attr('old-id', id);
     }
   }
-  else {
-    decendantFields.push({name: fieldName, value: fieldValue});
-  }
-};
 
-// recursive helper
-const setElementValue = (instance, element, fieldName, value) => {
-  console.log('setElementValue: element', element);
-  console.log('setElementValue: fieldName', fieldName);
-  console.log('setElementValue: value', value);
+  // repack every field
+  for (let field of fields) {
+    console.log('repackFields: repack: field', field.oldName);
 
-  // recursive flatten field value to array of decendant fields
-  const decendantFields = [];
-  flattenField(decendantFields, fieldName, value);
-  console.log('setElementValue: decendantFields', decendantFields);
-
-  // update each decendant field value on the DOM
-  for (let decendantField of decendantFields) {
-
-    // promise to await the selector in element
-    const selector = 'input[name="'+decendantField.name+'"]';
-    console.log('await selector', selector);
-    awaitSelector(selector, element, 250)
-
-        // then
-        .then((elements) => {
-          const el = elements[0];
-          console.log('resolved element', el);
-
-          // set the value of the input
-          qInput = instance.$(el);
-          qInput.val(decendantField.value);
-          console.log('set input', qInput.attr('name'), 'value to',
-              decendantField.value);
+    // find all inputs starting with old field name
+    const fieldElements = instance.$(`[old-name^="${field.oldName}"]`).get();
+    console.log(`repackFields: repack: found ${fieldElements.length} inputs`);
+    const fieldElementNamesString = _.chain(fieldElements)
+        .map(fieldElement => {
+          return instance.$(fieldElement).attr('name');
         })
+        .reduce((memo, fieldElementName) => {
+          return memo+', '+fieldElementName;
+        })
+        .value();
+    console.log(`repackFields: repack: field elements: ${fieldElementNamesString}.`);
 
-        // catch
-        .catch(error => {
-          console.error(error);
-        });
+    // for each input
+    for (let fieldElement of fieldElements) {
+
+      // get input query
+      const qFieldElement = instance.$(fieldElement);
+      console.log('repackFields: repack: value', qFieldElement.val());
+
+      // get old name of input
+      const oldName = qFieldElement.attr('old-name');
+      console.log('repackFields: repack: old name', oldName);
+
+      // get old id of input
+      const oldId = qFieldElement.attr('old-id');
+      console.log('repackFields: repack: old id', oldId);
+
+      // create new name
+      const newName = field.newName+oldName.substring(field.newName.length);
+      console.log('repackFields: repack: new name', newName);
+
+      // get input being replaced
+      const replaced = instance.$(`[old-name="${newName}"]`);
+      if(replaced.length === 0) {
+        const err = `Cannot find query: [old-name="${newName}"]`;
+        console.error(err);
+        throw 'err';
+      }
+      console.log('repackFields: repack: replaced ', replaced);
+      const newId = replaced.attr('old-id');
+      console.log('repackFields: repack: new id', newId);
+
+      // check if data schema key exists
+      const hasDataSchemaKey = qFieldElement.attr('data-schema-key')?true:false;
+
+      // update attributes
+      qFieldElement.attr('name', newName);
+      if (newId) {qFieldElement.attr('id', newId);}
+      if (hasDataSchemaKey) {qFieldElement.attr('data-schema-key', newName);}      
+    }
   }
 
+  // prune each field
+  for (let field of fields) {
+    console.log('repackFields: pruning: field', field.oldName);
+
+    // find all fields starting with field name
+    const inputs = instance.$(`[old-name^="${field.oldName}"]`).get();
+    console.log(`repackFields: pruning: found ${inputs.length} inputs`);
+
+    // for each input
+    for (let input of inputs) {
+
+      // get input query
+      const qInput = instance.$(input);
+
+      // update name and data-schema-key attributes with new name
+      qInput.removeAttr('old-id');
+      qInput.removeAttr('old-name');
+    }
+  }
 };
 
 const isArrayOfObjects = (schema, fieldName) => {
@@ -86,142 +133,74 @@ const isArrayOfObjects = (schema, fieldName) => {
   return result;
 };
 
-const compArray = array => {
-  return _.map(array, item => {
-    const result = {
-      name: item.name,
-      index: item.index
-    };
-    if (!_.isUndefined(array.removed)) {result.removed = array.removed;}
-    if (!_.isUndefined(array.value)) {result.value = array.value;}
-    return result;
+const getArrayFromDom = (instance, fieldName) => {
+
+  // find the first array
+  const qArray = instance.$('.js-autoform-array').first();
+  // console.log('getArrayFromDom: qArray', qArray);
+
+  // find the items of the array
+  const itemElements = qArray.children('.js-autoform-array-item').get();
+  // console.log('getArrayFromDom: itemElements', itemElements);
+
+  // for each item in items
+  const array = _.map(itemElements, itemElement => {
+
+    // get the properties of the item
+    const oldName = instance.$(itemElement).find(`[name^="${fieldName}"]`)
+        .first().attr('name');
+    const newIndex = instance.$(itemElement).prevAll().length-1;
+    const splitOldName = oldName.split('.');
+    const oldIndex = Number(_.last(splitOldName));
+    const arrayFieldName = _.first(splitOldName);
+    const newName = arrayFieldName+'.'+newIndex;
+
+    // return an object representing the item
+    return {arrayFieldName, oldName, newName, oldIndex, newIndex};
   });
+  console.log('getArrayFromDom: array', array);
+
+  // return the array
+  return array;
 };
 
-const moveFieldInArray = (instance, formId, fieldName, schema, fromIndex, toIndex) => {
-  const info = AutoForm.arrayTracker.info;
-  const field = info[formId][fieldName];
-  const array = field.array;
-  const fieldValue = AutoForm.getFieldValue(fieldName, formId);
-  const fieldIsComplex = isArrayOfObjects(schema, fieldName);
+const moveFieldInArray = (instance, array, fromIndex, toIndex) => {
 
   // define new array to delete than add
   const repack = [];
 
-  // sort indexes
-  const firstIndex = fromIndex>toIndex?fromIndex:toIndex;
-  const secondIndex = fromIndex<toIndex?fromIndex:toIndex;
-
   // pack field being moved
-  repack.push(_.clone(array[firstIndex]));
+  const fieldBeingMoved = _.clone(array[fromIndex]);
+  fieldBeingMoved.newIndex = toIndex;
+  repack.push(fieldBeingMoved);
 
-  // pack field being replaced
-  repack.push(_.clone(array[secondIndex]));
+  const fieldBeingReplaced = _.clone(array[toIndex]);
+  fieldBeingReplaced.newIndex = fromIndex>toIndex?toIndex+1:toIndex-1;
+  repack.push(fieldBeingReplaced);
 
-  // for each item after toIndex
-  for (let i = toIndex+1; i < array.length; i++) {
+  // for each field starting after toIndex
+  const lowestIndex = fromIndex>toIndex?toIndex:fromIndex;
+  for (let i = lowestIndex+1; i < array.length; i++) {
 
-    // if item is not firstIndex or secondIndex
-    if ((i !== firstIndex) && (i !== secondIndex)) {
+    // if index is not fromIndex or toIndex
+    if ((i !== fromIndex) && (i !== toIndex)) {
 
-      // pack remainder item
-      repack.push(_.clone(array[i]));
+      // shift idex and pack item
+      const shifted = _.clone(array[i]);
+      shifted.newIndex = shifted.index+1;
+      repack.push(shifted);
     }
   }
 
-  // for every item being repacked
-  for (let i = 0; i < repack.length; i++) {
-
-    // get the array item to repack
-    const r = repack[i];
-
-    // clone the item to repack
-    const c = _.clone(r);
-
-    // assign the array item value
-    r.value = fieldValue[r.index];
-
-    // mark the original item in array tracker as removed
-    array[r.index].removed = true;
-
-    // rework clone item index and name
-    c.index = array.length;
-    c.name = c.arrayFieldName+'.'+c.index;
-    r.newIndex = c.index;
-    r.newName = c.name;
-
-    // cleanup repack item
-    delete r.index;
-    delete r.minCount;
-    delete r.maxCount;
-    delete r.formId;
-    delete r.current;
-
-    // push array item to array tracker
-    array.push(c);
-  }
-  console.log('move: array:', array);
-  console.log('move: repack:', repack);
-
-  // mark the array as changed
-  field.deps.changed();
-
-  // for each repacked value
-  for (let item of repack) {
-    console.log('move: repack item',item.name,'under new name',item.newName);
-
-    // promise to find new array item
-    const rootNode = instance.$('.dragContainer').get()[0];
-    console.log('await', item.newName, 'in', rootNode);
-    awaitSelector("[name='"+item.newName+"']", rootNode, 250)
-
-        // then
-        .then((elements) => {
-          const element = elements[0];
-          console.log('resolved element:', element);
-
-          // if field is complex
-          if (fieldIsComplex) {
-
-            // recursively set value for new array item
-            setElementValue(instance, element, item.newName, item.value);
-          }
-
-          // else - field is elementary
-          else {
-
-            // set value for new array item
-            instance.$(element).val(item.value);
-          }
-        })
-
-        // catch
-        .catch(error => {
-          console.error(error);
-        });
-
-  }
+  // update repacked fields
+  repackFields(instance, repack);
 };
-
-Template.afArrayField_materialize.onCreated(() => {
-  const instance = Template.instance();
-});
 
 Template.afArrayField_materialize.onRendered(() => {
   const instance = Template.instance();
-
-  const context = AutoForm.Utility.getComponentContext(instance.data.atts, "afEachArrayItem");
-  instance.formId = AutoForm.getFormId();
-  console.log('Form Id:', instance.formId);
-  instance.form = AutoForm.getCurrentDataForForm(instance.formId);
-  console.log('Form:', instance.form);
-  instance.schema = AutoForm.getFormSchema(instance.formId);
-  console.log('Schema:', instance.schema);
-  instance.fieldName = context.atts.name;
-  console.log('Field Name:', instance.fieldName);
-
-  const array = AutoForm.arrayTracker.getField(instance.formId, instance.fieldName);
-  console.log('Initial array:', _.pluck(array, 'name'));
+  const context = AutoForm.Utility.getComponentContext(instance.data.atts,
+      "afEachArrayItem");
+  const fieldName = context.atts.name;
 
   const dragContainer = instance.$('.dragContainer').get()[0];
   instance.drake = dragula([dragContainer], {
@@ -233,51 +212,11 @@ Template.afArrayField_materialize.onRendered(() => {
     }
   });
   instance.drake.on('drop', (element, target, source, sibling) => {
-    console.log('Dropped element', element, 'before sibling', sibling);
 
     // get the array tracker value
-    const array = AutoForm.arrayTracker.getField(instance.formId, instance.fieldName);
-    console.log('AutoForm array:', _.pluck(array, 'name'));
+    const array = getArrayFromDom(instance, fieldName);
 
-    // if element is an object
-    let elementName;
-    if (isArrayOfObjects(instance.schema, instance.fieldName)) {
-
-      // get the card name attribute
-      elementName = instance.$(element).find('.card-panel').attr('name');
-    }
-
-    // else - element is literal or array
-    else {
-
-      // get the input name attribute
-      elementName = instance.$(element).find('input').attr('name');
-    }
-    console.log('Element Name:', elementName);
-
-    // find the move from index
-    const fromIndex = _.findIndex(array, (el) => {
-      return el.name === elementName;
-    });
-
-    // if element is dragged to the end
-    let toIndex;
-    if (sibling === null) {
-
-      // to index is the end of the array
-      toIndex = array.length-1;
-    }
-
-    // else - element is dragged before another element
-    else {
-
-      // find the move to index of element
-      toIndex = instance.$(target).children().index(element)-1;
-    }
-    console.log('Move element from index',fromIndex,'to',toIndex);
-
-    // move the element in the array tracker
-    moveFieldInArray(instance, instance.formId, instance.fieldName, instance.schema,
-       fromIndex, toIndex);
+    // repack the fieds on the DOM
+    repackFields(instance, array);
   });
 });

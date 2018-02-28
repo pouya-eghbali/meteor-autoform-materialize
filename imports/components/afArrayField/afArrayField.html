@@ -1,5 +1,7 @@
 <template name="afArrayField_materialize">
-  <div class="collection dragContainer">
+  <div class="collection dragContainer js-autoform-array">
+
+    <!-- heaer -->
     <div class="collection-item dragHeader">
       {{afFieldLabelText name=atts.name}}
 
@@ -9,15 +11,18 @@
         </a>
       {{/if}}
     </div>
+
+    <!-- invalid -->
     {{#if afFieldIsInvalid name=atts.name}}
       <div class="collection-item">
         <span class="red-text">{{{afFieldMessage name=atts.name}}}</span>
       </div>
     {{/if}}
 
+    <!-- items -->
     {{#afEachArrayItem name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
       {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
-        <div class="collection-item">
+        <div class="collection-item js-autoform-array-item">
 
           <div class="primary-content" style="width: calc(100% - 5rem);">
             {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
