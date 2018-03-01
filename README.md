@@ -2,21 +2,24 @@
 
 [Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
 
-> **Important** This package no longer supports the Atmosphere Materialize wrapper package. Please migrate to using the NPM Materialize package. See installation instructions below.
+> **Thank You** This suite of packages is maintained by [ExpertBox.com](https://www.ExpertBox.com/home) as a thank you to the Open Source community.
+
+> **Drag and Drop Sortable Arrays** Demonstrate your organizational skills by drag and drop sorting arrays!
 
 > **Whats New(ish)** File Uploads with Meteor-Files, Auto Complete, Easy Defaults, Responsive Text, Timepicker
-
-> **Thank You** This suite of packages is maintained by [ExpertBox.com](https://www.ExpertBox.com/home) as a thank you to the Open Source community.
 
 > **Cash for Issues** We will pay you cash to close issues on this suite of projects! See contributions section below for info.
 
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
+> **No more Atmosphere** This package no longer supports the Atmosphere Materialize wrapper package. Please migrate to using the NPM Materialize package. See installation instructions below.
+
+
 ## Dependancies
 
-Version 3.5.4 of this package was manual smoke tested in Playground 3.5.2 and seemed to work ok using:
+Version 3.6.0 of this package was manual smoke tested in Playground 3.6.0 and seemed to work ok using:
 + Chrome Version 62.0.3202.94 (Official Build) (64-bit)
-+ Meteor 1.6
++ Meteor 1.6.0.1
 + Simple Schema 0.5 (NPM Package)
 + Materialize CSS 0.100.2 (NPM Package)
 + Autoform 6.2.0 (Atmosphere Package)

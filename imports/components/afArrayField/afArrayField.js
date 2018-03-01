@@ -1,21 +1,19 @@
 /*jshint esversion: 6 */
 import './afArrayField.html';
-import dragula from 'dragula';
-import { _ } from 'underscore';
-import { awaitSelector } from '../../utilities/awaitSelector';
-
+import {Sortable} from '@shopify/draggable';
+import {_} from 'underscore';
 
 // repack the fields on the DOM
 const repackFields = (instance, fields) => {
-  console.log('repackFields: fields', fields);
+  // console.log('repackFields: fields', fields);
 
   // stamp every field
   for (let field of fields) {
-    console.log('repackFields: stamping: field old name', field.oldName);
+    // console.log('repackFields: stamping: field old name', field.oldName);
 
     // find all inputs with name starting with field name
     const inputs = instance.$(`[name^="${field.oldName}"]`).get();
-    console.log(`repackFields: stamping: found ${inputs.length} inputs`);
+    // console.log(`repackFields: stamping: found ${inputs.length} inputs`);
 
     // for each input
     for (let input of inputs) {
@@ -25,14 +23,14 @@ const repackFields = (instance, fields) => {
 
       // get name of input
       const name = qInput.attr('name');
-      console.log('repackFields: stamping: adding old name', name);
+      // console.log('repackFields: stamping: adding old name', name);
 
       // add old name attribute to each input
       qInput.attr('old-name', name);
 
       // get the id of input
       const id = qInput.attr('id');
-      console.log('repackFields: stamping: adding old id', id);
+      // console.log('repackFields: stamping: adding old id', id);
 
       // add old name attribute to each input
       qInput.attr('old-id', id);
@@ -41,39 +39,39 @@ const repackFields = (instance, fields) => {
 
   // repack every field
   for (let field of fields) {
-    console.log('repackFields: repack: field', field.oldName);
+    // console.log('repackFields: repack: field', field.oldName);
 
     // find all inputs starting with old field name
     const fieldElements = instance.$(`[old-name^="${field.oldName}"]`).get();
-    console.log(`repackFields: repack: found ${fieldElements.length} inputs`);
-    const fieldElementNamesString = _.chain(fieldElements)
-        .map(fieldElement => {
-          return instance.$(fieldElement).attr('name');
-        })
-        .reduce((memo, fieldElementName) => {
-          return memo+', '+fieldElementName;
-        })
-        .value();
-    console.log(`repackFields: repack: field elements: ${fieldElementNamesString}.`);
+    // console.log(`repackFields: repack: found ${fieldElements.length} inputs`);
+    // const fieldElementNamesString = _.chain(fieldElements)
+    //     .map(fieldElement => {
+    //       return instance.$(fieldElement).attr('name');
+    //     })
+    //     .reduce((memo, fieldElementName) => {
+    //       return memo+', '+fieldElementName;
+    //     })
+    //     .value();
+    // console.log(`repackFields: repack: field elements: ${fieldElementNamesString}.`);
 
     // for each input
     for (let fieldElement of fieldElements) {
 
       // get input query
       const qFieldElement = instance.$(fieldElement);
-      console.log('repackFields: repack: value', qFieldElement.val());
+      // console.log('repackFields: repack: value', qFieldElement.val());
 
       // get old name of input
       const oldName = qFieldElement.attr('old-name');
-      console.log('repackFields: repack: old name', oldName);
+      // console.log('repackFields: repack: old name', oldName);
 
       // get old id of input
       const oldId = qFieldElement.attr('old-id');
-      console.log('repackFields: repack: old id', oldId);
+      // console.log('repackFields: repack: old id', oldId);
 
       // create new name
       const newName = field.newName+oldName.substring(field.newName.length);
-      console.log('repackFields: repack: new name', newName);
+      // console.log('repackFields: repack: new name', newName);
 
       // get input being replaced
       const replaced = instance.$(`[old-name="${newName}"]`);
@@ -82,9 +80,9 @@ const repackFields = (instance, fields) => {
         console.error(err);
         throw 'err';
       }
-      console.log('repackFields: repack: replaced ', replaced);
+      // console.log('repackFields: repack: replaced ', replaced);
       const newId = replaced.attr('old-id');
-      console.log('repackFields: repack: new id', newId);
+      // console.log('repackFields: repack: new id', newId);
 
       // check if data schema key exists
       const hasDataSchemaKey = qFieldElement.attr('data-schema-key')?true:false;
@@ -92,17 +90,17 @@ const repackFields = (instance, fields) => {
       // update attributes
       qFieldElement.attr('name', newName);
       if (newId) {qFieldElement.attr('id', newId);}
-      if (hasDataSchemaKey) {qFieldElement.attr('data-schema-key', newName);}      
+      if (hasDataSchemaKey) {qFieldElement.attr('data-schema-key', newName);}
     }
   }
 
   // prune each field
   for (let field of fields) {
-    console.log('repackFields: pruning: field', field.oldName);
+    // console.log('repackFields: pruning: field', field.oldName);
 
     // find all fields starting with field name
     const inputs = instance.$(`[old-name^="${field.oldName}"]`).get();
-    console.log(`repackFields: pruning: found ${inputs.length} inputs`);
+    // console.log(`repackFields: pruning: found ${inputs.length} inputs`);
 
     // for each input
     for (let input of inputs) {
@@ -115,22 +113,6 @@ const repackFields = (instance, fields) => {
       qInput.removeAttr('old-name');
     }
   }
-};
-
-const isArrayOfObjects = (schema, fieldName) => {
-  // console.log('field name', fieldName);
-  const fieldDefinition = schema.getDefinition(fieldName);
-  // console.log('field definition', fieldDefinition);
-  const childDefinition = schema.getDefinition(fieldName+'.$');
-  // console.log('child definition', childDefinition);
-  let result = false;
-  for (let t of childDefinition.type) {
-    if (t.type === Object) {
-      result = true;
-      break;
-    }
-  }
-  return result;
 };
 
 const getArrayFromDom = (instance, fieldName) => {
@@ -158,7 +140,7 @@ const getArrayFromDom = (instance, fieldName) => {
     // return an object representing the item
     return {arrayFieldName, oldName, newName, oldIndex, newIndex};
   });
-  console.log('getArrayFromDom: array', array);
+  // console.log('getArrayFromDom: array', array);
 
   // return the array
   return array;
@@ -202,21 +184,37 @@ Template.afArrayField_materialize.onRendered(() => {
       "afEachArrayItem");
   const fieldName = context.atts.name;
 
-  const dragContainer = instance.$('.dragContainer').get()[0];
-  instance.drake = dragula([dragContainer], {
-    moves(el, container, handle) {
-      return handle.classList.contains('dragHandle');
+  // setup drag and drop sorting
+  const sortableContainerSelector = '.js-autoform-array';
+  const sortableContainers = instance.$(sortableContainerSelector).get();
+  // console.log('sortable containers', sortableContainers);
+
+  const sortable = new Sortable(sortableContainers, {
+    draggable: '.js-autoform-array-item',
+    appendTo: 'body',
+    mirror: {
+      constrainDimensions: true,
     },
-    accepts(el, target, source, sibling) {
-      return sibling===null?true:!sibling.classList.contains('dragHeader');
-    }
   });
-  instance.drake.on('drop', (element, target, source, sibling) => {
 
-    // get the array tracker value
-    const array = getArrayFromDom(instance, fieldName);
+  // on sorted dag event
+  let isSorted = false;
+  sortable.on('sortable:sorted', (dragEvent) => {
+    isSorted = true;
+  });
 
-    // repack the fieds on the DOM
-    repackFields(instance, array);
+  // on sorted dag event
+  sortable.on('mirror:destroy', (dragEvent) => {
+    // console.log('mirror:destroy:', dragEvent);
+
+    // if the array was sorted
+    if (isSorted) {
+
+      // get the array tracker value
+      const array = getArrayFromDom(instance, fieldName);
+
+      // repack the fieds on the DOM
+      repackFields(instance, array);
+    }
   });
 });

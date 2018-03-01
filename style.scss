@@ -50,8 +50,28 @@
     min-width: 150px;
     // padding-top: 0.6rem;
   }
+}
 
-  .collection-item .primary-content .row {
-    margin-bottom: 0px;
-  }
+.collection-item .primary-content .row {
+  margin-bottom: 0px;
+}
+
+// daggable collections
+.draggable-source {
+  background-color: $secondary-color;
+}
+
+.draggable-mirror {
+  z-index: 99999;
+  // position: relative;
+  border-width: 2px;
+  border-style: solid;
+  border-color: $secondary-color;
+  background-color: white;
+}
+
+.collection .draggable--over {
+  border-width: 2px;
+  border-style: dashed;
+  border-color: $secondary-color;
 }

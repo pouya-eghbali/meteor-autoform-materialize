@@ -1,3 +1,6 @@
+#v 3.6.0
+ - Added ability to drag and drop sort array inputs [#33](https://github.com/mozfet/meteor-autoform-materialize/issues/33)
+
 #v 3.5.8
  - Fixed placeholder for select inputs [#23](https://github.com/mozfet/meteor-autoform-materialize/issues/23)
 
