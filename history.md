@@ -1,3 +1,8 @@
+#v 3.6.1
+ - Fixed super fast clicks in arrays [#37](https://github.com/mozfet/meteor-autoform-materialize/issues/37)
+ - Fixed array item values clearing bug
+ [#38](https://github.com/mozfet/meteor-autoform-materialize/issues/33)
+
 #v 3.6.0
  - Added ability to drag and drop sort array inputs [#33](https://github.com/mozfet/meteor-autoform-materialize/issues/33)
 
