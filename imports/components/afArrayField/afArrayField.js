@@ -195,6 +195,7 @@ Template.afArrayField_materialize.onRendered(() => {
     mirror: {
       constrainDimensions: true,
     },
+    delay: 250
   });
 
   // on sorted dag event
