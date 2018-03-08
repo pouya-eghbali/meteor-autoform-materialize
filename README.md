@@ -133,20 +133,6 @@ Have a look at the [playground](https://github.com/mozfet/meteor-autoform-materi
 
 ## Additional types ##
 
-### File Upload ###
-
-Upload files, with preview, using [Meteor Files](https://github.com/VeliovGroup/Meteor-Files).
-```
-fileUpload: {
-  type: String,
-  optional: true,
-  autoform: {
-    type: 'fileUpload',
-    collection: 'Files'
-  }
-}
-```
-
 ### Auto Complete ###
 
 MaterializeCSS is busy adding support for Auto Complete in V1, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For this reason this package makes use of a modified hard fork of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
@@ -334,6 +320,7 @@ This input type is intended to be used with `type: Date` schema keys, but it als
 To provide pickadate options, set a `pickadateOptions` attribute equal to a helper that returns the options object.
 
 ### FlowText ###
+
 You can apply it directly in your template:
 
 ```html
@@ -393,6 +380,7 @@ MySchema = new SimpleSchema({
   }
 });
 ```
+
 If you need other values than boolean, you may specify the `trueValue` or `falseValue` options to customize the switch.
 
 At the template level:
@@ -416,7 +404,19 @@ MySchema = new SimpleSchema({
 
 ### File Upload ###
 
-See [mozfet:autoform-materialize-file](https://github.com/mozfet/meteor-autoform-file)
+Upload files, with preview, using [Meteor Files](https://github.com/VeliovGroup/Meteor-Files).
+```
+fileUpload: {
+  type: String,
+  optional: true,
+  autoform: {
+    type: 'fileUpload',
+    collection: 'Files'
+  }
+}
+```
+
+Alternatively, see [mozfet:autoform-materialize-file](https://github.com/mozfet/meteor-autoform-file)
 
 ### Input with prepended icon ###
 
@@ -435,6 +435,7 @@ It also works for textarea:
 ```
 
 ### Default Values ###
+
 You can easily add a default value to a select, text, number, autocomplete (more coming soon) input in the schema.
 ```js
 selectWithDefault: {
