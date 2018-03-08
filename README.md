@@ -133,6 +133,20 @@ Have a look at the [playground](https://github.com/mozfet/meteor-autoform-materi
 
 ## Additional types ##
 
+### File Upload ###
+
+Upload files, with preview, using [Meteor Files](https://github.com/VeliovGroup/Meteor-Files).
+```
+fileUpload: {
+  type: String,
+  optional: true,
+  autoform: {
+    type: 'fileUpload',
+    collection: 'Files'
+  }
+}
+```
+
 ### Auto Complete ###
 
 MaterializeCSS is busy adding support for Auto Complete in V1, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For this reason this package makes use of a modified hard fork of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
