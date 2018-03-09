@@ -17,7 +17,7 @@
 
 ## Dependancies
 
-Version 3.6.1 of this package was manual smoke tested in Playground 3.6.1 and seemed to work ok using:
+Version 3.6.2 of this package was manual smoke tested in Playground 3.6.2 and seemed to work ok using:
 + Chrome Version 62.0.3202.94 (Official Build) (64-bit)
 + Meteor 1.6.0.1
 + Simple Schema 0.5 (NPM Package)

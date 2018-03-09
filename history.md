@@ -1,3 +1,6 @@
+#v 3.6.2
+ - Fixed select and multi select [#39](https://github.com/mozfet/meteor-autoform-materialize/issues/39)
+
 #v 3.6.1
  - Fixed super fast clicks in arrays [#37](https://github.com/mozfet/meteor-autoform-materialize/issues/37)
  - Fixed array item values clearing bug
