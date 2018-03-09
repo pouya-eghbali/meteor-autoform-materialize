@@ -9,9 +9,15 @@ import { initializeSelect } from '../../utilities/initializeSelect';
 Template.afSelect_materialize.helpers({
   atts: attsToggleInvalidClass,
   optionAtts: optionAtts,
-  value() {
-    const instance = Template.instance();
-    return instance.data.value?instance.data.value:instance.data.atts.default;
+  firstValueSelected: function () {
+    const data = Template.currentData();
+    if (isEmptySelect(data.value) &&
+        (data.atts.firstOption || data.atts.placeholder)) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 });
 

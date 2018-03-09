@@ -2,6 +2,7 @@
 
 export const optionAtts = function () {
   const option = this;
+  console.log('option:', option);
   const atts = {
     value: option.value,
   };
@@ -11,6 +12,9 @@ export const optionAtts = function () {
 
     // change label to placeholder if it exists
     option.label = option.atts.placeholder?option.atts.placeholder:option.label;
+
+    // the first item cannot be selected
+    // atts.disabled = '';
   }
 
   if (option.selected) {

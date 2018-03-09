@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 
 export const initializeSelect = function () {
   const instance = Template.instance();
-  console.log('initialise select instance data:', instance.data);
+  console.log('initialise select instance data:', _.clone(instance.data));
 
   const select = instance.$('select');
   select.material_select();
@@ -11,17 +11,32 @@ export const initializeSelect = function () {
   const initialize = _.debounce(() => {
 
     // init value for single select with predefined value or default
-    instance.data.value = instance.data.value?instance.data.value:instance.data.atts.default;
+    console.log(`Select ${instance.data.name} has value ${_.clone(instance.data.value)}`);
 
-    // if value is defined and not empty and not and array
-    if (!_.isUndefined(instance.data.value) && !_.isEmpty(instance.data.value) && !_.isArray(instance.data.value)) {
+    // if value is defined and not empty
+    if (!_.isUndefined(instance.data.value) && !_.isEmpty(instance.data.value)) {
 
-        // init value for multiple select
-        // console.log('initialize select option jquery selector = "option[value="'+instance.data.value+'"]');
-        // console.log('initialize select instance options =', $('#'+instance.data.atts.id+' option'));
-        // console.log('initialize select option element =', $('#'+instance.data.atts.id+' option[value="'+instance.data.value+'"]'));
-        // find the option for value and select it
-        $('#'+instance.data.atts.id+' option[value="'+instance.data.value+'"]').attr('selected', true);
+      // if value is array
+      if (_.isArray(instance.data.value)) {
+
+        // for each value
+        for (let value of instance.data.value) {
+          console.log(`init select option ${value}`);
+
+          // select option
+          $(`#${instance.data.atts.id} option[value="${value}"]`)
+              .attr('selected', true);
+        }
+      }
+
+      // else - value is not array
+      else {
+        console.log(`init select option ${instance.data.value}`);
+
+          // select option
+          $(`#${instance.data.atts.id} option[value="${instance.data.value}"]`)
+              .attr('selected', true);
+      }
     }
 
     // init materialize form component
