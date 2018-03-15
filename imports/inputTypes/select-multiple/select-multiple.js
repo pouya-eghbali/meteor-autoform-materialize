@@ -7,7 +7,7 @@ import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass';
 import { initializeSelect } from '../../utilities/initializeSelect';
 
 const isEmptySelect = value => {
-  console.log(`Test for empty value:`, _.clone(value));
+  // console.log(`Test for empty value:`, _.clone(value));
   const valueIsEmptyArray = _.isArray(value) &&
       (value.length === 1) && (_.isEmpty(_.first(value)));
   if (_.isEmpty(value) || valueIsEmptyArray) {
@@ -34,11 +34,11 @@ const isPlaceholderValue = (data) => {
 
 Template.afSelectMultiple_materialize.onCreated(() => {
   const instance = Template.instance();
-  console.log(`instance data:`, _.clone(instance.data));
+  // console.log(`instance data:`, _.clone(instance.data));
 
   // if there is a placeholder and the value is empty
   if (isPlaceholderValue(instance.data)) {
-    console.log(`there is a placeholder and the value is empty`);
+    // console.log(`there is a placeholder and the value is empty`);
 
     // set the autoform value to the placeholder
   }
@@ -50,7 +50,7 @@ Template.afSelectMultiple_materialize.onRendered(() => {
   const select = instance.$('select');
   select.material_select();
 
-  console.log(`select was rendered and initialized`);
+  // console.log(`select was rendered and initialized`);
 
   // // for each selected option in value
   // for (let value of instance.data.value) {

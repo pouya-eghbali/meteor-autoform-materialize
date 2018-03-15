@@ -22,7 +22,7 @@ const textToParagraphs = (text) => {
 AutoForm.addInputType('flowtext', {
   template: 'afInputFlowtext_materialize',
   valueOut: function() {
-    console.log('flowtext: valueOut.this', this);
+    // console.log('flowtext: valueOut.this', this);
     return this.val();
   }
 });

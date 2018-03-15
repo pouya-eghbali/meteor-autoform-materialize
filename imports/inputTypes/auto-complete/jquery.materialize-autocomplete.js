@@ -163,29 +163,29 @@
       // handle a list for a value
       function handleList (value, list) {
         var itemsHtml = getItemsHtml(list);
-        console.log('ac.init.handleList.itemsHtml', itemsHtml);
+        // console.log('ac.init.handleList.itemsHtml', itemsHtml);
         var currentValue = self.$el.val();
-        console.log('ac.init.handleList.currentValue', currentValue);
+        // console.log('ac.init.handleList.currentValue', currentValue);
 
         // if ignorecase
         if (self.options.ignoreCase) {
 
           // convert current value to upper case
           currentValue = currentValue.toUpperCase();
-          console.log('ac.init.handleList.currentValue.toUpperCase:', currentValue);
+          // console.log('ac.init.handleList.currentValue.toUpperCase:', currentValue);
         }
 
         // if cacheable and there is a value to cache
         if (self.options.cacheable && !self.resultCache.hasOwnProperty(value)) {
 
           // cache the list
-          console.log('ac.init.handleList.cacheListForValue', value);
+          // console.log('ac.init.handleList.cacheListForValue', value);
           self.resultCache[value] = list;
         }
 
         // if handling a value that is not the current value
         if (value !== currentValue) {
-          console.log('ac.init.handleList.valueIsNotCurrentValue', value, currentValue);
+          // console.log('ac.init.handleList.valueIsNotCurrentValue', value, currentValue);
 
           // return false... why, what is done with it
           return false;
@@ -193,7 +193,7 @@
 
         // if there is html items
         if (itemsHtml) {
-          console.log('ac.init.handleList.itemsHtml.showDropdown');
+          // console.log('ac.init.handleList.itemsHtml.showDropdown');
 
           // set the dropdown html to the items
           self.$dropdown.html(itemsHtml);
@@ -204,7 +204,7 @@
         }
         // else there is not items html
         else {
-          console.log('ac.init.handleList.itemsHtml.hideDropdown');
+          // console.log('ac.init.handleList.itemsHtml.hideDropdown');
 
           // hide the dropdown
           self.$dropdown.hide();
@@ -218,17 +218,17 @@
       self.compiled.item = template(self.options.dropdown.itemTemplate);
 
       // renders the autocomplete object
-      console.log('ac.init.handleList.render');
+      // console.log('ac.init.handleList.render');
       self.render();
 
       // set value to an array if enabled, else to a string
       if (self.options.value) {
-        console.log('ac.jquery.init: val:', self.options.value);
+        // console.log('ac.jquery.init: val:', self.options.value);
         self.value = self.options.value;
         if (self.options.multiple.enable && _.isArray(self.value)) {
 
           _.each( self.value, (val) => {
-            console.log('ac.jquery.init: append val:', val);
+            // console.log('ac.jquery.init: append val:', val);
             //find the item for val
 
             self.options.getData(val, (value, data) => {
@@ -239,13 +239,13 @@
         }
       }
       else {
-        console.log('ac.jquery.init: empty val');
+        // console.log('ac.jquery.init: empty val');
         self.value = self.options.multiple.enable ? [] : '';
       }
 
       // event handler, when user inputs text
       self.$el.on('input', function (e) {
-        console.log('ac.jquery.acInput.onInput');
+        // console.log('ac.jquery.acInput.onInput');
 
         // get the value of the input
         var $t = $(this);
@@ -253,7 +253,7 @@
 
         // if there is no value
         if (!value) {
-          console.log('ac.jquery.acInput.onInput.noValue.hideDropdown');
+          // console.log('ac.jquery.acInput.onInput.noValue.hideDropdown');
 
           //hide the dropdown
           self.$dropdown.hide();
@@ -261,37 +261,37 @@
           return false;
         }
         else {
-          console.log('ac.jquery.acInput.onInput.value:', value);
+          // console.log('ac.jquery.acInput.onInput.value:', value);
         }
 
         if (self.options.ignoreCase) {
           value = value.toUpperCase();
-          console.log('ac.jquery.acInput.onInput.value.toUpperCase.value:', value);
+          // console.log('ac.jquery.acInput.onInput.value.toUpperCase.value:', value);
         }
 
         if (self.resultCache.hasOwnProperty(value) && self.resultCache[value]) {
-          console.log('ac.jquery.acInput.onInput.cache');
+          // console.log('ac.jquery.acInput.onInput.cache');
           handleList(value, self.resultCache[value]);
           return true;
         }
 
         if (self.options.throttling) {
-          console.log('ac.jquery.acInput.onInput.throttling');
+          // console.log('ac.jquery.acInput.onInput.throttling');
           clearTimeout(timer);
           timer = setTimeout(function () {
-            console.log('ac.jquery.acInput.onInput.trottling.getData');
+            // console.log('ac.jquery.acInput.onInput.trottling.getData');
             self.options.getData(value, handleList);
           }, 200);
           return true;
         }
 
-        console.log('ac.jquery.acInput.onInput.getData');
+        // console.log('ac.jquery.acInput.onInput.getData');
         self.options.getData(value, handleList);
       });
 
       // event handler, when user press down key
       self.$el.on('keydown', function (e) {
-        console.log('ac.jquery.input.onKeydown');
+        // console.log('ac.jquery.input.onKeydown');
         var $t = $(this);
         var keyCode = e.keyCode;
         var $items, $hover;
@@ -346,7 +346,7 @@
       });
 
       self.$dropdown.on('click', '[data-id]', function (e) {
-        console.log('ac.jquery.dropdown.onClick:', this, e);
+        // console.log('ac.jquery.dropdown.onClick:', this, e);
         var $t = $(this);
         var item = {
           id: $t.data('id'),
@@ -356,7 +356,7 @@
       });
 
       self.$appender.on('click', '[data-id] .close', function (e) {
-        console.log('ac.jquery.appender.close.onClick');
+        // console.log('ac.jquery.appender.close.onClick');
         var $t = $(this);
         var $li = $t.closest('[data-id]');
         var item = {
@@ -494,7 +494,7 @@
 
     },
     select: function (item) {
-      console.log('select:', item);
+      // console.log('select:', item);
       var self = this;
 
       self.value = item.text;

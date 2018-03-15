@@ -17,25 +17,25 @@ AutoForm.addInputType('autocomplete', {
 //when created
 Template.afAutoComplete_materialize.onCreated(() => {
   const instance = Template.instance();
-  console.log('autoComplete.onCreated.instance:', instance);
+  // console.log('autoComplete.onCreated.instance:', instance);
 
   // initialise multiple
   const multiple = instance.data.atts && instance.data.atts.multiple?
       instance.data.atts.multiple:false;
-  console.log('autoComplete.onCreated.multiple:', multiple);
+  // console.log('autoComplete.onCreated.multiple:', multiple);
   instance.multiple = multiple;
 
   // initialise value
   let value = instance.data.value?instance.data.value:instance.data.atts.default;
   value = _.isUndefined(value)?(instance.multiple?[]:''):value;
-  console.log('autoComplete.onCreated.value:', value);
+  // console.log('autoComplete.onCreated.value:', value);
   instance.value = new ReactiveVar(value);
 
   // initialise input value
   // const inputValue = instance.data.atts.multiple?'':value;
   const inputValue = '';
   instance.inputValue = new ReactiveVar(inputValue);
-  console.log('autoComplete.onCreated.inputValue:', inputValue);
+  // console.log('autoComplete.onCreated.inputValue:', inputValue);
 
   // initialise options and sort them by label
   let options = instance.data.selectOptions?instance.data.selectOptions:[];
@@ -47,7 +47,7 @@ Template.afAutoComplete_materialize.onCreated(() => {
   options = _.sortBy(options, (opt) => {
     return opt.label;
   });
-  console.log('autoComplete.onCreated.options:', options);
+  // console.log('autoComplete.onCreated.options:', options);
   instance.options = options;
 
   // initialise items
@@ -56,13 +56,13 @@ Template.afAutoComplete_materialize.onCreated(() => {
   // initialise display limit
   const displayLimit = instance.data.atts && instance.data.atts.displayLimit?
       instance.data.atts.displayLimit:20;
-  console.log('autoComplete.onCreated.displayLimit:', displayLimit);
+  // console.log('autoComplete.onCreated.displayLimit:', displayLimit);
   instance.displayLimit = displayLimit;
 
   // initialise placeholder
   const placeholder = instance.data.atts && instance.data.atts.placeholder?
       instance.data.atts.placeholder:undefined;
-  console.log('autoComplete.onCreated.placeholder:', placeholder);
+  // console.log('autoComplete.onCreated.placeholder:', placeholder);
   instance.placeholder = new ReactiveVar(placeholder);
 });
 
@@ -72,11 +72,11 @@ Template.afAutoComplete_materialize.onRendered(() => {
 
   // assign label to instance
   instance.$label = instance.$('.auto-complete').parent().find('label');
-  console.log('autocomplete.onRendered.instance.$label:', instance.$label);
+  // console.log('autocomplete.onRendered.instance.$label:', instance.$label);
 
   // assign hidden to instance
   instance.$hidden = instance.$('.auto-complete-hidden-select');
-  console.log('autocomplete.onRendered.instance.$hidden:', instance.$hidden);
+  // console.log('autocomplete.onRendered.instance.$hidden:', instance.$hidden);
 
   // initialise the dropdown - probably not needed
   instance.$('.auto-complete-input').dropdown({
@@ -130,7 +130,7 @@ Template.afAutoComplete_materialize.onRendered(() => {
 
         // if there is a input value
         if (!_.isUndefined(inputValue) && !_.isEmpty(inputValue)) {
-          console.log('autocomplete.onRendered.autorun.generateItems.inputValuePresent:', inputValue);
+          // console.log('autocomplete.onRendered.autorun.generateItems.inputValuePresent:', inputValue);
 
           // get display limit
           const displayLimit = instance.displayLimit;
@@ -191,7 +191,7 @@ Template.afAutoComplete_materialize.onRendered(() => {
         }
         //else - no input value
         else {
-          console.log('autocomplete.onRendered.autorun.generateItems.noInputValuePresent:', inputValue);
+          // console.log('autocomplete.onRendered.autorun.generateItems.noInputValuePresent:', inputValue);
 
           // clear the instance items
           instance.items.clear();
@@ -228,12 +228,12 @@ Template.afAutoComplete_materialize.helpers({
 
       // get value
       const value = instance.value.get();
-      console.log('autoComplete.helpers.inputAtts.value:', value);
+      // console.log('autoComplete.helpers.inputAtts.value:', value);
 
       if (!_.isUndefined(value) && !_.isEmpty(value)) {
 
         // find option for value
-        console.log('autoComplete.helpers.inputAtts.options:', instance.options);
+        // console.log('autoComplete.helpers.inputAtts.options:', instance.options);
         const option = _.find(instance.options, (opt) => {
           return value === opt.value;
         });
@@ -288,7 +288,7 @@ Template.afAutoComplete_materialize.helpers({
       return val === option.value;
     });
     if (valueHasOption) {
-      console.log('autoComplete.helpers.selectedOption.valueHasOption:', valueHasOption);
+      // console.log('autoComplete.helpers.selectedOption.valueHasOption:', valueHasOption);
 
       // return selected true
       return true;
@@ -366,21 +366,21 @@ Template.afAutoComplete_materialize.events({
 
     // get the input value
     const inputValue = event.currentTarget.value;
-    console.log('autoComplete.events.input.inputValue:', inputValue);
+    // console.log('autoComplete.events.input.inputValue:', inputValue);
     instance.inputValue.set(inputValue);
 
     // get the key that was pressed
     const key = event.which;
-    console.log('autoComplete.events.input.key:', key);
+    // console.log('autoComplete.events.input.key:', key);
 
     // if key is enter
     if (key === 13) {
-      console.log('autoComplete.events.input.key.enter');
+      // console.log('autoComplete.events.input.key.enter');
 
     }
     // if key is backspace
     else if (key === 8) {
-      console.log('autoComplete.events.input.key.backspace');
+      // console.log('autoComplete.events.input.key.backspace');
       // if input has value
         // backspace on input
       // else - input has no value
@@ -389,17 +389,17 @@ Template.afAutoComplete_materialize.events({
     }
     // else if key is up
     else if (key === 38) {
-      console.log('autoComplete.events.input.key.up');
+      // console.log('autoComplete.events.input.key.up');
       // select the previous item on the list
     }
     // else if key is down
     else if (key === 40) {
-      console.log('autoComplete.events.input.key.down');
+      // console.log('autoComplete.events.input.key.down');
       // select the next item on the list
     }
     // else - any other key is pressed
     else {
-      console.log('autoComplete.events.input.other');
+      // console.log('autoComplete.events.input.other');
     }
 
     // mark the event as handled
@@ -408,15 +408,15 @@ Template.afAutoComplete_materialize.events({
 
   // when click on dropdown item
   'click li'(event, instance) {
-    console.log('autoComplete.events.click.li', event.currentTarget);
+    // console.log('autoComplete.events.click.li', event.currentTarget);
     const value = $(event.currentTarget).data('value');
-    console.log('autoComplete.events.click.li.value:', value);
+    // console.log('autoComplete.events.click.li.value:', value);
     const label = $(event.currentTarget).data('label');
-    console.log('autoComplete.events.click.li.lable:', label);
+    // console.log('autoComplete.events.click.li.lable:', label);
 
     // if multiple
     if (instance.multiple) {
-      console.log('autoComplete.events.click.li.multiple:', instance.multiple);
+      // console.log('autoComplete.events.click.li.multiple:', instance.multiple);
 
       // get the instance value
       let instanceValue = instance.value.get();
@@ -436,7 +436,7 @@ Template.afAutoComplete_materialize.events({
     }
     // else - singular
     else {
-      console.log('autoComplete.events.click.li.singular');
+      // console.log('autoComplete.events.click.li.singular');
 
       // set the instance value
       instance.value.set(value);
@@ -451,9 +451,9 @@ Template.afAutoComplete_materialize.events({
 
   // when click on tag icon
   'click .tags i'(event, instance) {
-    console.log('autoComplete.events.click.closeTag');
+    // console.log('autoComplete.events.click.closeTag');
     const value = $(event.currentTarget).data('value');
-    console.log('autoComplete.events.click.closeTag.value:', value);
+    // console.log('autoComplete.events.click.closeTag.value:', value);
     const instanceValue = instance.value.get();
     const newValue = _.without(instanceValue, value);
     instance.value.set(newValue);
