@@ -1,6 +1,6 @@
 <template name="afInputFlowtext_materialize">
   {{#each paragraph in paragraphs}}
-    <p class="flow-text">{{paragraph}}</p>
+    <p class="{{paragraphClass}}">{{paragraph}}</p>
   {{/each}}
   <input type="hidden" value="{{value}}" {{atts}}>
 </template>

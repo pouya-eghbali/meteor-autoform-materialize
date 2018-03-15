@@ -1,3 +1,7 @@
+#v 3.6.3
+ - Removed logging
+ - Added class override ability for flowtext input
+
 #v 3.6.2
  - Fixed select and multi select [#39](https://github.com/mozfet/meteor-autoform-materialize/issues/39)
 

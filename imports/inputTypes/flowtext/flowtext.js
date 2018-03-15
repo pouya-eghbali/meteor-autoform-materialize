@@ -45,6 +45,12 @@ Template.afInputFlowtext_materialize.helpers({
   paragraphs() {
     const instance = Template.instance();
     return textToParagraphs(instance.data.value);
+  },
+
+  paragraphClass() {
+    const instance = Template.instance();
+    return _.isUndefined(instance.data.atts.paragraphClass)?'flow-text':
+        instance.data.atts.paragraphClass;
   }
 
 });
