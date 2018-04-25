@@ -2,7 +2,6 @@
 
 export const optionAtts = function () {
   const option = this;
-  console.log('option:', option);
   const atts = {
     value: option.value,
   };
