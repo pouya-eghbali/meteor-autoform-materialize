@@ -232,7 +232,7 @@
             //find the item for val
 
             self.options.getData(val, (value, data) => {
-              console.log('value', value, 'has data', data);
+              //console.log('value', value, 'has data', data);
               self.append(data[0]);
             });
           });

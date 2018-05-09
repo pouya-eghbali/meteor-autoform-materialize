@@ -340,7 +340,7 @@ Template.afAutoComplete_materialize.events({
 
   // when focus on auto complete input
   'focus .auto-complete-input'(event, instance) {
-    console.log('focus', instance.data.atts.name);
+    // console.log('focus', instance.data.atts.name);
     instance.$label.addClass('active');
   },
 
@@ -349,11 +349,11 @@ Template.afAutoComplete_materialize.events({
     // console.log('autoComplete.events.keydown:', event);
     // if key is enter
     if ( event.which === 13) {
-      console.log('autoComplete.events.keydown.key.enter');
+      //console.log('autoComplete.events.keydown.key.enter');
 
       //TODO select item
 
-      console.log('autoComplete.events.keydown.key.enter.stopPropagation');
+      //console.log('autoComplete.events.keydown.key.enter.stopPropagation');
       event.stopPropagation();
       return false;
     }
