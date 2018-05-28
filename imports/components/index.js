@@ -3,6 +3,5 @@
 import './afArrayField';
 import './afFormGroup';
 import './afObjectField';
-import './afQuickField';
 import './autoForm';
 import './quickForm';
