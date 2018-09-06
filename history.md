@@ -1,3 +1,6 @@
+#v 4.0.1
+ - Update all dependancies to latest versions
+
 #v 4.0.0
  - Upgrade to MaterializeCSS V1 RC2
 
