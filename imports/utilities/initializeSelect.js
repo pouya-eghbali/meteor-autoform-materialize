@@ -1,20 +1,16 @@
-/*jshint esversion: 6 */
-import { Template } from 'meteor/templating';
+import { Template } from 'meteor/templating'
 
 export const initializeSelect = function () {
-  const instance = Template.instance();
-  // console.log('initialise select instance data:', _.clone(instance.data));
+  const instance = Template.instance()
 
-  const select = instance.$('select');
-  select.material_select();
+  const select = instance.$('select')
+  select.formSelect()
 
   const initialize = _.debounce(() => {
 
-    // init value for single select with predefined value or default
-    // console.log(`Select ${instance.data.name} has value ${_.clone(instance.data.value)}`);
-
     // if value is defined and not empty
-    if (!_.isUndefined(instance.data.value) && !_.isEmpty(instance.data.value)) {
+    if (!_.isUndefined(instance.data.value) &&
+        !_.isEmpty(instance.data.value)) {
 
       // if value is array
       if (_.isArray(instance.data.value)) {
@@ -25,7 +21,7 @@ export const initializeSelect = function () {
 
           // select option
           $(`#${instance.data.atts.id} option[value="${value}"]`)
-              .attr('selected', true);
+              .attr('selected', true)
         }
       }
 
@@ -35,19 +31,19 @@ export const initializeSelect = function () {
 
           // select option
           $(`#${instance.data.atts.id} option[value="${instance.data.value}"]`)
-              .attr('selected', true);
+              .attr('selected', true)
       }
     }
 
     // init materialize form component
-    select.material_select();
-  }, 500);
+    select.formSelect()
+  }, 500)
 
   // autorun
   instance.autorun(function () {
 
     // reinitialize select when data changes
-    const currentData = Template.currentData();
-    initialize();
-  });
-};
+    const currentData = Template.currentData()
+    initialize()
+  })
+}

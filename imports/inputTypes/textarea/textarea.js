@@ -13,5 +13,5 @@ Template.afTextarea_materialize.helpers({
 
 Template.afTextarea_materialize.onRendered(() => {
   const instance = Template.instance();
-  instance.$('textarea').characterCounter();
+  // instance.$('textarea').characterCounter();
 });

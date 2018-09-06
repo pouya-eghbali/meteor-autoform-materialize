@@ -1,3 +1,6 @@
+#v 4.0.0
+ - Upgrade to MaterializeCSS V1 RC2
+
 #v 3.6.3
  - Removed logging
  - Added class override ability for flowtext input

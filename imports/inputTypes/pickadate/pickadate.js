@@ -94,10 +94,10 @@ Template.afPickadate.onRendered(() => {
     hiddenName: true,
     closeOnSelect: true
   });
-  const input = instance.$('input').pickadate(opts);
+  const input = instance.$('input').datepicker(opts);
 
   //get picker
-  const picker = input.pickadate('picker');
+  const picker = input.datepicker('picker');
 
   //get label - seems not to be needed anymore
   // const qInput = $('#'+instance.data.atts.id);
