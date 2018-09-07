@@ -30,45 +30,11 @@ const isPlaceholderValue = (data) => {
   return placeholder(data) && isEmptySelect(data.value)
 };
 
-Template.afSelectMultiple_materialize.onCreated(() => {
-  const instance = Template.instance()
-
-  // if there is a placeholder and the value is empty
-  if (isPlaceholderValue(instance.data)) {
-
-    // set the autoform value to the placeholder
-  }
-})
-
 Template.afSelectMultiple_materialize.onRendered(() => {
   const instance = Template.instance()
 
   const select = instance.$('select')
   select.formSelect();
-
-  // console.log(`select was rendered and initialized`);
-
-  // // for each selected option in value
-  // for (let value of instance.data.value) {
-  //   console.log(`init select option ${value}`);
-  //
-  //   // select option on the dom, but this is already done by optionAttr helper!
-  //   $(`#${instance.data.atts.id} option[value="${value}"]`)
-  //       .attr('selected', true);
-  // }
-
-  // // react when instance data changes
-  // instance.autorun(() => {
-  //   const data = Template.currentData();
-  //
-  //   // if the value is empty and there is a placeholder
-  //   if (data && isEmptySelect(data.value)) {
-  //     console.log(`${data.name} is empty`);
-  //
-  //     // set the placeholder of the materialize input
-  //   }
-  // });
-
 });
 
 Template.afSelectMultiple_materialize.helpers({
