@@ -43,16 +43,16 @@ Template.afSelect_materialize.onRendered(() => {
   //   }
   // })
 
-  instance.autorun(() => {
-    const item = instance.selectedItem.get()
-    if (item._id !== "AUTOFORM_EMPTY_FIRST_OPTION") {
-      console.log('selected item is not the empty first option')
-      instance.firstItemWasUnSelected.set(true)
-    }
-    else {
-      console.log('selected item is the empty first option')
-    }
-  })
+  // instance.autorun(() => {
+  //   const item = instance.selectedItem.get()
+  //   if (item._id !== "AUTOFORM_EMPTY_FIRST_OPTION") {
+  //     console.log('selected item is not the empty first option')
+  //     instance.firstItemWasUnSelected.set(true)
+  //   }
+  //   else {
+  //     console.log('selected item is the empty first option')
+  //   }
+  // })
 })
 
 Template.afSelect_materialize.helpers({
@@ -63,8 +63,8 @@ Template.afSelect_materialize.helpers({
     instance.firstItemWasUnSelected.get()
 
     const data = Template.currentData()
-    console.log('select data', data)
-    console.log('option', option)
+    // console.log('select data', data)
+    // console.log('option', option)
     const atts = {
       value: option.value,
     }
@@ -81,7 +81,7 @@ Template.afSelect_materialize.helpers({
     //       atts.disabled = ''
     //     }
     //   }
-    // }    
+    // }
 
     if (option.selected) {
       atts.selected = ''
