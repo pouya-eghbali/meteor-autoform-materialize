@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating'
-import {ReactiveArray} from 'meteor/manuel:reactivearray'
 import './auto-complete.html'
 // import './jquery.materialize-autocomplete'
 

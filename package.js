@@ -7,17 +7,18 @@ Package.describe({
 
 Npm.depends({
   'moment': '2.18.0',
-  // 'underscore': '1.8.3',
   '@shopify/draggable': '1.0.0-beta.4'
 });
 
 Package.onUse(function(api) {
   api.versionsFrom('METEOR@1.6');
-  api.use(['templating', 'underscore'], 'client');
   api.use('ecmascript@0.7.2');
-  api.use('aldeed:autoform@6.2.0');
-  api.use('mozfet:materialize-icons@1.0.1');
+  api.use([
+    'underscore',
+    'templating@1.2.13',
+    'aldeed:autoform@6.2.0',
+    'mozfet:materialize-icons@1.0.1'
+  ], 'client');
   api.use('fourseven:scss@4.9.0');
-  api.use('manuel:reactivearray@1.0.6');
   api.addFiles(['index.js', 'style.scss'], 'client');
 });
