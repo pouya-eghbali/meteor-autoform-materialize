@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-
 import { Template } from 'meteor/templating'
 import { AutoForm } from 'meteor/aldeed:autoform'
 import './pickadate.html'
@@ -71,7 +69,7 @@ Template.afPickadate.onRendered(() => {
     instance.$('input').parent().find('label').addClass('active')
   }
 
-  //init pickadate
+  // init pickadate
   const userOptions = instance.data.atts.pickadateOptions || {}
   // console.log('pickadate user options', userOptions);
   const options = _.defaults(userOptions, {
