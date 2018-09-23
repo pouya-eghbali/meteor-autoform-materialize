@@ -71,7 +71,7 @@ Template.afPickadate.onRendered(() => {
 
   // init pickadate
   const userOptions = instance.data.atts.pickadateOptions || {}
-  // console.log('pickadate user options', userOptions);
+  console.log('pickadate user options', userOptions)
   const options = _.defaults(userOptions, {
     format: DATE_FORMAT_PICKER,
     // hiddenName: true,
@@ -91,6 +91,17 @@ Template.afPickadate.onRendered(() => {
     // set picker max date
     options.maxDate = instance.data.max
   }
+
+  // if container is specified
+  console.log('options.container', typeof options.container)
+  if (typeof options.container === 'string') {
+
+    const q = $(options.container)
+    console.log('element', q)
+    options.container = q
+  }
+
+  console.log('options', options)
 
   const input = instance.$('input')
   M.Datepicker.init(input, options)

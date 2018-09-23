@@ -254,12 +254,11 @@ MySchema = new SimpleSchema({
     autoform: {
       type: 'pickadate',
       pickadateOptions: {
-        closeOnSelect: true,
-        closeOnClear: true
+        container: '#modalContainer'
       }
     }
   }
-});
+})
 ```
 
 ### PickATime ###
@@ -290,7 +289,7 @@ MySchema = new SimpleSchema({
       }
     }
   }
-});
+})
 ```
 
 Note that when using PickATime with an initialised value from a doc, that the default time and fromnow is overwritten with the value from the doc.
