@@ -1,150 +1,110 @@
 /*jshint esversion: 6 */
 
-import { Template } from 'meteor/templating';
-import { AutoForm } from 'meteor/aldeed:autoform';
-import './pickadate.html';
-import moment from 'moment';
+import { Template } from 'meteor/templating'
+import { AutoForm } from 'meteor/aldeed:autoform'
+import './pickadate.html'
+import moment from 'moment'
 
-var DEFAULT_PICKADATE_FORMAT_SUBMIT = 'yyyy/mm/dd';
+var DATE_FORMAT_PICKER = 'd mmmm yyyy'
+var DATE_FORMAT_INPUT = 'D MMMM YYYY'
 
 AutoForm.addInputType('pickadate', {
   template: 'afPickadate',
   valueIn: function(val, atts) {
-    var result, timezoneId;
-    result = val;
-    timezoneId = atts.timezoneId;
-    if (typeof timezoneId === 'string') {
-      if (typeof moment.tz !== 'function') {
-        throw new Error('If you specify a timezoneId, make sure that you\'ve added a moment-timezone package to your app');
-      }
-      if (val instanceof Date) {
-        result = moment(
-          AutoForm.Utility.dateToNormalizedLocalDateAndTimeString(val, timezoneId),
-          'YYYY-MM-DD[T]HH:mm:ss.SSS'
-        ).toDate();
-      }
-    }
-    return result;
+    console.log('locale', moment.locale())
+    return val instanceof Date?moment(val).format(DATE_FORMAT_INPUT):val
   },
   valueOut: function() {
-    var picker = this.pickadate('picker');
-    var item   = picker && picker.get('select');
-    const value = item && item.obj;
+    const value = this.val()
     if (value) {
-      return moment(value).format();
+      return moment(value, DATE_FORMAT_INPUT).toDate()
     } else {
-      return null;
+      return null
     }
   },
   valueConverters: {
     'string': function(val) {
       if (val instanceof Date) {
-        return val.toString();
+        return val.toString()
       } else {
-        return val;
+        return val
       }
     },
     'stringArray': function(val) {
       if (val instanceof Date) {
-        return [val.toString()];
+        return [val.toString()]
       }
-      return val;
+      return val
     },
     'number': function(val) {
       if (val instanceof Date) {
-        return val.getTime();
+        return val.getTime()
       } else {
-        return val;
+        return val
       }
     },
     'numberArray': function(val) {
       if (val instanceof Date) {
-        return [val.getTime()];
+        return [val.getTime()]
       }
-      return val;
+      return val
     },
     'dateArray': function(val) {
       if (val instanceof Date) {
-        return [val];
+        return [val]
       }
-      return val;
+      return val
     }
   },
   contextAdjust: function(context) {
     if (context.atts.timezoneId) {
-      context.atts["data-timezone-id"] = context.atts.timezoneId;
+      context.atts["data-timezone-id"] = context.atts.timezoneId
     }
-    delete context.atts.timezoneId;
-    return context;
+    delete context.atts.timezoneId
+    return context
   }
-});
+})
 
 Template.afPickadate.onRendered(() => {
   const instance = Template.instance();
 
   if (instance.data.value) {
-    instance.$('input').parent().find('label').addClass('active');
+    instance.$('input').parent().find('label').addClass('active')
   }
 
   //init pickadate
-  const userOptions = instance.data.atts.pickadateOptions || {};
+  const userOptions = instance.data.atts.pickadateOptions || {}
   // console.log('pickadate user options', userOptions);
-  const opts = _.defaults(userOptions, {
-    format: DEFAULT_PICKADATE_FORMAT_SUBMIT,
-    hiddenName: true,
-    closeOnSelect: true
-  });
-  const input = instance.$('input').datepicker(opts);
+  const options = _.defaults(userOptions, {
+    format: DATE_FORMAT_PICKER,
+    // hiddenName: true,
+    autoClose: true
+  })
 
-  //get picker
-  const picker = input.datepicker('picker');
+  // if data min is a date
+  if (instance.data.min instanceof Date) {
 
-  //get label - seems not to be needed anymore
-  // const qInput = $('#'+instance.data.atts.id);
-  // console.log('pickatime.qInput', qInput);
-  // const qParent = qInput.parent().parent().parent();
-  // console.log('pickatime.qParent', qParent.html());
-  // const qLabel = qParent.find('label');
-  //console.log('pickatime.qLabel', qLabel);
+    // set picker min date
+    options.minDate = instance.data.min
+  }
 
-  //autorun - reactive set picker to data value, min and max
-  instance.autorun(() => {
+  // if data max is a date
+  if (instance.data.max instanceof Date) {
 
-    //when data changes
-    const data = Template.currentData();
+    // set picker max date
+    options.maxDate = instance.data.max
+  }
 
-    //if data value is a date
-    if (data.value instanceof Date) {
-
-      //set picker select to value
-      picker.set('select', data.value);
-
-      //add active class to label - this seems not to be needed anymore
-      // qLabel.addClass('active');
-    }
-
-    //if data min is a date
-    if (data.min instanceof Date) {
-
-      //set picker min date
-      picker.set('min', data.min);
-    }
-
-    //if data max is a date
-    if (data.max instanceof Date) {
-
-      //set picket max date
-      return picker.set('max', data.max);
-    }
-  });
-});
+  const input = instance.$('input')
+  M.Datepicker.init(input, options)
+})
 
 Template.afPickadate.helpers({
   atts() {
-    const instance = Template.instance();
-    const atts = _.clone(instance.data.atts);
-    delete atts.dateTimePickerOptions;
-    delete atts.pickadateOptions;
-    return atts;
+    const instance = Template.instance()
+    const atts = _.clone(instance.data.atts)
+    delete atts.dateTimePickerOptions
+    delete atts.pickadateOptions
+    return atts
   }
-});
+})
