@@ -11,7 +11,6 @@ var DATE_FORMAT_INPUT = 'D MMMM YYYY'
 AutoForm.addInputType('pickadate', {
   template: 'afPickadate',
   valueIn: function(val, atts) {
-    console.log('locale', moment.locale())
     return val instanceof Date?moment(val).format(DATE_FORMAT_INPUT):val
   },
   valueOut: function() {
