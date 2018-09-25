@@ -70,7 +70,7 @@ Template.afPickadate.onRendered(() => {
   }
 
   // init pickadate
-  const userOptions = instance.data.atts.pickadateOptions || {}
+  const userOptions = instance.data.atts.pickerOptions || {}
   console.log('pickadate user options', userOptions)
   const options = _.defaults(userOptions, {
     format: DATE_FORMAT_PICKER,
@@ -111,8 +111,7 @@ Template.afPickadate.helpers({
   atts() {
     const instance = Template.instance()
     const atts = _.clone(instance.data.atts)
-    delete atts.dateTimePickerOptions
-    delete atts.pickadateOptions
+    delete atts.pickerOptions    
     return atts
   }
 })

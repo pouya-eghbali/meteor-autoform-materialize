@@ -6,44 +6,44 @@ import './pickatime.html'
 
 const TIME_FORMAT = 'h:mm A'
 
-//add autoform input
+// add autoform input
 AutoForm.addInputType('pickatime', {
   template: 'afInputPickatime_materialize',
   valueOut: function() {
     return this.val()
   }
-});
+})
 
-//when created
+// when created
 Template.afInputPickatime_materialize.onCreated(() => {
   const instance = Template.instance()
 
-  //if value was provided
+  // if value was provided
   let value;
   if(instance.data.value) {
 
-    //use provided value as value
+    // use provided value as value
     value = instance.data.value
   }
 
-  //initialise value
+  // initialise value
   instance.value = new ReactiveVar(value)
 })
 
-//when rendered
+// when rendered
 Template.afInputPickatime_materialize.onRendered(() => {
   const instance = Template.instance()
+  console.log('timepicker instance', instance)
 
-  //get value
+  // get value
   const value = instance.value.get()
 
-  //initialise timepicker
+  // initialise timepicker
   let options
-  if(instance.data.atts.timepickerOptions) {
-    options = _.clone(instance.data.atts.timepickerOptions)
+  if(instance.data.atts.pickerOptions) {
+    options = _.clone(instance.data.atts.pickerOptions)
     if(value) {
-      options.default = value
-      delete options.fromnow
+      options.defaultTime = value
       instance.$('input').val(value)
       instance.$('input').parent().find('label').addClass('active')
     }
@@ -51,15 +51,16 @@ Template.afInputPickatime_materialize.onRendered(() => {
   else {
     options = {}
     if(value) {
-      options.default = value
+      options.defaultTime = value
       instance.$('input').val(value)
       instance.$('input').parent().find('label').addClass('active')
     }
   }
+  console.log('timepicker options', options)
+  const input = instance.$('.timepicker')
+  M.Timepicker.init(input, options)
 
-  $('.timepicker').timepicker(options)
-
-  //use jquery to detect the change since nothing else seems to work...
+  // use jquery to detect the change since nothing else seems to work...
   instance.$('.timepicker').on('change', function () {
     const value = instance.$('.timepicker').val()
     instance.value.set(value)
@@ -72,7 +73,7 @@ Template.afInputPickatime_materialize.onRendered(() => {
   })
 })
 
-//helpers
+// helpers
 Template.afInputPickatime_materialize.helpers({
   atts() {
     const instance = Template.instance()

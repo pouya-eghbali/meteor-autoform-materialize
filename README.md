@@ -253,7 +253,7 @@ MySchema = new SimpleSchema({
     label: 'Pick a date with options',
     autoform: {
       type: 'pickadate',
-      pickadateOptions: {
+      pickerOptions: {
         container: '#modalContainer'
       }
     }
@@ -277,7 +277,7 @@ MySchema = new SimpleSchema({
     label: 'Pick a time',
     autoform: {
       type: 'pickatime',      
-      timepickerOptions: {
+      pickerOptions: {
         default: 'now',       // Set default time
         fromnow: 0,           // set default time to * milliseconds from now (using with default = 'now')
         twelvehour: false,    // Use AM/PM or 24-hour format
