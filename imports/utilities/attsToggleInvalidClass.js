@@ -1,7 +1,11 @@
-/*jshint esversion: 6 */
-
+// imports
 import { AutoFrom } from 'meteor/aldeed:autoform';
 
+/**
+ * Add invalid class if invalid
+ * @param {}  -
+ * @returns {}
+ **/
 export const attsToggleInvalidClass = function () {
   let atts    = _.clone(this.atts);
   const context = AutoForm.getFormSchema().namedContext(AutoForm.getFormId());
