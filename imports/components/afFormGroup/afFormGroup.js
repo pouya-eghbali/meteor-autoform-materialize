@@ -34,7 +34,6 @@ Template.afFormGroup_materialize.helpers({
             'select-radio',
             'select-checkbox-inline',
             'select-radio-inline',
-            'boolean-radio',
             'toggle',
             'switch'
         ];
@@ -60,6 +59,7 @@ Template.afFormGroup_materialize.rendered = function() {
                 'checkbox',
                 'checkbox-group',
                 'boolean-checkbox',
+                'boolean-select',
                 'flowtext',
                 'select',
                 'select-multiple',
