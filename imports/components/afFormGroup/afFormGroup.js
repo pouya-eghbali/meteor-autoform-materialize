@@ -29,6 +29,7 @@ Template.afFormGroup_materialize.helpers({
             'checkbox',
             'checkbox-group',
             'boolean-checkbox',
+            'boolean-radios',
             'flowtext',
             'select-radio',
             'select-checkbox-inline',

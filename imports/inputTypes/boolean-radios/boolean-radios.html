@@ -1,12 +1,17 @@
 <template name="afBooleanRadioGroup_materialize">
   <div class="af-radio-group {{rowColumnAtts}}" {{dsk}}>
+    {{>afLabel_materialize this}}
     <p class="{{falseColumnAtts}}">
-      <input id="{{atts.id}}_false" type="radio" value="false" {{falseAtts}} />
-      <label for="{{atts.id}}_false">{{#with atts.falseLabel}}{{this}}{{else}}False{{/with}}</label>
+      <label>
+        <input group={{atts.id}} type="radio" value="false" {{falseAtts}} />
+        <span>{{#with atts.falseLabel}}{{this}}{{else}}False{{/with}}</span>
+      </label>
     </p>
     <p class="{{trueColumnAtts}}">
-      <input id="{{atts.id}}_true" type="radio" value="true" {{trueAtts}} />
-      <label for="{{atts.id}}_true">{{#with atts.trueLabel}}{{this}}{{else}}True{{/with}}</label>
+      <label>
+        <input group={{atts.id}} type="radio" value="true" {{trueAtts}} />
+        <span>{{#with atts.trueLabel}}{{this}}{{else}}True{{/with}}</span>
+      </label>
     </p>
   </div>
 </template>
