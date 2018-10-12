@@ -64,6 +64,7 @@ AutoForm.addInputType('pickadate', {
 
 Template.afPickadate.onRendered(() => {
   const instance = Template.instance();
+  console.log('pickadate instance.data', instance.data)
 
   if (instance.data.value) {
     instance.$('input').parent().find('label').addClass('active')
@@ -111,7 +112,7 @@ Template.afPickadate.helpers({
   atts() {
     const instance = Template.instance()
     const atts = _.clone(instance.data.atts)
-    delete atts.pickerOptions    
+    delete atts.pickerOptions
     return atts
   }
 })

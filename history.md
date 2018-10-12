@@ -1,3 +1,6 @@
+#v 4.0.8
+ - Fix minor side effects left over from MaterializeCSS V1 RC2 migration
+
 #v 4.0.1
  - Update all dependancies to latest versions
 
