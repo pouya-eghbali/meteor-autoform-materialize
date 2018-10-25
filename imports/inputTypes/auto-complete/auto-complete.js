@@ -13,6 +13,7 @@ AutoForm.addInputType('autocomplete', {
 // when created
 Template.afAutoComplete_materialize.onCreated(() => {
   const instance = Template.instance()
+  // console.log('Template.afAutoComplete_materialize.onCreated:', instance)
 
   // initialise multiple
   const multiple = instance.data.atts && instance.data.atts.multiple?
@@ -227,7 +228,7 @@ Template.afAutoComplete_materialize.helpers({
     const option = _.find(instance.options, (opt) => {
       return value === opt.value
     })
-    return option.label
+    return option?option.label:undefined
   }
 })
 

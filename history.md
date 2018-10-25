@@ -1,3 +1,9 @@
+#v 4.0.11
+ - Prepare for javascript component
+
+#v 4.0.10
+ - Datepicker value converter for string uses D MMMM YYYY format
+
 #v 4.0.8
  - Fix minor side effects left over from MaterializeCSS V1 RC2 migration
 

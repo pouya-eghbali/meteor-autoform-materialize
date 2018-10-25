@@ -6,13 +6,15 @@
 
       <div class='tags'>
         {{#each val in value}}
-          <div class="chip">
-            {{label val}}
-            <i class="close material-icons" data-value={{val}}>close</i>
-          </div>
+          {{#with (label val)}}
+            {{#if this}}
+              <div class="chip">{{this}}
+                <i class="close material-icons" data-value={{val}}>close</i>
+              </div>
+            {{/if}}
+          {{/with}}
         {{/each}}
       </div>
-
     {{/if}}
 
     <!-- text input -->

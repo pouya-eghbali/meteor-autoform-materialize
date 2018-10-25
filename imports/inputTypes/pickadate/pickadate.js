@@ -9,7 +9,7 @@ var DATE_FORMAT_INPUT = 'D MMMM YYYY'
 AutoForm.addInputType('pickadate', {
   template: 'afPickadate',
   valueIn: function(val, atts) {
-    return val instanceof Date?moment(val).format(DATE_FORMAT_INPUT):val
+    return (val instanceof Date)?moment(val).format(DATE_FORMAT_INPUT):val
   },
   valueOut: function() {
     const value = this.val()
@@ -22,27 +22,27 @@ AutoForm.addInputType('pickadate', {
   valueConverters: {
     'string': function(val) {
       if (val instanceof Date) {
-        return val.toString()
+        return moment(val, DATE_FORMAT_INPUT).toDate()
       } else {
         return val
       }
     },
     'stringArray': function(val) {
       if (val instanceof Date) {
-        return [val.toString()]
+        return [moment(val, DATE_FORMAT_INPUT).toDate()]
       }
       return val
     },
     'number': function(val) {
       if (val instanceof Date) {
-        return val.getTime()
+        return moment(val, DATE_FORMAT_INPUT).toDate().getTime()
       } else {
         return val
       }
     },
     'numberArray': function(val) {
       if (val instanceof Date) {
-        return [val.getTime()]
+        return [moment(val, DATE_FORMAT_INPUT).toDate().getTime()]
       }
       return val
     },

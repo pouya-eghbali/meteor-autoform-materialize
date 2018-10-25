@@ -1,11 +1,9 @@
-/*jshint esversion: 6 */
-
-import { Template } from 'meteor/templating';
-import './afFormGroup.html';
+import { Template } from 'meteor/templating'
+import './afFormGroup.html'
 
 Template.afFormGroup_materialize.helpers({
     addInputField: function() {
-        var result, skipInputType, type;
+        var result, skipInputType, type
         skipInputType = [
             'checkbox',
             'checkbox-group',
@@ -16,14 +14,15 @@ Template.afFormGroup_materialize.helpers({
             'select-radio-inline',
             'boolean-radios',
             'toggle',
-            'switch'
-        ];
-        type = AutoForm.getInputType(this);
-        result = !_.contains(skipInputType, type);
-        return result;
+            'switch',
+            'javascript'
+        ]
+        type = AutoForm.getInputType(this)
+        result = !_.contains(skipInputType, type)
+        return result
     },
     skipLabel: function() {
-        var result, skipLabelTypes, type;
+        var result, skipLabelTypes, type
         skipLabelTypes = [
             'medium',
             'checkbox',
@@ -35,23 +34,24 @@ Template.afFormGroup_materialize.helpers({
             'select-checkbox-inline',
             'select-radio-inline',
             'toggle',
-            'switch'
-        ];
-        type = AutoForm.getInputType(this);
-        result = this.skipLabel || _.contains(skipLabelTypes, type);
-        return result;
+            'switch',
+            'javascript'
+        ]
+        type = AutoForm.getInputType(this)
+        result = this.skipLabel || _.contains(skipLabelTypes, type)
+        return result
     }
-});
+})
 
 Template.afFormGroup_materialize.rendered = function() {
-    var formId;
-    formId = AutoForm.getFormId();
+    var formId
+    formId = AutoForm.getFormId()
     this.autorun((function(_this) {
         return function() {
-            var value = AutoForm.getFieldValue(_this.data.name, formId);
-            var inputValue = AutoForm.getInputValue(_this.find('input'));
-            var type = AutoForm.getInputType(_this.data);
-            var placeholder = _this.data.afFieldInputAtts.placeholder;
+            var value = AutoForm.getFieldValue(_this.data.name, formId)
+            var inputValue = AutoForm.getInputValue(_this.find('input'))
+            var type = AutoForm.getInputType(_this.data)
+            var placeholder = _this.data.afFieldInputAtts.placeholder
 
             // do not auto activate labels for the following types
             var skipActiveLabelTypes = [
@@ -68,8 +68,9 @@ Template.afFormGroup_materialize.rendered = function() {
                 'select-radio-inline',
                 'boolean-radio',
                 'toggle',
-                'switch'
-            ];
+                'switch',
+                'javascript'
+            ]
 
             // always activate labels for the following types
             var alwaysActiveLabelTypes = [
@@ -77,13 +78,13 @@ Template.afFormGroup_materialize.rendered = function() {
               'file',
               'fileUpload',
               'date'
-            ];
+            ]
 
             // if the input always has an active label
             if (_.contains(alwaysActiveLabelTypes, type)) {
 
               // activate the label
-              return _this.$('.input-field > label:not(:focus)').addClass('active');
+              return _this.$('.input-field > label:not(:focus)').addClass('active')
             }
 
             // else, if the input is an active type
@@ -94,15 +95,15 @@ Template.afFormGroup_materialize.rendered = function() {
               {
 
                 // activate the label
-                return _this.$('.input-field > label:not(:focus)').addClass('active');
+                return _this.$('.input-field > label:not(:focus)').addClass('active')
 
               // else
               } else {
 
                 // deactivate the label
-                return _this.$('.input-field > label:not(:focus)').removeClass('active');
+                return _this.$('.input-field > label:not(:focus)').removeClass('active')
               }
             }
-        };
-    })(this));
-};
+        }
+    })(this))
+}

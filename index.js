@@ -1,3 +1,3 @@
-import './imports/materializecss.js';
-import './imports/inputTypes';
-import './imports/components';
+import './imports/materializecss.js'
+import './imports/inputTypes'
+import './imports/components'
