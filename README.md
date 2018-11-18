@@ -1,4 +1,4 @@
-# Meteor Autoform Materialize templates #
+# Meteor Autoform Materialize templates
 
 [Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
 
