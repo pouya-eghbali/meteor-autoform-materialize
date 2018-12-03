@@ -1,10 +1,12 @@
 <template name="afCheckboxGroup_materialize">
-  <div class="af-checkbox-group collection" {{dsk}}>
-    {{#each items}}
-    <p>
-      <input type="checkbox" value="{{value}}" {{itemAtts}} />
-      <label for="{{itemAtts.id}}">{{label}}</label>
-    </p>
+  <div class="af-checkbox-group" {{dsk}}>
+    {{#each item in items}}
+      <p>
+        <label>
+          <input {{itemAtts item}} />
+          <span>{{item.label}}</span>
+        </label>
+      </p>
     {{/each}}
   </div>
 </template>

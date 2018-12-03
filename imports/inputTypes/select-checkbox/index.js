@@ -1,3 +1,1 @@
-/*jshint esversion: 6 */
-
-import './select-checkbox.js';
+import './select-checkbox.js'

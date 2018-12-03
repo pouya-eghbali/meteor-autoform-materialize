@@ -1,3 +1,7 @@
+#v 4.0.12
+ - Fix Select Checkbox [#59](https://github.com/mozfet/meteor-autoform-materialize/issues/59)
+ - Removed javascript component to avoid package bloat
+
 #v 4.0.11
  - Prepare for javascript component
 

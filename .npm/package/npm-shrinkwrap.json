@@ -450,11 +450,6 @@
       "resolved": "https://registry.npmjs.org/phantom/-/phantom-4.0.12.tgz",
       "integrity": "sha512-Tz82XhtPmwCk1FFPmecy7yRGZG2btpzY2KI9fcoPT7zT9det0CcMyfBFPp1S8DqzsnQnm8ZYEfdy528mwVtksA=="
     },
-    "phantomjs-prebuilt": {
-      "version": "2.1.16",
-      "resolved": "https://registry.npmjs.org/phantomjs-prebuilt/-/phantomjs-prebuilt-2.1.16.tgz",
-      "integrity": "sha1-79ISpKOWbTZHaE6ouniFSb4q7+8="
-    },
     "pinkie": {
       "version": "2.0.4",
       "resolved": "https://registry.npmjs.org/pinkie/-/pinkie-2.0.4.tgz",

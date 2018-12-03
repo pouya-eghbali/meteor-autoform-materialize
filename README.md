@@ -12,17 +12,14 @@
 
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
-> **No more Atmosphere** This package no longer supports the Atmosphere Materialize wrapper package. Please migrate to using the NPM Materialize package. See installation instructions below.
-
-
 ## Compatability
 
-Version 4.0.6 of this package was manual smoke tested in Playground 4.0.6 with:
+Version 4.0.12 of this package was manual smoke tested in Playground 4.0.8 with:
 + OSX High Sierra 10.13.6
 + Chrome Version 62.0.3497.81 (Official Build) (64-bit)
-+ Meteor 1.7.0.5
++ Meteor 1.8
 + Simple Schema 0.5 (NPM Package)
-+ Materialize CSS 1.0.0-rc2 (NPM Package)
++ Materialize CSS 1.0.0 (NPM Package)
 + Hammerjs 2.0.8 (NPM Package)
 + Aldeed Autoform 6.3.0 (Atmosphere Package)
 + Aldeed Collection2 2.1.2 (Atmosphere Package)
@@ -48,9 +45,9 @@ $ meteor add fourseven:scss
 ```
 2. create init script to import JavaScript in file `/imports/startup/client/materialize.js`
 ```
-import 'hammerjs';
-import 'materialize-css/dist/js/materialize.js';
-import 'materialize-css/extras/noUISlider/nouislider.js';
+import 'hammerjs'
+import 'materialize-css/dist/js/materialize.js'
+import 'materialize-css/extras/noUISlider/nouislider.js'
 ```
 3. create scss include paths in file '/scss-config.json'
 ```json
@@ -66,19 +63,9 @@ import 'materialize.js'
 ```
 5. import SASS in file `/client/main.scss`
 ```
-@import "../node_modules/materialize-css/sass/components/_color.scss";
-
-$primary-color: color("blue", "base") !default;
-$primary-color-light: color("blue", "lighten-4") !default;
-$primary-color-dark: color("blue", "darken-4") !default;
-$secondary-color: color("orange", "lighten-1") !default;
-$success-color: color("green", "base") !default;
-$error-color: color("red", "base") !default;
-$link-color: color("light-blue", "darken-1") !default;
-
-@import "../node_modules/materialize-css/sass/materialize.scss";
+@import "../node_modules/materialize-css/sass/materialize.scss"
+@import "{mozfet:autoform-materialize}/style.scss"
 ```
-6. copy fonts folder from `/node-modules/materialize-css/dist/fonts` to your Meteor project's ```/public/fonts/roboto``` folder. Or alternatively use a CDN; if you manage to get the CDN working, please let us know how so we can add it here.
 
 ## Install Autoform Materialize
 
