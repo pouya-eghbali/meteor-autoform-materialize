@@ -12,9 +12,14 @@
 
 > **Shiny Modals** Want forms in modals? See [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals).
 
+## History
+Version 5.0.0 contains breaking changes to DatePicker and TimePicker. Please see []()
+
+See [history.md](/history.md) for an overview of changes per version.
+
 ## Compatability
 
-Version 4.0.13 of this package was manual smoke tested in Playground 5.0.0 with:
+Version 5.0.0 of this package was manual smoke tested in Playground 5.1.1 with:
 + macOS Majave v10.14.1
 + Chrome v62.0.3497.81 (Official Build) (64-bit)
 + Meteor v1.8.1

@@ -1,3 +1,8 @@
+#v 5.0.0 (breaking changes)
+ - Changed string value format for DatePicker to ```YYYY-MM-DD``` [#64](https://github.com/mozfet/meteor-autoform-materialize/issues/64)
+ - Changed string value format for TimePicker to ```HH:mm```
+ [#64](https://github.com/mozfet/meteor-autoform-materialize/issues/64)
+
 #v 4.0.12
  - Fix Select Checkbox [#59](https://github.com/mozfet/meteor-autoform-materialize/issues/59)
  - Removed javascript component to avoid package bloat

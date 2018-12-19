@@ -4,7 +4,7 @@ import { Blaze } from 'meteor/blaze'
 import moment from 'moment'
 import './pickatime.html'
 
-const TIME_FORMAT = 'h:mm A'
+const TIME_FORMAT = 'HH:mm'
 
 // add autoform input
 AutoForm.addInputType('pickatime', {
@@ -33,7 +33,6 @@ Template.afInputPickatime_materialize.onCreated(() => {
 // when rendered
 Template.afInputPickatime_materialize.onRendered(() => {
   const instance = Template.instance()
-  console.log('timepicker instance', instance)
 
   // get value
   const value = instance.value.get()
@@ -56,7 +55,8 @@ Template.afInputPickatime_materialize.onRendered(() => {
       instance.$('input').parent().find('label').addClass('active')
     }
   }
-  console.log('timepicker options', options)
+  options.twelveHour = false
+  // console.log('timepicker options', options)
   const input = instance.$('.timepicker')
   M.Timepicker.init(input, options)
 

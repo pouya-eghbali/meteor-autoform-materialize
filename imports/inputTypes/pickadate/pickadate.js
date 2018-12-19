@@ -1,56 +1,80 @@
 import { Template } from 'meteor/templating'
 import { AutoForm } from 'meteor/aldeed:autoform'
+import { _ } from 'meteor/underscore'
 import './pickadate.html'
 import moment from 'moment'
 
-var DATE_FORMAT_PICKER = 'd mmmm yyyy'
-var DATE_FORMAT_INPUT = 'D MMMM YYYY'
+const DATE_FORMAT_PICKER = 'd mmmm yyyy'
+const DATE_FORMAT_STRING = 'YYYY-MM-DD' // this is the format of string formatted dates
+const DATE_FORMAT_DISPLAY = 'D MMMM YYYY'
 
 AutoForm.addInputType('pickadate', {
   template: 'afPickadate',
   valueIn: function(val, atts) {
-    return (val instanceof Date)?moment(val).format(DATE_FORMAT_INPUT):val
+    // console.log(`valueIn ${val}:`, atts)
+    // console.log(`valueIn type ${typeof val}`)
+    let converted = null
+
+    // if empty
+    if (_.isNull(val) || _.isUndefined(val) || val === '') {
+      // console.log('convert from empty')
+    }
+
+    // else - not empty - if string
+    else if (_.isString(val)) {
+      // console.log('convert from string')
+      converted = moment(val, DATE_FORMAT_STRING).format(DATE_FORMAT_DISPLAY)
+    }
+
+    // else - not string or empty - if date
+    else if (_.isDate(val)){
+      // console.log('convert from date')
+      converted = moment(val).format(DATE_FORMAT_DISPLAY)
+    }
+
+    // else - not supported
+    else {
+      // console.log('input type not supported')
+    }
+
+    // console.log('valueIn converted', converted)
+    return converted
   },
+
+  // default value out is converted from display format to string format
   valueOut: function() {
+    // console.log(`valueOut this`, this)
     const value = this.val()
+    // console.log(`valueOut`, value)
     if (value) {
-      return moment(value, DATE_FORMAT_INPUT).toDate()
+      const result = moment(value, DATE_FORMAT_DISPLAY)
+          .format(DATE_FORMAT_STRING)
+      // console.log('valueOut', result)
+      return result
     } else {
       return null
     }
   },
+
+  // convert from display string to number and date types
   valueConverters: {
-    'string': function(val) {
-      if (val instanceof Date) {
-        return moment(val, DATE_FORMAT_INPUT).toDate()
+
+    // convert date string to number
+    'number': function (val) {
+      if (_.isString(val)) {
+        return moment(val, DATE_FORMAT_STRING).unix()
       } else {
         return val
       }
     },
-    'stringArray': function(val) {
-      if (val instanceof Date) {
-        return [moment(val, DATE_FORMAT_INPUT).toDate()]
-      }
-      return val
-    },
-    'number': function(val) {
-      if (val instanceof Date) {
-        return moment(val, DATE_FORMAT_INPUT).toDate().getTime()
+
+    // convert date string to date object
+    'date': function (val) {
+      if (_.isString(val)) {
+        return moment(val, DATE_FORMAT_STRING).toDate()
       } else {
         return val
       }
-    },
-    'numberArray': function(val) {
-      if (val instanceof Date) {
-        return [moment(val, DATE_FORMAT_INPUT).toDate().getTime()]
-      }
-      return val
-    },
-    'dateArray': function(val) {
-      if (val instanceof Date) {
-        return [val]
-      }
-      return val
     }
   },
   contextAdjust: function(context) {
@@ -64,7 +88,7 @@ AutoForm.addInputType('pickadate', {
 
 Template.afPickadate.onRendered(() => {
   const instance = Template.instance();
-  console.log('pickadate instance.data', instance.data)
+  // console.log('pickadate instance.data', instance.data)
 
   if (instance.data.value) {
     instance.$('input').parent().find('label').addClass('active')
@@ -72,10 +96,8 @@ Template.afPickadate.onRendered(() => {
 
   // init pickadate
   const userOptions = instance.data.atts.pickerOptions || {}
-  console.log('pickadate user options', userOptions)
   const options = _.defaults(userOptions, {
     format: DATE_FORMAT_PICKER,
-    // hiddenName: true,
     autoClose: true
   })
 
@@ -94,16 +116,14 @@ Template.afPickadate.onRendered(() => {
   }
 
   // if container is specified
-  console.log('options.container', typeof options.container)
+  // console.log('options.container', typeof options.container)
   if (typeof options.container === 'string') {
 
     const q = $(options.container)
-    console.log('element', q)
     options.container = q
   }
 
-  console.log('options', options)
-
+  // init datepicker
   const input = instance.$('input')
   M.Datepicker.init(input, options)
 })
