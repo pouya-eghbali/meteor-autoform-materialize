@@ -9,9 +9,6 @@ Template.afFormGroup_materialize.helpers({
             'checkbox-group',
             'boolean-checkbox',
             'flowtext',
-            'select-radio',
-            'select-checkbox-inline',
-            'select-radio-inline',
             'boolean-radios',
             'toggle',
             'switch',
@@ -30,9 +27,6 @@ Template.afFormGroup_materialize.helpers({
             'boolean-checkbox',
             'boolean-radios',
             'flowtext',
-            'select-radio',
-            'select-checkbox-inline',
-            'select-radio-inline',
             'toggle',
             'switch',
             'javascript'
@@ -63,9 +57,6 @@ Template.afFormGroup_materialize.rendered = function() {
                 'flowtext',
                 'select',
                 'select-multiple',
-                'select-radio',
-                'select-checkbox-inline',
-                'select-radio-inline',
                 'boolean-radio',
                 'toggle',
                 'switch',
@@ -73,7 +64,9 @@ Template.afFormGroup_materialize.rendered = function() {
             ]
 
             // always activate labels for the following types
-            var alwaysActiveLabelTypes = [
+            var alwaysActiveLabelTypes = [              
+              'select-radio',
+              'select-radio-inline',
               'noUiSlider2',
               'file',
               'fileUpload',

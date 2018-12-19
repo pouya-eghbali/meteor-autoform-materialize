@@ -19,7 +19,7 @@ See [history.md](/history.md) for an overview of changes per version.
 
 ## Compatability
 
-Version 5.0.0 of this package was manual smoke tested in Playground 5.1.1 with:
+Version 5.0.1 of this package was manual smoke tested in Playground 5.1.2 with:
 + macOS Majave v10.14.1
 + Chrome v62.0.3497.81 (Official Build) (64-bit)
 + Meteor v1.8.1

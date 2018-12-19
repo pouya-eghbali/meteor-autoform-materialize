@@ -1,11 +1,24 @@
-/*jshint esversion: 6 */
+import { Template } from 'meteor/templating'
+import './select-radio-inline.html'
 
-import { Template } from 'meteor/templating';
-import './select-radio-inline.html';
-import { dsk } from '../../utilities/dsk';
-import { selectedAttsAdjust } from '../../utilities/selectedAttsAdjust';
+Template.afRadioGroupInline_materialize.onCreated(() => {
+  const instance = Template.instance()
+})
 
 Template.afRadioGroupInline_materialize.helpers({
-  dsk:      dsk,
-  itemAtts: selectedAttsAdjust
-});
+  dsk() {
+    const instance = Template.instance()
+    return {
+      'data-schema-key': instance.data.atts['data-schema-key']
+    }
+  },
+  itemAtts(item) {
+    return {
+      type: 'radio',
+      value: item.value,
+      checked: item.selected,
+      id: item.atts.id+'_'+item._id,
+      name: item.name
+    }
+  }
+})

@@ -1,11 +1,26 @@
-/*jshint esversion: 6 */
+import { Template } from 'meteor/templating'
+import './select-radio.html'
 
-import { Template } from 'meteor/templating';
-import './select-radio.html';
-import { dsk } from '../../utilities/dsk';
-import { selectedAttsAdjust } from '../../utilities/selectedAttsAdjust.js';
+Template.afRadioGroup_materialize.onCreated(() => {
+  const instance = Template.instance()
+})
 
 Template.afRadioGroup_materialize.helpers({
-  dsk:      dsk,
-  itemAtts: selectedAttsAdjust
-});
+  dsk() {
+    const instance = Template.instance()
+    return {
+      'data-schema-key': instance.data.atts['data-schema-key']
+    }
+  },
+  itemAtts(item) {
+    const instance = Template.instance()
+    return {
+      type: 'radio',
+      value: item.value,
+      checked: item.selected?item.selected:
+          item.value === instance.data.atts.default,
+      id: item.atts.id+'_'+item._id,
+      name: item.name
+    }
+  }
+})
