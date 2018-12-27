@@ -6,7 +6,7 @@
 
 > **Drag and Drop Sortable Arrays** Demonstrate your organizational skills by drag and drop sorting arrays!
 
-> **Whats New(ish)** File Uploads with Meteor-Files, Auto Complete, Easy Defaults, Responsive Text, Timepicker
+> **Whats New(ish)** MaterializeCSS v1 support, File Uploads with Meteor-Files, Auto Complete, Easy Defaults, Responsive Text, Timepicker
 
 > **Cash for Issues** We will pay you cash to close issues on this suite of projects! See contributions section below for info.
 
@@ -18,7 +18,6 @@ Version 5.0.0 contains breaking changes to DatePicker and TimePicker. Please see
 See [history.md](/history.md) for an overview of changes per version.
 
 ## Compatability
-
 Version 5.0.1 of this package was manual smoke tested in Playground 5.1.2 with:
 + macOS Majave v10.14.1
 + Chrome v62.0.3497.81 (Official Build) (64-bit)
@@ -39,9 +38,7 @@ Version 5.0.1 of this package was manual smoke tested in Playground 5.1.2 with:
 + Material Design Icons Fonts 3.0.1 (Atmosphere)
 
 # Installation
-
 ## Install Materialize CSS (CSS & SASS) using NPM ##
-
 1. install dependancies
 ```
 $ meteor npm install hammerjs --save
@@ -73,7 +70,6 @@ import 'materialize.js'
 ```
 
 ## Install Autoform Materialize
-
 Using the command line in the project folder:
 ```
 $ meteor add mozfet:autoform-materialize
@@ -119,7 +115,6 @@ In client view html, e.g. project/imports/gui/views/insertBook.html
 See [Autoform documentation](https://github.com/aldeed/meteor-autoform) for more form examples.
 
 ## This package is part of a suite ##
-
 - [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
 - [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals)
 - [mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
@@ -129,13 +124,10 @@ See [Autoform documentation](https://github.com/aldeed/meteor-autoform) for more
 - [mozfet:meteor-autoform-materialize-playground](https://github.com/mozfet/meteor-autoform-materialize-playground)
 
 ## Demo, Examples, Detailed Usage and Smoke Testing ##
-
 Have a look at the [playground](https://github.com/mozfet/meteor-autoform-materialize-playground) for demo, examples, detailed usage and smoke testing.
 
 ## Additional types ##
-
 ### Auto Complete ###
-
 MaterializeCSS is busy adding support for Auto Complete in V1, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For this reason this package makes use of a modified hard fork of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
 
 In your schema definition (see playground for extensive list of examples):
@@ -209,7 +201,6 @@ autoCompleteMultipleMinMaxDefault: {
 ```
 
 ### NoUiSlider ##
-
 To add NoUiSlider (see [the playground](https://github.com/mozfet/meteor-autoform-materialize-playground)):
 
 ```
@@ -243,6 +234,16 @@ MySchema = new SimpleSchema({
   dateField: {
     type: Date,
     label: 'Pick a date with options',
+    autoform: {
+      type: 'pickadate',
+      pickerOptions: {
+        container: '#modalContainer'
+      }
+    }
+  },
+  dateField: {
+    type: String,
+    label: 'Pick a string date with options',
     autoform: {
       type: 'pickadate',
       pickerOptions: {
@@ -457,7 +458,7 @@ stringDefault: {
 }
 ```
 
-# Contributors
+# Contributions
 If you use this package and find it useful, why not help improve it? We want your feature requests, bug reports, and pull requests.
 
 > **Cash for Issues** We will pay you to close issues on this suite! You pick your own issues, set your own place and time, you do it at your own pace, you make an estimate for your own work, and set your own price (be gentle please, we are a small startup, Ts&Cs apply). As long as it works, not break anything else, and looks good, we are happy. Payments are made to your PayPal account after pull request is approved. Interested? Please drop us a mail at info@expertbox.com.
