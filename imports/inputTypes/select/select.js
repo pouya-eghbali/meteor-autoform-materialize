@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating'
 import { ReactiveVar } from 'meteor/reactive-var'
 import { _ } from 'meteor/underscore'
 import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass'
-import '../../utilities/jqueryAttributeChangePlugin'
+// import '../../utilities/jqueryAttributeChangePlugin'
 import './select.html'
 
 // on template rendered
@@ -83,35 +83,13 @@ Template.afSelect_materialize_items.helpers({
 
   // get DOM attributes for an option
   optionAtts(option) {
-    const instance = Template.instance()
-
-    // init atts with option value
-    const atts = {
-      value: option.value,
+    const atts = {value: option.value}
+    if (option.selected) {atts.selected = ''}
+    if (option.disabled) {atts.disabled = ''}
+    if (option.atts && option.atts.htmlAttributes) {
+      _.extend(atts, option.atts.htmlAttributes)
     }
-    // if selected
-    if (option.selected) {
-
-      // select option on DOM
-      atts.selected = ''
-    }
-
-    // // if option is empty first option
-    // if (option._id === 'AUTOFORM_EMPTY_FIRST_OPTION') {
-    //   console.log('optionAtts: is empty first option:')
-    //
-    //   // if option is required
-    //   if (instance.data.atts.required !== undefined) {
-    //     console.log('optionAtts: select is required')
-    //     //if first item was unselected
-    //     if (!instance.firstItemWasUnSelected.get()) {
-    //       console.log('optionAtts: first item was unselected')
-    //       atts.disabled = ''
-    //     }
-    //   }
-    // }
-
-    // return atts
+    console.log(`optionAtts for option ${option.label}`, atts)
     return atts
   },
 
@@ -120,6 +98,9 @@ Template.afSelect_materialize_items.helpers({
     if (option._id === 'AUTOFORM_EMPTY_FIRST_OPTION') {
       if (option.atts.placeholder) {
         return option.atts.placeholder
+      }
+      if (option.atts.firstOption) {
+        return option.atts.firstOption
       }
     }
     return option.label

@@ -1,22 +1,4 @@
 <template name="afSelectMultiple_materialize">
   <select {{atts}} multiple>
-    {{#if this.atts.firstOption}}
-      {{#if firstValueSelected}}
-        <option value disabled selected>{{this.atts.firstOption}}</option>
-      {{else}}
-        <option value disabled>{{this.atts.firstOption}}</option>
-      {{/if}}
-    {{/if}}
-    {{#each item in this.items}}
-      {{#if item.optgroup}}
-        <optgroup label="{{this.optgroup}}">
-          {{#each groupedItem in item.items}}
-            <option {{optionAtts groupedItem}}>{{groupedItem.label}}</option>
-          {{/each}}
-        </optgroup>
-      {{else}}
-        <option {{optionAtts item}} value={{item.value}}>{{item.label}}</option>
-      {{/if}}
-    {{/each}}
   </select>
 </template>

@@ -2,6 +2,18 @@
 
 [Materialize-css](http://materializecss.com/) styled forms for use with [aldeed:autoform](https://github.com/aldeed/meteor-autoform).
 
+> **Important** Due to [open pull request 6014](https://github.com/Dogfalo/materialize/pull/6014) which solves a bug with multiple select in MaterializeCSS V1.0.0, it is not recommended to install Materialize V1.0.0 using npm, but to use git to clone and merge the pull request manually instead.
+
+To fix multiple select, remove "materialize-css": "^1.0.0" dependancy from package.json, navigate to node_modules folder of your project
+```
+$ rm -rf materialize-css
+$ git clone https://github.com/Dogfalo/materialize.git
+$ mv materialize materialize-css
+$ cd materialize-css
+$ git fetch origin +refs/pull/6014/merge
+$ git checkout FETCH_HEAD
+```
+
 > **Thank You** This suite of packages is maintained by [ExpertBox.com](https://www.ExpertBox.com/home) as a thank you to the Open Source community.
 
 > **Drag and Drop Sortable Arrays** Demonstrate your organizational skills by drag and drop sorting arrays!
