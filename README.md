@@ -50,19 +50,22 @@ Version 5.0.1 of this package was manual smoke tested in Playground 5.1.2 with:
 + Material Design Icons Fonts 3.0.1 (Atmosphere)
 
 # Installation
+
 ## Install Materialize CSS (CSS & SASS) using NPM ##
-1. install dependancies
+
+1. install required dependancies
 ```
 $ meteor npm install hammerjs --save
 $ meteor npm install materialize-css --save
 $ meteor add fourseven:scss
 ```
+
 2. create init script to import JavaScript in file `/imports/startup/client/materialize.js`
 ```
 import 'hammerjs'
 import 'materialize-css/dist/js/materialize.js'
-import 'materialize-css/extras/noUISlider/nouislider.js'
 ```
+
 3. create scss include paths in file '/scss-config.json'
 ```json
 {
@@ -87,12 +90,13 @@ Using the command line in the project folder:
 $ meteor add mozfet:autoform-materialize
 ```
 
-Optionally add the extras (if needed)
+Optionally add the extras (as needed)
 ```
 $ meteor add mozfet:autoform-materialize-modals
-$ mozfet:autoform-medium
-$ mozfet:autoform-materialize-nouislider
-$ mozfet:autoform-materialize-files
+$ meteor add mozfet:autoform-medium
+$ meteor add mozfet:autoform-materialize-nouislider
+$ meteor add mozfet:autoform-materialize-nouislider2
+$ meteor add mozfet:autoform-materialize-files
 ```
 
 In client startup code, e.g. project/imports/startup/client/autoform.js
@@ -130,6 +134,7 @@ See [Autoform documentation](https://github.com/aldeed/meteor-autoform) for more
 - [mozfet:meteor-autoform-materialize](https://github.com/mozfet/meteor-autoform-materialize)
 - [mozfet:meteor-autoform-materialize-modals](https://github.com/mozfet/meteor-autoform-materialize-modals)
 - [mozfet:meteor-autoform-nouislider](https://github.com/mozfet/meteor-autoform-nouislider)
+- [mozfet:meteor-autoform-nouislider2](https://github.com/mozfet/meteor-autoform-nouislider2)
 - [mozfet:meteor-autoform-medium](https://github.com/mozfet/meteor-autoform-medium)
 - [mozfet:meteor-autoform-file](https://github.com/mozfet/meteor-autoform-file)
 - [mozfet:materialize-icons](https://github.com/mozfet/meteor-materialize-icons)
@@ -139,7 +144,9 @@ See [Autoform documentation](https://github.com/aldeed/meteor-autoform) for more
 Have a look at the [playground](https://github.com/mozfet/meteor-autoform-materialize-playground) for demo, examples, detailed usage and smoke testing.
 
 ## Additional types ##
+
 ### Auto Complete ###
+
 MaterializeCSS is busy adding support for Auto Complete in V1, however at the time of writing this is not yet supported in a stable release and does not yet support multiple entries in an autocomplete. For this reason this package makes use of a modified hard fork of [materialize-autocomplete](https://github.com/icefox0801/materialize-autocomplete), and will do so until the build in MaterializeCSS support for this feature is more mature.
 
 In your schema definition (see playground for extensive list of examples):
@@ -213,21 +220,99 @@ autoCompleteMultipleMinMaxDefault: {
 ```
 
 ### NoUiSlider ##
-To add NoUiSlider (see [the playground](https://github.com/mozfet/meteor-autoform-materialize-playground)):
 
+There are two stylings of nouislider because the styling provided by Materialize does not work well with larger tooltips. In general the first styling is good enough, but the second styling works better with large tooltips. Both styles can be used within the same project.
+
+For examples see [the playground](https://github.com/mozfet/meteor-autoform-materialize-playground/tree/master/imports/ui/components/slidersExample)). For more information on
+
+So far the focus was on getting horizontal sliders to work, no attention was given to vertical sliders as form components... See the [noUiSlider docs](https://refreshless.com/nouislider/) for more information on the options.
+
+NoUiSlider is an optional extension of this package. To add NoUiSlider:
 ```
-meteor add mozfet:autoform-materialize-nouislider
+$ meteor add mozfet:autoform-materialize-nouislider
+$ meteor add mozfet:autoform-materialize-nouislider2
 ```
 
-You can apply it directly in your template:
-
-```html
-{{> afFieldInput name="dateField" type="pickadate"}}
-```
-
-You can also specify it at the schema level:
-```
-TODO
+At the schema level:
+```js
+const schema = new SimpleSchema({
+  'basic': {
+    type: Number,
+    min: 10,
+    max: 26,
+    autoform: {
+      type: 'noUiSlider',
+      noUiSliderOptions: {
+        format: wNumb({
+          decimals: 0
+        })
+      }
+    }
+  },
+  'rangeArrayPips': {
+    type: Array,
+    optional: true,
+    autoform: {
+      type: 'noUiSlider',
+      step: 2,
+      noUiSliderOptions: {
+        start: [700,8000],
+        connect: true,
+        range: {
+          'min': [0],
+        	'10%': [500,500],
+        	'50%': [4000,1000],
+        	'max': [10000]
+        },
+        pips: {
+          mode: 'range',
+          density: 3
+        }
+      }
+    }
+  },
+  'rangeArrayPips.$': {
+    type: Number
+  },
+  'formattedTooltips': {
+    type: String,
+    optional: true,
+    label: 'Large tooltip with custom formatting',
+    autoform: {
+      type: 'noUiSlider2',
+      // labelLeft: 'LeftLabel',
+      // labelRight: 'RightLabel',
+      noUiSliderOptions: {
+        start: '45m',
+        step: 5,
+        tooltips: true,
+        orientation: 'horizontal',
+        range: {
+          min: 0,
+          max: 12*60
+        },
+        format: {
+          to: function ( value ) {
+            const minutes = Math.round(value)
+            const human = moment.duration(minutes, 'minutes')
+                .format('h[h]mm[m]')
+            // console.log(`to ${value} human ${human}`)
+            return human
+          },
+          from: function ( value ) {
+            let hours = value.match(/^\d{1,2}h/g)
+            hours = Number(hours?hours[0].slice(0, -1):'0')
+            let mins = value.match(/\d{1,2}m$/g)
+            mins = Number(mins?mins[0].slice(0, -1):'0')
+            const result = hours*60 + mins
+            // console.log(`from ${value} to ${result}`)
+            return result
+          }
+        }
+      }
+    }
+  }
+}, {tracker: Tracker})
 ```
 
 ### PickADate ##
