@@ -233,6 +233,13 @@ $ meteor add mozfet:autoform-materialize-nouislider
 $ meteor add mozfet:autoform-materialize-nouislider2
 ```
 
+mozfet:autoform-materialize-nouislider is as close as possible to that published by MaterializeCSS; however this includes an out of date version of noUiSlider and also includes wNumb.
+
+mozfet:autoform-materialize-nouislider2 makes use of SASS styling and the latest version of noUiSlider and does no include wNumb; import the style in your package in a ```.sass``` or ```.scss``` file for it to work.
+```
+@import "{mozfet:autoform-materialize-nouislider2}/style.scss";
+```
+
 At the schema level:
 ```js
 const schema = new SimpleSchema({
