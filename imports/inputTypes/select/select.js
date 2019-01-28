@@ -17,11 +17,11 @@ Template.afSelect_materialize.onRendered(() => {
   let oldItems
   instance.autorun(() => {
     const data = Template.currentData()
-    console.log('select template data', data)
+    // console.log('select template data', data)
 
     // if items changed
     if (!_.isEqual(oldItems, data.items)) {
-      console.log('items changed', oldItems, data.items)
+      // console.log('items changed', oldItems, data.items)
 
       // assign new items to old items
       oldItems = _.clone(data.items)
@@ -37,14 +37,14 @@ Template.afSelect_materialize.onRendered(() => {
         if (!_.isArray(selectedValues)) {
           selectedValues = [selectedValues]
         }
-        console.log('old selectedValues', selectedValues)
+        // console.log('old selectedValues', selectedValues)
 
         // select previous selected values in new items
         data.items = _.map(data.items, item => {
           return _.contains(selectedValues, item.value)?
               _.extend(item, {selected: true}):item
         })
-        console.log('data.items', data.items)
+        // console.log('data.items', data.items)
 
         // destory previous instance of materialize select
         instance.selectInstance.destroy()
@@ -89,7 +89,7 @@ Template.afSelect_materialize_items.helpers({
     if (option.atts && option.atts.htmlAttributes) {
       _.extend(atts, option.atts.htmlAttributes)
     }
-    console.log(`optionAtts for option ${option.label}`, atts)
+    // console.log(`optionAtts for option ${option.label}`, atts)
     return atts
   },
 

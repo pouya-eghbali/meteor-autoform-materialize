@@ -1,5 +1,6 @@
 // impoers
 import { Template } from 'meteor/templating'
+import { ReactiveVar } from 'meteor/reactive-var'
 import './select-multiple.html'
 import { optionAtts } from '../../utilities/optionAtts'
 import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass'
@@ -41,7 +42,7 @@ function createItems(data) {
   if (!_.isArray(selectedValues)) {
     selectedValues = [selectedValues]
   }
-  console.log('selectedValues', selectedValues)
+  // console.log('selectedValues', selectedValues)
 
   // if there is a placeholder (or first option)
   if (hasPlaceholder(data)) {
@@ -81,7 +82,7 @@ function createItems(data) {
   }
 
   // return items
-  console.log('created items', items)
+  // console.log('created items', items)
   return items
 }
 
@@ -105,11 +106,11 @@ Template.afSelectMultiple_materialize.onRendered(() => {
   let oldItems
   instance.autorun(() => {
     const data = Template.currentData()
-    console.log('select template data', data)
+    // console.log('select template data', data)
 
     // if items changed
     if (!_.isEqual(oldItems, data.items)) {
-      console.log('items changed', oldItems, data.items)
+      // console.log('items changed', oldItems, data.items)
 
       // assign new items to old items
       oldItems = _.clone(data.items)
@@ -125,7 +126,7 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       const itemData = {items: createItems(data)}
 
       // remove all children of the select element
-      console.log(selectQuery.get(0))
+      // console.log(selectQuery.get(0))
       selectQuery.empty()
 
       // render items template inside select element
@@ -144,7 +145,7 @@ Template.afSelectMultiple_materialize.helpers({
     const atts = {value: option.value}
     if (option.selected) {atts.selected = ''}
     if (option.disabled) {atts.disabled = ''}
-    console.log(`optionAtts for option ${option.label}`, atts)
+    // console.log(`optionAtts for option ${option.label}`, atts)
     return atts
   },
 

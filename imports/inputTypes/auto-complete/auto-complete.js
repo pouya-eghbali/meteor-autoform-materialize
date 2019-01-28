@@ -73,7 +73,7 @@ Template.afAutoComplete_materialize.onRendered(() => {
       const selectedOption = _.find(instance.options, option => {
         return option.label === label
       })
-      console.log(selectedOption)
+      // console.log(selectedOption)
 
       // if multiple
       if (instance.multiple) {
@@ -237,7 +237,7 @@ Template.afAutoComplete_materialize.events({
 
   // when focus on auto complete input
   'focus .autocomplete'(event, instance) {
-    console.log('focus on input')
+    // console.log('focus on input')
     // event.preventDefault()
     instance.$label.addClass('active')
   },
@@ -248,14 +248,14 @@ Template.afAutoComplete_materialize.events({
 
     // get the input value
     const inputValue = event.currentTarget.value
-    console.log('inputValue:', inputValue)
+    // console.log('inputValue:', inputValue)
     instance.inputValue.set(inputValue)
   },
 
   // when click on tag icon
   'click .tags i'(event, instance) {
     const value = $(event.currentTarget).data('value')
-    console.log('clicked on tag:', value)
+    // console.log('clicked on tag:', value)
     const instanceValue = instance.value.get()
     const newValue = _.without(instanceValue, value)
     instance.value.set(newValue)
