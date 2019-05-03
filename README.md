@@ -62,8 +62,8 @@ $ meteor add fourseven:scss
 
 2. create init script to import JavaScript in file `/imports/startup/client/materialize.js`
 ```
-import 'hammerjs'
-import 'materialize-css/dist/js/materialize.js'
+import 'hammerjs';
+import 'materialize-css/dist/js/materialize.js';
 ```
 
 3. create scss include paths in file '/scss-config.json'
@@ -76,12 +76,12 @@ import 'materialize-css/dist/js/materialize.js'
 ```
 4. import init script in file `/imports/startup/client/index.js`
 ```javascript
-import 'materialize.js'
+import 'materialize.js';
 ```
 5. import SASS in file `/client/main.scss`
 ```
-@import "../node_modules/materialize-css/sass/materialize.scss"
-@import "{mozfet:autoform-materialize}/style.scss"
+@import "../node_modules/materialize-css/sass/materialize.scss";
+@import "{mozfet:autoform-materialize}/style.scss";
 ```
 
 ## Install Autoform Materialize
@@ -101,7 +101,7 @@ $ meteor add mozfet:autoform-materialize-files
 
 In client startup code, e.g. project/imports/startup/client/autoform.js
 ```js
-import AutoFrom from 'meteor/aldeed:autoform';
+import { AutoForm } from 'meteor/aldeed:autoform';
 AutoForm.setDefaultTemplate('materialize');
 ```
 
