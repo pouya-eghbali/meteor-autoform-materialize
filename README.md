@@ -62,7 +62,10 @@ $ meteor add fourseven:scss
 
 2. create init script to import JavaScript in file `/imports/startup/client/materialize.js`
 ```
+<<<<<<< Updated upstream
 import 'hammerjs';
+=======
+>>>>>>> Stashed changes
 import 'materialize-css/dist/js/materialize.js';
 ```
 
@@ -101,8 +104,13 @@ $ meteor add mozfet:autoform-materialize-files
 
 In client startup code, e.g. project/imports/startup/client/autoform.js
 ```js
+<<<<<<< Updated upstream
 import { AutoForm } from 'meteor/aldeed:autoform';
 AutoForm.setDefaultTemplate('materialize');
+=======
+import { AutoForm } from 'meteor/aldeed:autoform'
+AutoForm.setDefaultTemplate('materialize')
+>>>>>>> Stashed changes
 ```
 
 In client view js, e.g. project/imports/gui/views/insertBook.js
