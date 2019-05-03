@@ -24,12 +24,29 @@
       </div>
     {{/if}}
 
+
     <!-- for each item -->
-    {{#afEachArrayItem name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+    {{#afEachArrayItem name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
+        arrayItemTemplate=atts.arrayItemTemplate}}
 
       <div class="collection-item js-autoform-array-item">
         <div class="primary-content" style="width: calc(100% - 5rem);">
-          {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
+          <!-- if custom array template is provided -->
+          {{#if ../atts.arrayItemTemplate}}
+
+            Template {{../atts.arrayItemTemplate}}
+            Name {{this.name}}
+
+            <!-- show dynamic template -->
+            {{> Template.dynamic template=../atts.arrayItemTemplate data=this}}
+
+          <!-- else  -->
+          {{else}}
+
+            <!-- show as quickfield -->
+            {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
+
+          {{/if}}
         </div>
 
         <!-- if there are more than the minimum of items in the array -->

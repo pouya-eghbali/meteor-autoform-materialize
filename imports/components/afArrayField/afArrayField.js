@@ -1,3 +1,4 @@
+import { Template } from 'meteor/templating'
 import './afArrayField.html'
 import {Sortable} from '@shopify/draggable'
 import {_} from 'meteor/underscore'
@@ -178,7 +179,10 @@ const moveFieldInArray = (instance, array, fromIndex, toIndex) => {
 }
 
 Template.afArrayField_materialize.onRendered(() => {
+
   const instance = Template.instance()
+  console.log('afArrayField_materialize.data', instance.data)
+
   const context = AutoForm.Utility.getComponentContext(instance.data.atts,
       "afEachArrayItem")
   const fieldName = context.atts.name
