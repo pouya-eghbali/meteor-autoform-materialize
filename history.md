@@ -1,3 +1,6 @@
+# v5.0.5
+- Start adding support for custom array item templates
+
 # v5.0.1
 - Fixed Select Radio and Select Radio Inline [#62](https://github.com/mozfet/meteor-autoform-materialize/issues/62)
 - Fixed Select Checkbox Inline [#61](https://github.com/mozfet/meteor-autoform-materialize/issues/61)
