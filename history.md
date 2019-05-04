@@ -1,3 +1,6 @@
+# v5.0.6
+- Custom array item templates seems to be working
+
 # v5.0.5
 - Start adding support for custom array item templates
 
