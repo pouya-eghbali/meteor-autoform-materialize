@@ -3,7 +3,8 @@
 
     <!-- header row -->
     <div class="collection-item dragHeader">
-      {{afFieldLabelText name=atts.name}}
+
+      <span class="array-collection-header">{{afFieldLabelText name=atts.name}}</span>
 
       <!-- if there are less items than the maximum -->
       {{#if afArrayFieldHasLessThanMaximum name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
@@ -30,15 +31,23 @@
         arrayItemTemplate=atts.arrayItemTemplate}}
 
       <div class="collection-item js-autoform-array-item">
-        <div class="primary-content" style="width: calc(100% - 5rem);">
+        <div class="primary-content" style="width: calc(100% - 3rem);">
           <!-- if custom array template is provided -->
           {{#if ../atts.arrayItemTemplate}}
-
-            Template {{../atts.arrayItemTemplate}}
-            Name {{this.name}}
+          <!-- {{#if false}} -->
 
             <!-- show dynamic template -->
-            {{> Template.dynamic template=../atts.arrayItemTemplate data=this}}
+            <div class="card autoform-object-field" style="margin: 0px;" name="{{this.name}}">
+              <div class="card-content">
+                <!-- Template {{../atts.arrayItemTemplate}}, Name {{this.name}} -->
+                {{#with template=../atts.arrayItemTemplate data=(pack ../atts afOptionsFromSchema this.name)}}
+                  {{> Template.dynamic template=template data=data}}
+                {{/with}}
+
+                <!-- {{> Template.dynamic template=(../atts.arrayItemTemplate)}} -->
+                <!-- {{> Template.dynamic template="profileItemForm"}} -->
+              </div>
+            </div>
 
           <!-- else  -->
           {{else}}
