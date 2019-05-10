@@ -1,197 +1,115 @@
 import { Template } from 'meteor/templating'
 import './afArrayField.html'
-import {Sortable} from '@shopify/draggable'
-import {_} from 'meteor/underscore'
+import { Sortable } from '@shopify/draggable'
+import { _ } from 'meteor/underscore'
 
-// repack the fields on the DOM
-const repackFields = (instance, fields) => {
-  // console.log('repackFields: fields', fields)
+const repackFields = (instance, fieldName, safeDragClass) => {  
 
-  // stamp every field
-  for (let field of fields) {
-    // console.log('repackFields: stamping: field old name', field.oldName)
+  const container = instance.$(`.draggable-container-${safeDragClass}`)  
 
-    // find all inputs with name starting with field name
-    const inputs = instance.$(`[name^="${field.oldName}"]`).get()
-    // console.log(`repackFields: stamping: found ${inputs.length} inputs`)
+  // get draggable items that are children of the container
+  const draggableItems = container.children(`.draggable-item-${safeDragClass}`).get();
 
-    // for each input
-    for (let input of inputs) {
+  // loop through draggable items and change all field names / schema-key
 
-      // get input query
-      const qInput = instance.$(input)
+  draggableItems.forEach((draggableItem, index) => {
 
-      // get name of input
-      const name = qInput.attr('name')
-      // console.log('repackFields: stamping: adding old name', name)
+    draggableItem = $(draggableItem);
+    const allSchemaKeys = draggableItem.find('[data-schema-key]');
+    const allNames = draggableItem.find('[name]');
 
-      // add old name attribute to each input
-      qInput.attr('old-name', name)
+    // change schema-keys:
 
-      // get the id of input
-      const id = qInput.attr('id')
-      // console.log('repackFields: stamping: adding old id', id)
-
-      // add old name attribute to each input
-      qInput.attr('old-id', id)
-    }
-  }
-
-  // repack every field
-  for (let field of fields) {
-    // console.log('repackFields: repack: field', field.oldName)
-
-    // find all inputs starting with old field name
-    const fieldElements = instance.$(`[old-name^="${field.oldName}"]`).get()
-    // console.log(`repackFields: repack: found ${fieldElements.length} inputs`)
-    // const fieldElementNamesString = _.chain(fieldElements)
-    //     .map(fieldElement => {
-    //       return instance.$(fieldElement).attr('name')
-    //     })
-    //     .reduce((memo, fieldElementName) => {
-    //       return memo+', '+fieldElementName
-    //     })
-    //     .value()
-    // console.log(`repackFields: repack: field elements: ${fieldElementNamesString}.`)
-
-    // for each input
-    for (let fieldElement of fieldElements) {
-
-      // get input query
-      const qFieldElement = instance.$(fieldElement)
-      // console.log('repackFields: repack: value', qFieldElement.val())
-
-      // get old name of input
-      const oldName = qFieldElement.attr('old-name')
-      // console.log('repackFields: repack: old name', oldName)
-
-      // get old id of input
-      const oldId = qFieldElement.attr('old-id')
-      // console.log('repackFields: repack: old id', oldId)
-
-      // create new name
-      const newName = field.newName+oldName.substring(field.newName.length)
-      // console.log('repackFields: repack: new name', newName)
-
-      // get input being replaced
-      const replaced = instance.$(`[old-name="${newName}"]`)
-      if(replaced.length === 0) {
-        const err = `Cannot find query: [old-name="${newName}"]`
-        console.error(err)
-        throw 'err'
+    allSchemaKeys.each(function () {
+      const schemaKey = $(this)
+      let key = schemaKey.attr('data-schema-key')
+      if (key == fieldName) {
+        return
       }
-      // console.log('repackFields: repack: replaced ', replaced)
-      const newId = replaced.attr('old-id')
-      // console.log('repackFields: repack: new id', newId)
+      if (key.startsWith(fieldName)) {
+        // remove fieldName and the dot after
+        key = key.slice(fieldName.length + 1);
+        // remove leading number and dot after
+        key = key.replace(/^\d+\./, '');
+        // add current index and field name
+        key = `${fieldName}.${index}.${key}`
+        // replace data-schema-key
+        schemaKey.attr('data-schema-key', key)
+      }
+    })
 
-      // check if data schema key exists
-      const hasDataSchemaKey = qFieldElement.attr('data-schema-key')?true:false
+    // change names:
 
-      // update attributes
-      qFieldElement.attr('name', newName)
-      if (newId) {qFieldElement.attr('id', newId)}
-      if (hasDataSchemaKey) {qFieldElement.attr('data-schema-key', newName)}
-    }
-  }
-
-  // prune each field
-  for (let field of fields) {
-    // console.log('repackFields: pruning: field', field.oldName)
-
-    // find all fields starting with field name
-    const inputs = instance.$(`[old-name^="${field.oldName}"]`).get()
-    // console.log(`repackFields: pruning: found ${inputs.length} inputs`)
-
-    // for each input
-    for (let input of inputs) {
-
-      // get input query
-      const qInput = instance.$(input)
-
-      // update name and data-schema-key attributes with new name
-      qInput.removeAttr('old-id')
-      qInput.removeAttr('old-name')
-    }
-  }
-}
-
-const getArrayFromDom = (instance, fieldName) => {
-
-  // find the first array
-  const qArray = instance.$('.js-autoform-array').first()
-  // console.log('getArrayFromDom: qArray', qArray)
-
-  // find the items of the array
-  const itemElements = qArray.children('.js-autoform-array-item').get()
-  // console.log('getArrayFromDom: itemElements', itemElements)
-
-  // for each item in items
-  const array = _.map(itemElements, itemElement => {
-
-    // get the properties of the item
-    const oldName = instance.$(itemElement).find(`[name^="${fieldName}"]`)
-        .first().attr('name')
-    const newIndex = instance.$(itemElement).prevAll().length-1
-    const splitOldName = oldName.split('.')
-    const oldIndex = Number(_.last(splitOldName))
-    const arrayFieldName = _.first(splitOldName)
-    const newName = arrayFieldName+'.'+newIndex
-
-    // return an object representing the item
-    return {arrayFieldName, oldName, newName, oldIndex, newIndex}
+    allNames.each(function () {
+      const field = $(this)
+      let name = field.attr('name')
+      if (name == fieldName) {
+        return
+      }
+      if (name.startsWith(fieldName)) {
+        // remove fieldName and the dot after
+        name = name.slice(fieldName.length + 1);
+        // remove leading number and dot after
+        name = name.replace(/^\d+\./, '');
+        // add current index and field name
+        name = `${fieldName}.${index}.${name}`
+        // replace data-schema-key
+        field.attr('name', name)
+      }
+    })
+    
   })
-  // console.log('getArrayFromDom: array', array)
-
-  // return the array
-  return array
+  
 }
 
-const moveFieldInArray = (instance, array, fromIndex, toIndex) => {
-
-  // define new array to delete than add
-  const repack = []
-
-  // pack field being moved
-  const fieldBeingMoved = _.clone(array[fromIndex])
-  fieldBeingMoved.newIndex = toIndex
-  repack.push(fieldBeingMoved)
-
-  const fieldBeingReplaced = _.clone(array[toIndex])
-  fieldBeingReplaced.newIndex = fromIndex>toIndex?toIndex+1:toIndex-1
-  repack.push(fieldBeingReplaced)
-
-  // for each field starting after toIndex
-  const lowestIndex = fromIndex>toIndex?toIndex:fromIndex
-  for (let i = lowestIndex+1; i < array.length; i++) {
-
-    // if index is not fromIndex or toIndex
-    if ((i !== fromIndex) && (i !== toIndex)) {
-
-      // shift idex and pack item
-      const shifted = _.clone(array[i])
-      shifted.newIndex = shifted.index+1
-      repack.push(shifted)
-    }
-  }
-
-  // update repacked fields
-  repackFields(instance, repack)
-}
-
-Template.afArrayField_materialize.onRendered(() => {
+Template.afArrayField_materialize.onRendered(() => {  
 
   const instance = Template.instance()
+  const template = this;
+
+  const formId = template.$('form').attr('id');
+  
   const context = AutoForm.Utility.getComponentContext(instance.data.atts,
-      "afEachArrayItem")
+    "afEachArrayItem")
   const fieldName = context.atts.name
+  const safeDragClass = fieldName.replace(/\./g, '-dot-')
+
+  // headers!
+
+  instance.autorun(function () {
+    const fieldValue = AutoForm.getFieldValue(fieldName, formId);    
+    if (!fieldValue || !fieldValue.length) {      
+      return
+    }
+    const defaultField = Object.keys(fieldValue[0]).sort((a, b) => a > b ? 1 : -1)[0];
+    const items = template.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
+    
+    items.each(function (index) {
+      const item = template.$(this);
+      let field = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderField');
+      if (field == 'null') {
+        field = defaultField;
+      }
+      if (!fieldValue[index]) {
+        return
+      }
+      item.find('[data-afArrayHeaderField]').text(fieldValue[index][field]);
+    });
+  })
+
+  // initialize the collapsible
+
+  instance.$('.collapsible').collapsible();
 
   // setup drag and drop sorting
-  const sortableContainerSelector = '.js-autoform-array'
-  const sortableContainers = instance.$(sortableContainerSelector).get()
-  // console.log('sortable containers', sortableContainers)
+  const sortableContainerSelector = `.draggable-container-${safeDragClass}`
+  const sortableContainer = instance.$(sortableContainerSelector).get()
+  // console.log('sortable containers', sortableContainer)  
 
-  const sortable = new Sortable(sortableContainers, {
-    draggable: '.js-autoform-array-item',
+  // avoid conflicts by adding safeDragClass
+  const sortable = new Sortable(sortableContainer, {
+    draggable: `.draggable-item-${safeDragClass}`,
+    handle: `.drag-handle-${safeDragClass}`,
     appendTo: 'body',
     mirror: {
       constrainDimensions: true,
@@ -210,19 +128,60 @@ Template.afArrayField_materialize.onRendered(() => {
     // console.log('mirror:destroy:', dragEvent)
 
     // if the array was sorted
-    if (isSorted) {
+    if (isSorted) {   
 
-      // get the array tracker value
-      const array = getArrayFromDom(instance, fieldName)
-
-      // repack the fieds on the DOM
-      repackFields(instance, array)
+      // allow draggable to clean the DOM
+      Meteor.setTimeout(() => {
+        repackFields(template, fieldName, safeDragClass)
+      }, 0)
     }
   })
 })
 
 Template.afArrayField_materialize.helpers({
   pack(atts, options, name) {
-    return {atts, options, name}
+    return { atts, options, name }
+  },
+  safeDragClass(fieldName) {
+    return fieldName.replace(/\./g, '-dot-');
+  },
+})
+
+Template.afArrayField_materialize.events({
+  'click .afArrayItemRemoveButton': function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const instance = Template.instance();
+    // prevent the item from opening/closing
+    instance.$(event.target).closest('.collapsible-header').click();
+    // open the modal
+    instance.$(event.target).closest('.collapsible-header').find('.afArrayItemRemoveDialog').modal().modal('open');
+  },
+  'click .modal-close': function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const instance = Template.instance();
+    // prevent the item from opening/closing
+    instance.$(event.target).closest('.collapsible-header').click();
+    // close the modal
+    instance.$(event.target).closest('.collapsible-header').find('.afArrayItemRemoveDialog').modal().modal('close');
+  },
+  'click .modal-overlay': function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const instance = Template.instance();
+    // prevent the item from opening/closing
+    instance.$(event.target).closest('.collapsible-header').click();
+    // close the modal
+    instance.$(event.target).closest('.collapsible-header').find('.afArrayItemRemoveDialog').modal().modal('close');
+  },
+  'click .modal-confirm': function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const instance = Template.instance();
+    // prevent the item from opening/closing
+    instance.$(event.target).closest('.collapsible-header').click();
+    // remove the item
+    instance.$(event.target).closest('.collapsible-header').find('.autoform-remove-item').click();
   }
 })
