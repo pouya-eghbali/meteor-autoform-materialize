@@ -48,9 +48,19 @@
             {{> Template.dynamic template=template data=data}}
           {{/with}}
         {{else if ../atts.arrayHeaderField}}
-          <span data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1"> </span>
+          {{#if ../atts.arrayHeaderDefault}}
+            <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" data-afArrayHeaderDefault="{{../atts.arrayHeaderDefault}}"
+              style="flex-grow: 1"> </div>
+          {{else}}
+            <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1"> </div>
+          {{/if}}
         {{else}}
-          <span data-afArrayHeaderField="null" style="flex-grow: 1"> </span>
+          {{#if ../atts.arrayHeaderDefault}}
+            <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" data-afArrayHeaderDefault="{{../atts.arrayHeaderDefault}}"
+              style="flex-grow: 1"> </div>
+          {{else}}
+            <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1"> </div>
+          {{/if}}
         {{/if}}
 
         <!-- show the edit icon -->
@@ -77,9 +87,19 @@
                   {{> Template.dynamic template=template data=data}}
                 {{/with}}
               {{else if ../atts.arrayHeaderField}}
-                <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1" class="flow-text"> </div>
+                {{#if ../atts.arrayHeaderDefault}}
+                  <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" data-afArrayHeaderDefault="{{../atts.arrayHeaderDefault}}"
+                    style="flex-grow: 1" class="flow-text"> </div>
+                {{else}}
+                  <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1" class="flow-text"> </div>
+                {{/if}}
               {{else}}
-                <div data-afArrayHeaderField="null" style="flex-grow: 1" class="flow-text"> </div>
+                {{#if ../atts.arrayHeaderDefault}}
+                  <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" data-afArrayHeaderDefault="{{../atts.arrayHeaderDefault}}"
+                    style="flex-grow: 1" class="flow-text"> </div>
+                {{else}}
+                  <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1" class="flow-text"> </div>
+                {{/if}}
               {{/if}}
               <div>This action cannot be undone.</div>
             </div>

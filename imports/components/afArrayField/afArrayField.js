@@ -77,11 +77,8 @@ Template.afArrayField_materialize.onRendered(() => {
   // headers!
 
   instance.autorun(function () {
-    const fieldValue = AutoForm.getFieldValue(fieldName, formId);    
-    if (!fieldValue || !fieldValue.length) {      
-      return
-    }
-    const defaultField = Object.keys(fieldValue[0]).sort((a, b) => a > b ? 1 : -1)[0];
+    const fieldValue = AutoForm.getFieldValue(fieldName, formId) || [];
+    const defaultField = Object.keys(fieldValue[0] || {}).sort((a, b) => a > b ? 1 : -1)[0];
     const items = template.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
     
     items.each(function (index) {
@@ -90,10 +87,16 @@ Template.afArrayField_materialize.onRendered(() => {
       if (field == 'null') {
         field = defaultField;
       }
+      let header;
       if (!fieldValue[index]) {
-        return
+        header = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderDefault') || 'Click here to edit this item';
+        return item.find('[data-afArrayHeaderField]').text(header);
       }
-      item.find('[data-afArrayHeaderField]').text(fieldValue[index][field]);
+      header = fieldValue[index][field];
+      if (!header) {
+        header = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderDefault') || 'Click here to edit this item';
+      }
+      item.find('[data-afArrayHeaderField]').text(header);
     });
   })
 

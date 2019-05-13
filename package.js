@@ -15,7 +15,7 @@ Package.onUse(function(api) {
   api.use(['templating@1.3.0', 'blaze@2.3.0'], 'client');
   api.use([
     'aldeed:autoform@6.3.0',
-    'mozfet:materialize-icons@1.1.0'
+    'mozfet:materialize-icons@1.1.7'
   ], 'client');
   api.use(['ecmascript', 'underscore'], 'client');
   api.use('fourseven:scss@4.10.0');
