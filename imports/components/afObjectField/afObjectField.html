@@ -1,15 +1,29 @@
 <template name="afObjectField_materialize">
-  <div class="card-panel autoform-object-field" name="{{this.name}}">
-    <div class="card-content">
-      {{#with afFieldLabelText name=this.name}}
+  <div class="col {{colSize this.name}}">
+    <div class="card-panel autoform-object-field" name="{{this.name}}">
+      <div class="card-content">
+        {{#with afFieldLabelText name=this.name}}
         <div class="card-title" style="margin-bottom: 2em">
           {{this}}
         </div>
-      {{/with}}
-      {{#if afFieldIsInvalid name=this.name}}
+        {{/with}}
+        {{#if afFieldIsInvalid name=this.name}}
         <div class="red-text">{{{afFieldMessage name=this.name}}}</div>
-      {{/if}}
-      {{> afQuickFields name=this.name}}
+        {{/if}}
+        {{#each group in groupped (afFieldNames name=this.name) this}}
+        <div class="{{group.name}}-group row">
+          {{#if group.title}}
+          <h5>{{group.title}}</h5>
+          {{/if}}
+          {{#if group.help}}
+          <div class="col s12">{{group.help}}</div>
+          {{/if}}
+          {{#each group.fields}}
+          {{> afQuickField name=this.name options=afOptionsFromSchema}}
+          {{/each}}
+        </div>
+        {{/each}}
+      </div>
     </div>
   </div>
 </template>

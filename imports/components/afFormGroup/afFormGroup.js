@@ -1,7 +1,18 @@
 import { Template } from 'meteor/templating'
 import './afFormGroup.html'
+import { flattenSchema } from '../../utilities/flattenSchema'
 
 Template.afFormGroup_materialize.helpers({
+    colSize(context) {      
+      let name = context.afFieldInputAtts.name;
+      let schema = AutoForm.getFormSchema()._schema;
+      schema = flattenSchema(schema);
+      name = name.replace(/\.\d+/g, '.$');
+      let fieldSchema = schema[name] || {};
+      let fieldAutoform = fieldSchema.autoform || {};      
+      let size = fieldAutoform.size || 's12';
+      return size;
+    },
     addInputField: function() {
         var result, skipInputType, type
         skipInputType = [

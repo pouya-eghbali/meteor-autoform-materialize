@@ -1,6 +1,18 @@
 <template name="quickForm_materialize">
   {{#autoForm this.qfAutoFormContext}}
-    {{> afQuickFields}}
+    {{#each group in groupped (afFieldNames) this}}
+      <div class="{{group.name}}-group row">
+        {{#if group.title}}
+          <h5>{{group.title}}</h5>
+        {{/if}}
+        {{#if group.help}}
+          <div class="col s12">{{group.help}}</div>
+        {{/if}}
+        {{#each group.fields}}
+          {{> afQuickField name=this.name options=afOptionsFromSchema}}
+        {{/each}}
+      </div>
+    {{/each}}
     {{#if qfShouldRenderButton}}
       <div class="row">
         <div class="col s12">

@@ -148,6 +148,9 @@ Template.afArrayField_materialize.helpers({
   safeDragClass(fieldName) {
     return fieldName.replace(/\./g, '-dot-');
   },
+  colSize(atts) {
+    return atts.size || 's12';
+  }
 })
 
 Template.afArrayField_materialize.events({
@@ -182,8 +185,6 @@ Template.afArrayField_materialize.events({
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
-    // prevent the item from opening/closing
-    instance.$(event.target).closest('.collapsible-header').click();
     // remove the item
     instance.$(event.target).closest('.collapsible-header').find('.autoform-remove-item').click();
   }
