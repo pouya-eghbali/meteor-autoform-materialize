@@ -77,30 +77,35 @@ Template.afArrayField_materialize.onRendered(() => {
   // headers!
 
   instance.autorun(function () {
+    const options = context.defs.autoform || {};
     const fieldValue = AutoForm.getFieldValue(fieldName, formId) || [];
     const defaultField = Object.keys(fieldValue[0] || {}).sort((a, b) => a > b ? 1 : -1)[0];
+    const headerFieldName = options.arrayHeaderField || defaultField;
+    const defaultHeader = options.arrayHeaderDefault || 'Click here to edit this item';
     const items = template.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
     
     items.each(function (index) {
       const item = template.$(this);
-      let field = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderField');
-      if (field == 'null') {
-        field = defaultField;
-      }
+      
       let header;
-      if (!fieldValue[index]) {
-        header = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderDefault') || 'Click here to edit this item';
-      } else {
-        header = fieldValue[index][field];
-        if (!header) {
-          header = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderDefault') || 'Click here to edit this item';
+
+      if (fieldValue[index]) {
+        if (headerFieldName == '$') {          
+          header = fieldValue[index];
+        } else {
+          header = fieldValue[index][headerFieldName];
         }
+      }
+
+      if ((header == undefined) || (header == '')) {
+        header = defaultHeader
       }
       
       if (context.defs.autoform && context.defs.autoform.arrayHeaderFieldCallback) {
         header = context.defs.autoform.arrayHeaderFieldCallback(header);        
       }
-      item.find('[data-afArrayHeaderField]').text(header);
+
+      item.find('.afArrayHeader').text(header);
     });
   })
 

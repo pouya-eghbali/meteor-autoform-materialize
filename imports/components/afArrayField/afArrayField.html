@@ -44,24 +44,12 @@
     
           <!-- if custom array header template is provided -->
           {{#if ../atts.arrayHeaderTemplate}}
-          <!-- show dynamic template -->
-          {{#with template=../atts.arrayHeaderTemplate data=(packValues ../atts afOptionsFromSchema this.name)}}
-          {{> Template.dynamic template=template data=data}}
-          {{/with}}
-          {{else if ../atts.arrayHeaderField}}
-          {{#if ../atts.arrayHeaderDefault}}
-          <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}"
-            data-afArrayHeaderDefault="{{../atts.arrayHeaderDefault}}" style="flex-grow: 1"> </div>
+            <!-- show dynamic template -->
+            {{#with template=../atts.arrayHeaderTemplate data=(packValues ../atts afOptionsFromSchema this.name)}}
+              {{> Template.dynamic template=template data=data}}
+            {{/with}}
           {{else}}
-          <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1"> </div>
-          {{/if}}
-          {{else}}
-          {{#if ../atts.arrayHeaderDefault}}
-          <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}"
-            data-afArrayHeaderDefault="{{../atts.arrayHeaderDefault}}" style="flex-grow: 1"> </div>
-          {{else}}
-          <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1"> </div>
-          {{/if}}
+            <div class="afArrayHeader" style="flex-grow: 1"> </div>
           {{/if}}
     
           <!-- show the edit icon -->
@@ -83,24 +71,12 @@
               <h4>Do you want to remove the following item?</h4>
               <!-- if custom array header template is provided -->
               {{#if ../atts.arrayHeaderTemplate}}
-              <!-- show dynamic template -->
-              {{#with template=../atts.arrayHeaderTemplate data=(packValues ../atts afOptionsFromSchema this.name)}}
-              {{> Template.dynamic template=template data=data}}
-              {{/with}}
-              {{else if ../atts.arrayHeaderField}}
-              {{#if ../atts.arrayHeaderDefault}}
-              <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}"
-                data-afArrayHeaderDefault="{{../atts.arrayHeaderDefault}}" style="flex-grow: 1" class="flow-text"> </div>
+                <!-- show dynamic template -->
+                {{#with template=../atts.arrayHeaderTemplate data=(packValues ../atts afOptionsFromSchema this.name)}}
+                  {{> Template.dynamic template=template data=data}}
+                {{/with}}
               {{else}}
-              <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1" class="flow-text"> </div>
-              {{/if}}
-              {{else}}
-              {{#if ../atts.arrayHeaderDefault}}
-              <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}"
-                data-afArrayHeaderDefault="{{../atts.arrayHeaderDefault}}" style="flex-grow: 1" class="flow-text"> </div>
-              {{else}}
-              <div data-afArrayHeaderField="{{../atts.arrayHeaderField}}" style="flex-grow: 1" class="flow-text"> </div>
-              {{/if}}
+                <div class="afArrayHeader" style="flex-grow: 1"> </div>
               {{/if}}
               <div>This action cannot be undone.</div>
             </div>
