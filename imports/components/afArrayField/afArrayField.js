@@ -90,11 +90,15 @@ Template.afArrayField_materialize.onRendered(() => {
       let header;
       if (!fieldValue[index]) {
         header = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderDefault') || 'Click here to edit this item';
-        return item.find('[data-afArrayHeaderField]').text(header);
+      } else {
+        header = fieldValue[index][field];
+        if (!header) {
+          header = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderDefault') || 'Click here to edit this item';
+        }
       }
-      header = fieldValue[index][field];
-      if (!header) {
-        header = item.find('[data-afArrayHeaderField]').attr('data-afArrayHeaderDefault') || 'Click here to edit this item';
+      
+      if (context.defs.autoform && context.defs.autoform.arrayHeaderFieldCallback) {
+        header = context.defs.autoform.arrayHeaderFieldCallback(header);        
       }
       item.find('[data-afArrayHeaderField]').text(header);
     });
