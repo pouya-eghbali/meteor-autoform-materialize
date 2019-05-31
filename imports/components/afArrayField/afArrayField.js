@@ -78,8 +78,9 @@ Template.afArrayField_materialize.onRendered(() => {
 
   instance.autorun(function () {
     const options = context.defs.autoform || {};
-    const fieldValue = AutoForm.getFieldValue(fieldName, formId) || [];
+    const fieldValue = AutoForm.getFieldValue(fieldName, formId) || [];    
     const defaultField = Object.keys(fieldValue[0] || {}).sort((a, b) => a > b ? 1 : -1)[0];
+    const isArrayOrObject = Array.isArray(fieldValue[0]) || typeof fieldValue[0] == 'object';
     const headerFieldName = options.arrayHeaderField || defaultField;
     const defaultHeader = options.arrayHeaderDefault || 'Click here to edit this item';
     const items = template.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
@@ -90,7 +91,7 @@ Template.afArrayField_materialize.onRendered(() => {
       let header;
 
       if (fieldValue[index]) {
-        if (headerFieldName == '$') {          
+        if (!isArrayOrObject || headerFieldName == '$') {          
           header = fieldValue[index];
         } else {
           header = fieldValue[index][headerFieldName];
