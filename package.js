@@ -18,6 +18,6 @@ Package.onUse(function(api) {
     'mozfet:materialize-icons@1.1.7'
   ], 'client');
   api.use(['ecmascript', 'underscore'], 'client');
-  api.use('fourseven:scss@4.10.0');
+  api.use('fourseven:scss@4.12.0');
   api.addFiles(['index.js', 'style.scss'], 'client');
 });

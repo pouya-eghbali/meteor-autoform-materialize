@@ -1,0 +1,6 @@
+<template name="afHelp_materialize">
+  <span class="helper-text" {{ifError}} {{ifSuccess}}>
+    {{#if text}} {{text}} {{/if}}
+    {{#if html}} {{{html}}} {{/if}}
+  </span>
+</template>

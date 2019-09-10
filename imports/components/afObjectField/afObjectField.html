@@ -1,5 +1,5 @@
 <template name="afObjectField_materialize">
-  <div class="col {{colSize this.name}}">
+  <div class="col {{colSize this.name}} afFieldContainer-{{getClassForName this.name}}">
     <div class="card-panel autoform-object-field" name="{{this.name}}">
       <div class="card-content">
         {{#with afFieldLabelText name=this.name}}
@@ -11,17 +11,19 @@
         <div class="red-text">{{{afFieldMessage name=this.name}}}</div>
         {{/if}}
         {{#each group in groupped (afFieldNames name=this.name) this}}
-        <div class="{{group.name}}-group row">
-          {{#if group.title}}
-          <h5>{{group.title}}</h5>
-          {{/if}}
-          {{#if group.help}}
-          <div class="col s12">{{group.help}}</div>
-          {{/if}}
-          {{#each group.fields}}
-          {{> afQuickField name=this.name options=afOptionsFromSchema}}
-          {{/each}}
-        </div>
+          <div class="{{group.name}}-group row">
+            {{#if group.title}}
+              <h5 class="group-title">{{group.title}}</h5>
+            {{/if}}
+            {{#if group.help}}
+              <div class="col s12 group-help">{{group.help}}</div>
+            {{/if}}
+            <div class="group-fields {{group.gclass}}">
+              {{#each group.fields}}
+                {{> afQuickField name=this.name options=afOptionsFromSchema}}
+              {{/each}}
+            </div>
+          </div>
         {{/each}}
       </div>
     </div>

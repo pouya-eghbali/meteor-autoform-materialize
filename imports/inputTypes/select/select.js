@@ -4,6 +4,7 @@ import { _ } from 'meteor/underscore'
 import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass'
 // import '../../utilities/jqueryAttributeChangePlugin'
 import './select.html'
+import './search.css'
 
 // on template rendered
 Template.afSelect_materialize.onRendered(() => {
@@ -12,6 +13,10 @@ Template.afSelect_materialize.onRendered(() => {
   // get select element, query
   const selectQuery = instance.$('select')
   const selectElement = selectQuery.get(0)
+
+  instance.$('select').change(function () {
+    instance.selectInstance = M.FormSelect.init(selectElement)
+  })
 
   // react when template data changes
   let oldItems
@@ -58,6 +63,46 @@ Template.afSelect_materialize.onRendered(() => {
 
       // init materialize select
       instance.selectInstance = M.FormSelect.init(selectElement)
+
+      // search bar
+
+      function ensureSearchBar() {
+        if (!$(instance.selectInstance.dropdownOptions).find('.afSelectSearchBar').length) {
+          maybeMakeSearchBar()
+        }
+      }
+
+      function maybeMakeSearchBar() {
+        if (data.atts.enableSearch) {
+          const ul = $(instance.selectInstance.dropdownOptions)
+          const search = $(`<input placeholder="Search...">`)
+          const searchBar = $(`<div class="afSelectSearchBar"></div>`)
+          const children = ul.children().toArray().map(child => {
+            return { el: child, content: child.innerText.toLowerCase() }
+          })
+          searchBar.append(search)
+          ul.prepend(searchBar)
+
+          instance.selectInstance.dropdown.options.closeOnClick = false;
+          search.on('keydown', event => event.stopImmediatePropagation())
+          instance.selectInstance.dropdown.options.onCloseEnd = ensureSearchBar
+
+          search.on('keyup', event => {
+            const searchTerm = event.target.value.toLowerCase()
+            children.forEach(child => {
+              const { el, content } = child
+              if (content.includes(searchTerm)) {
+                el.style.display = 'list-item'
+              } else {
+                el.style.display = 'none'
+              }
+            })
+          })
+        }
+      }
+
+      maybeMakeSearchBar();
+
     }
   })
 })

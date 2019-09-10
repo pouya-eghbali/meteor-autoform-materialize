@@ -3,5 +3,6 @@
     {{#if this.labelText}}{{this.labelText}}
     {{else}}{{afFieldLabelText name=this.name}}
     {{/if}}
+    {{#if this.required}} <span class="red-text">*</span> {{/if}}
   </label>
 </template>

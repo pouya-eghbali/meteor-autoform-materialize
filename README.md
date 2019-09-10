@@ -381,7 +381,7 @@ MySchema = new SimpleSchema({
     type: String,
     label: 'Pick a time',
     autoform: {
-      type: 'pickatime',      
+      type: 'pickatime',
       pickerOptions: {
         default: 'now',       // Set default time
         fromnow: 0,           // set default time to * milliseconds from now (using with default = 'now')
@@ -390,7 +390,7 @@ MySchema = new SimpleSchema({
         cleartext: 'Clear',   // text for clear-button
         canceltext: 'Cancel', // Text for cancel-button
         autoclose: false,     // automatic close timepicker
-        ampmclickable: true,  // make AM PM clickable        
+        ampmclickable: true,  // make AM PM clickable
       }
     }
   }
@@ -446,7 +446,7 @@ MySchema = new SimpleSchema({
   someTextToDisplay: {
     type: String,
     autoform: {
-      type: 'flowtext'      
+      type: 'flowtext'
     }
   }
 });
@@ -535,7 +535,7 @@ Alternatively, see [mozfet:autoform-materialize-file](https://github.com/mozfet/
 
 You can add icon to any field like this:
 ```html
-{{> afQuickField name='subject' icon='person'}}
+{{> afQuickField name='subject' icon='identity'}}
 ```
 For blank space in place of icon, just use "none":
 ```html
@@ -544,7 +544,7 @@ For blank space in place of icon, just use "none":
 
 It also works for textarea:
 ```html
-{{> afQuickField name='message' type='textarea' icon='person'}}
+{{> afQuickField name='message' type='textarea' icon='identity'}}
 ```
 
 ### Default Values ###

@@ -5,6 +5,7 @@ import './select-multiple.html'
 import { optionAtts } from '../../utilities/optionAtts'
 import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass'
 import { initializeSelect } from '../../utilities/initializeSelect'
+import './search.css'
 
 // worker functions
 function isEmptySelect(value) {
@@ -89,7 +90,6 @@ function createItems(data) {
 // on created
 Template.afSelectMultiple_materialize.onCreated(() => {
   const instance = Template.instance()
-
   // init items
   instance.items = new ReactiveVar(createItems(instance.data))
 })
@@ -134,6 +134,31 @@ Template.afSelectMultiple_materialize.onRendered(() => {
 
       // init materialize select
       instance.selectInstance = M.FormSelect.init(selectElement)
+
+      // search bar
+
+      if (data.atts.enableSearch) {
+        const ul = $(instance.selectInstance.dropdownOptions)
+        const search = $(`<input placeholder="Search...">`)
+        const searchBar = $(`<div class="afSelectSearchBar"></div>`)
+        const children = ul.children().toArray().map(child => {
+          return { el: child, content: child.innerText.toLowerCase() }
+        })
+        searchBar.append(search)
+        ul.prepend(searchBar)
+        search.on('keydown', event => event.stopImmediatePropagation())
+        search.on('keyup', event => {
+          const searchTerm = event.target.value.toLowerCase()
+          children.forEach(child => {
+            const { el, content } = child
+            if (content.includes(searchTerm)) {
+              el.style.display = 'list-item'
+            } else {
+              el.style.display = 'none'
+            }
+          })
+        })
+      }
     }
   })
 })
@@ -143,8 +168,8 @@ Template.afSelectMultiple_materialize.helpers({
   atts: attsToggleInvalidClass,
   optionAtts(option) {
     const atts = {value: option.value}
-    if (option.selected) {atts.selected = ''}
-    if (option.disabled) {atts.disabled = ''}
+    if (option.selected) {atts.selected = true}
+    if (option.disabled) {atts.disabled = true}
     // console.log(`optionAtts for option ${option.label}`, atts)
     return atts
   },

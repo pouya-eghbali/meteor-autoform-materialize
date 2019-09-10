@@ -4,6 +4,9 @@ import './afObjectField.html'
 import { flattenSchema } from '../../utilities/flattenSchema'
 
 Template.afObjectField_materialize.helpers({
+  getClassForName: function (name) {
+    return name.replace(/\.\d+/g, '-array').replace(/\./g, '-')
+  },
   colSize: function (name) {
     let schema = AutoForm.getFormSchema()._schema;
     schema = flattenSchema(schema);
@@ -15,20 +18,22 @@ Template.afObjectField_materialize.helpers({
   },
   groupped: function (fields) {
     let schema = AutoForm.getFormSchema()._schema;
-    schema = flattenSchema(schema);    
+    schema = flattenSchema(schema);
     let groups = {}
-    fields.forEach(function (field) {      
+    fields.forEach(function (field) {
       let autoform = schema[field.name.replace(/\.\d+/g, '.$')].autoform || {};
       const group = autoform.group || 'default';
       const title = autoform.groupTitle || '';
       const help = autoform.groupHelp || '';
       const gorder = autoform.groupOrder != undefined ? autoform.groupOrder : 999;
       const order = autoform.order != undefined ? autoform.order : 999;
+      const gclass = autoform.groupClass || '';
       groups[group] = groups[group] || { name: group, fields: [] };
       groups[group].fields.push(field);
       groups[group].order = groups[group].order || gorder;
       groups[group].help = groups[group].help || help;
       groups[group].title = groups[group].title || title;
+      groups[group].gclass = groups[group].gclass || gclass;
       field.order = order;
     })
     Object.values(groups).forEach(function (group) {

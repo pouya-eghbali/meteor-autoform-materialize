@@ -1,0 +1,7 @@
+.afSelectSearchBar:hover {
+  background-color: white !important;
+}
+.afSelectSearchBar {
+  box-sizing: border-box;
+  padding: .5em 1em;
+}

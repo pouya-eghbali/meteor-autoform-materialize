@@ -3,9 +3,9 @@ import './afArrayField.html'
 import { Sortable } from '@shopify/draggable'
 import { _ } from 'meteor/underscore'
 
-const repackFields = (instance, fieldName, safeDragClass) => {  
+const repackFields = (instance, fieldName, safeDragClass) => {
 
-  const container = instance.$(`.draggable-container-${safeDragClass}`)  
+  const container = instance.$(`.draggable-container-${safeDragClass}`)
 
   // get draggable items that are children of the container
   const draggableItems = container.children(`.draggable-item-${safeDragClass}`).get();
@@ -57,18 +57,18 @@ const repackFields = (instance, fieldName, safeDragClass) => {
         field.attr('name', name)
       }
     })
-    
+
   })
-  
+
 }
 
-Template.afArrayField_materialize.onRendered(() => {  
+Template.afArrayField_materialize.onRendered(() => {
 
   const instance = Template.instance()
   const template = this;
 
   const formId = template.$('form').attr('id');
-  
+
   const context = AutoForm.Utility.getComponentContext(instance.data.atts,
     "afEachArrayItem")
   const fieldName = context.atts.name
@@ -78,20 +78,20 @@ Template.afArrayField_materialize.onRendered(() => {
 
   instance.autorun(function () {
     const options = context.defs.autoform || {};
-    const fieldValue = AutoForm.getFieldValue(fieldName, formId) || [];    
+    const fieldValue = AutoForm.getFieldValue(fieldName, formId) || [];
     const defaultField = Object.keys(fieldValue[0] || {}).sort((a, b) => a > b ? 1 : -1)[0];
     const isArrayOrObject = Array.isArray(fieldValue[0]) || typeof fieldValue[0] == 'object';
     const headerFieldName = options.arrayHeaderField || defaultField;
     const defaultHeader = options.arrayHeaderDefault || 'Click here to edit this item';
     const items = template.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
-    
+
     items.each(function (index) {
       const item = template.$(this);
-      
+
       let header;
 
       if (fieldValue[index]) {
-        if (!isArrayOrObject || headerFieldName == '$') {          
+        if (!isArrayOrObject || headerFieldName == '$') {
           header = fieldValue[index];
         } else {
           header = fieldValue[index][headerFieldName];
@@ -101,9 +101,9 @@ Template.afArrayField_materialize.onRendered(() => {
       if ((header == undefined) || (header == '')) {
         header = defaultHeader
       }
-      
+
       if (context.defs.autoform && context.defs.autoform.arrayHeaderFieldCallback) {
-        header = context.defs.autoform.arrayHeaderFieldCallback(header);        
+        header = context.defs.autoform.arrayHeaderFieldCallback(header);
       }
 
       item.find('.afArrayHeader').text(header);
@@ -112,12 +112,25 @@ Template.afArrayField_materialize.onRendered(() => {
 
   // initialize the collapsible
 
-  instance.$('.collapsible').collapsible();
+  const options = {}
+  const afOptions = context.defs.autoform || {};
+
+  options.accordion = afOptions.accordion ? true : false;
+
+  const elem = instance.$('.collapsible').get(0);
+  const collapsible = M.Collapsible.init(elem, options);
+
+  if (afOptions.allOpen) {
+    const items = template.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
+    for (let index = 1; index <= items.length; index++) {
+      collapsible.open(index)
+    }
+  }
 
   // setup drag and drop sorting
   const sortableContainerSelector = `.draggable-container-${safeDragClass}`
   const sortableContainer = instance.$(sortableContainerSelector).get()
-  // console.log('sortable containers', sortableContainer)  
+  // console.log('sortable containers', sortableContainer)
 
   // avoid conflicts by adding safeDragClass
   const sortable = new Sortable(sortableContainer, {
@@ -141,7 +154,7 @@ Template.afArrayField_materialize.onRendered(() => {
     // console.log('mirror:destroy:', dragEvent)
 
     // if the array was sorted
-    if (isSorted) {   
+    if (isSorted) {
 
       // allow draggable to clean the DOM
       Meteor.setTimeout(() => {
