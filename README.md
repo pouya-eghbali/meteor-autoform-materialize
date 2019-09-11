@@ -535,7 +535,7 @@ Alternatively, see [mozfet:autoform-materialize-file](https://github.com/mozfet/
 
 You can add icon to any field like this:
 ```html
-{{> afQuickField name='subject' icon='identity'}}
+{{> afQuickField name='subject' icon='person'}}
 ```
 For blank space in place of icon, just use "none":
 ```html
@@ -544,7 +544,7 @@ For blank space in place of icon, just use "none":
 
 It also works for textarea:
 ```html
-{{> afQuickField name='message' type='textarea' icon='identity'}}
+{{> afQuickField name='message' type='textarea' icon='person'}}
 ```
 
 ### Default Values ###
