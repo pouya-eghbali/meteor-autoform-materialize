@@ -119,6 +119,7 @@ Template.afArrayField_materialize.onRendered(() => {
 
   const elem = instance.$('.collapsible').get(0);
   const collapsible = M.Collapsible.init(elem, options);
+  instance.collapsible = collapsible;
 
   if (afOptions.allOpen) {
     const items = template.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
@@ -210,5 +211,22 @@ Template.afArrayField_materialize.events({
     const instance = Template.instance();
     // remove the item
     instance.$(event.target).closest('.collapsible-header').find('.autoform-remove-item').click();
+  },
+  'click .autoform-add-item': function (event) {
+    const instance = Template.instance();
+
+    const context = AutoForm.Utility.getComponentContext(instance.data.atts,
+      "afEachArrayItem")
+    const fieldName = context.atts.name
+    const safeDragClass = fieldName.replace(/\./g, '-dot-')
+
+    if (instance.data.atts && instance.data.atts.allOpen) {
+      setTimeout(() => {
+        const items = instance.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
+        for (let index = 1; index <= items.length; index++) {
+          instance.collapsible.open(index)
+        }
+      }, 0)
+    }
   }
 })
