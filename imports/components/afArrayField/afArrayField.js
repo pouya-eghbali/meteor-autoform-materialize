@@ -66,8 +66,7 @@ Template.afArrayField_materialize.onRendered(() => {
 
   const instance = Template.instance()
   const template = this;
-
-  const formId = template.$('form').attr('id');
+  const formId = AutoForm.getFormId();
 
   const context = AutoForm.Utility.getComponentContext(instance.data.atts,
     "afEachArrayItem")
