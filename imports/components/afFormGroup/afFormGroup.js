@@ -82,38 +82,38 @@ Template.afFormGroup_materialize.rendered = function() {
     ]
 
     this.autorun((function(_this) {
-        return function() {
-            var $input = $(`[data-schema-key="${_this.data.name}"]`)
-            var value = AutoForm.getFieldValue(_this.data.name, formId, false)
-            var inputValue = AutoForm.getInputValue($input[0])
-            var type = AutoForm.getInputType(_this.data)
-            var placeholder = _this.data.afFieldInputAtts.placeholder || $input.attr('placeholder')
+      return function() {
+        var $input = $(`[data-schema-key="${_this.data.name}"]`)
+        var value = AutoForm.getFieldValue(_this.data.name, formId, false)
+        var inputValue = AutoForm.getInputValue($input[0])
+        var type = AutoForm.getInputType(_this.data)
+        var placeholder = _this.data.afFieldInputAtts.placeholder || $input.attr('placeholder')
 
-            setTimeout(function () {
-              // if the input always has an active label
-              if (alwaysActiveLabelTypes.includes(type)) {
+        setTimeout(function () {
+          // if the input always has an active label
+          if (alwaysActiveLabelTypes.includes(type)) {
 
-                // activate the label
-                return $(`[data-schema-key="${_this.data.name}"] + label:not(:focus)`).addClass('active')
-              }
+            // activate the label
+            return $(`[data-schema-key="${_this.data.name}"] + label:not(:focus)`).addClass('active')
+          }
 
-              // else, if the input is an active type
-              else if (!skipActiveLabelTypes.includes(type)) {
+          // else, if the input is an active type
+          else if (!skipActiveLabelTypes.includes(type)) {
 
-                // if value or inputValue number 0 or placeholder
-                if (!!value || !!inputValue || inputValue === 0 || !!placeholder) {
+            // if value or inputValue number 0 or placeholder
+            if (!!value || !!inputValue || inputValue === 0 || !!placeholder) {
 
-                  // activate the label
-                  return $(`[data-schema-key="${_this.data.name}"] + label:not(:focus)`).addClass('active')
+              // activate the label
+              return $(`[data-schema-key="${_this.data.name}"] + label:not(:focus)`).addClass('active')
 
-                  // else
-                } else {
+              // else
+            } else {
 
-                  // deactivate the label
-                  return $(`[data-schema-key="${_this.data.name}"] + label:not(:focus)`).removeClass('active')
-                }
-              }
-            }, 0)
-        }
+              // deactivate the label
+              return $(`[data-schema-key="${_this.data.name}"] + label:not(:focus)`).removeClass('active')
+            }
+          }
+        }, 0)
+      }
     })(this))
 }

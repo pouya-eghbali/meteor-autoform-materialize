@@ -20,10 +20,7 @@ Template.afSelect_materialize.onRendered(() => {
 
   // react when template data changes
   let oldItems
-  instance.autorun(() => {
-    const data = Template.currentData()
-    // console.log('select template data', data)
-
+  const onItemsChanged = data => {
     // if items changed
     if (!_.isEqual(oldItems, data.items)) {
       // console.log('items changed', oldItems, data.items)
@@ -46,8 +43,8 @@ Template.afSelect_materialize.onRendered(() => {
 
         // select previous selected values in new items
         data.items = _.map(data.items, item => {
-          return _.contains(selectedValues, item.value)?
-              _.extend(item, {selected: true}):item
+          return _.contains(selectedValues, item.value) ?
+            _.extend(item, { selected: true }) : item
         })
         // console.log('data.items', data.items)
 
@@ -104,6 +101,12 @@ Template.afSelect_materialize.onRendered(() => {
       maybeMakeSearchBar();
 
     }
+  }
+  const onItemsChangedThrottled = throttle(onItemsChanged, 100)
+  instance.autorun(() => {
+    const data = Template.currentData()
+    // console.log('select template data', data)
+    onItemsChangedThrottled(data)
   })
 })
 

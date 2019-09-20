@@ -94,6 +94,16 @@ Template.afSelectMultiple_materialize.onCreated(() => {
   instance.items = new ReactiveVar(createItems(instance.data))
 })
 
+function throttle(fn, limit) {
+  let timeout
+  return function (...args) {
+    clearTimeout(timeout)
+    timeout = setTimeout(function () {
+      fn(...args)
+    }, limit)
+  }
+}
+
 // on rendered
 Template.afSelectMultiple_materialize.onRendered(() => {
   const instance = Template.instance()
@@ -104,10 +114,8 @@ Template.afSelectMultiple_materialize.onRendered(() => {
 
   // react when template data changes
   let oldItems
-  instance.autorun(() => {
-    const data = Template.currentData()
-    // console.log('select template data', data)
 
+  const onItemsChanged = data => {
     // if items changed
     if (!_.isEqual(oldItems, data.items)) {
       // console.log('items changed', oldItems, data.items)
@@ -123,7 +131,7 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       }
 
       // create items
-      const itemData = {items: createItems(data)}
+      const itemData = { items: createItems(data) }
 
       // remove all children of the select element
       // console.log(selectQuery.get(0))
@@ -180,6 +188,14 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       }
 
     }
+  }
+
+  const onItemsChangedThrottled = throttle(onItemsChanged, 100)
+
+  instance.autorun(() => {
+    const data = Template.currentData()
+    // console.log('select template data', data)
+    onItemsChangedThrottled(data)
   })
 })
 

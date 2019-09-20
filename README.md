@@ -8,6 +8,12 @@ Here's a list of what's been changed:
 
 ## Features
 
+* **Performance**:
+  * **Throttle select item rendering**:
+      When there are many select options and the `options` method is reactive,
+      this function gets recalled a lot as the data gets loaded. I throttled this
+      function to improve performance.
+
 * **Collapsible arrays**:
       Arrays are collapsible now. The following options are available for array now:
 
