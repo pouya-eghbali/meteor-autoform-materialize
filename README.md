@@ -75,6 +75,12 @@ Here's a list of what's been changed:
       If not defined, Materialize icon will be assumed.
       It can be one of `['fa', 'fab', 'fad', 'fal', 'far', 'fas']`
 
-* **Search bar for select elements**:
+* **Select element enhancements**:
+  * `enableSearch`:
       Set `enableSearch` to `true` to render a search bar inside select elements.
-
+  * `enableSelectAll`:
+      Adds a select all option inside select-multiple elements.
+  * `selectAllText`:
+      Text to be displayed as the select all option.
+  * `selectNoneText`:
+      Text to be displayed as the select none option.

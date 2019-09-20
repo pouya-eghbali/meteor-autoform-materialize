@@ -135,13 +135,32 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       // init materialize select
       instance.selectInstance = M.FormSelect.init(selectElement)
 
+      // select all options
+
+      if (data.atts.enableSelectAll) {
+        const selectAllText = data.atts.selectAllText || "Select all";
+        const selectNoneText = data.atts.selectNoneText || "Select none";
+        const ul = $(instance.selectInstance.dropdownOptions)
+        const selectAllEl = $(
+          `<li class="afSelectAllOption afNotAnActualSelectItem">
+            <span><label>${selectAllText}</label></span></li>`)
+        ul.prepend(selectAllEl)
+        selectAllEl.click(event => {
+          const selectAll = selectAllEl.find('label').text() == selectAllText
+          selectAllEl.find('label').text(selectAll ? selectNoneText : selectAllText)
+          ul.children('li').not('.afNotAnActualSelectItem').filter(function () {
+            return $(this).find('input').prop('checked') != selectAll;
+          }).click();
+        })
+      }
+
       // search bar
 
       if (data.atts.enableSearch) {
         const ul = $(instance.selectInstance.dropdownOptions)
         const search = $(`<input placeholder="Search...">`)
-        const searchBar = $(`<div class="afSelectSearchBar"></div>`)
-        const children = ul.children().toArray().map(child => {
+        const searchBar = $(`<div class="afSelectSearchBar afNotAnActualSelectItem"></div>`)
+        const children = ul.children().not('.afNotAnActualSelectItem').toArray().map(child => {
           return { el: child, content: child.innerText.toLowerCase() }
         })
         searchBar.append(search)
@@ -159,6 +178,7 @@ Template.afSelectMultiple_materialize.onRendered(() => {
           })
         })
       }
+
     }
   })
 })
