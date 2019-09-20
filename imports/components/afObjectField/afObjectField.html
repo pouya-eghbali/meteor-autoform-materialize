@@ -1,31 +1,67 @@
 <template name="afObjectField_materialize">
   <div class="col {{colSize this.name}} afFieldContainer-{{getClassForName this.name}}">
-    <div class="card-panel autoform-object-field" name="{{this.name}}">
-      <div class="card-content">
-        {{#with afFieldLabelText name=this.name}}
-        <div class="card-title" style="margin-bottom: 2em">
-          {{this}}
+    {{#if this.collapsibleGroups}}
+      {{#with afFieldLabelText name=this.name}}
+        <div class="object-title" style="margin-bottom: 2em">
+          <h5>{{this}}</h5>
         </div>
-        {{/with}}
-        {{#if afFieldIsInvalid name=this.name}}
+      {{/with}}
+      {{#if afFieldIsInvalid name=this.name}}
         <div class="red-text">{{{afFieldMessage name=this.name}}}</div>
-        {{/if}}
+      {{/if}}
+      <ul class="collapsible expandable">
         {{#each group in groupped (afFieldNames name=this.name) this}}
+          <li class="{{group.name}}-group">
+            {{#if group.title}}
+              <div class="group-title collapsible-header">{{group.title}}</div>
+            {{/if}}
+            <div class="collapsible-body">
+              {{#if group.help}}
+                <div class="row group-help">{{group.help}}</div>
+              {{/if}}
+              <div class="group-fields row {{group.gclass}}">
+                {{#each group.fields}}
+                  {{> afQuickField name=this.name options=afOptionsFromSchema}}
+                {{/each}}
+              </div>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+      <script>
+        var elem = document.querySelector('.collapsible.expandable');
+        var instance = M.Collapsible.init(elem, {
+          accordion: false
+        });
+      </script>
+    {{else}}
+      <div class="card-panel autoform-object-field" name="{{this.name}}">
+        <div class="card-content">
+          {{#with afFieldLabelText name=this.name}}
+          <div class="card-title" style="margin-bottom: 2em">
+            {{this}}
+          </div>
+          {{/with}}
+          {{#if afFieldIsInvalid name=this.name}}
+          <div class="red-text">{{{afFieldMessage name=this.name}}}</div>
+          {{/if}}
+          {{#each group in groupped (afFieldNames name=this.name) this}}
           <div class="{{group.name}}-group row">
             {{#if group.title}}
-              <h5 class="group-title">{{group.title}}</h5>
+            <h5 class="group-title">{{group.title}}</h5>
             {{/if}}
             {{#if group.help}}
-              <div class="col s12 group-help">{{group.help}}</div>
+            <div class="col s12 group-help">{{group.help}}</div>
             {{/if}}
             <div class="group-fields {{group.gclass}}">
               {{#each group.fields}}
-                {{> afQuickField name=this.name options=afOptionsFromSchema}}
+              {{> afQuickField name=this.name options=afOptionsFromSchema}}
               {{/each}}
             </div>
           </div>
-        {{/each}}
+          {{/each}}
+        </div>
       </div>
-    </div>
+    {{/if}}
   </div>
 </template>
