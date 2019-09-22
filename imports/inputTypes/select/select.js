@@ -6,6 +6,16 @@ import { attsToggleInvalidClass } from '../../utilities/attsToggleInvalidClass'
 import './select.html'
 import './search.css'
 
+function throttle(fn, limit) {
+  let timeout
+  return function (...args) {
+    clearTimeout(timeout)
+    timeout = setTimeout(function () {
+      fn(...args)
+    }, limit)
+  }
+}
+
 // on template rendered
 Template.afSelect_materialize.onRendered(() => {
   const instance = Template.instance()
