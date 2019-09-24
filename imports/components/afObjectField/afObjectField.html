@@ -1,5 +1,5 @@
 <template name="afObjectField_materialize">
-  <div class="col {{colSize this.name}} afFieldContainer-{{getClassForName this.name}}">
+  <div class="col {{colSize this.name}} afFieldContainer-{{safeClass this.name}}">
     {{#if this.collapsibleGroups}}
       {{#with afFieldLabelText name=this.name}}
         <div class="object-title" style="margin-bottom: 2em">

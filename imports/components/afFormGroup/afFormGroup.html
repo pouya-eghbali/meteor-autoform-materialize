@@ -1,5 +1,5 @@
 <template name="afFormGroup_materialize">
-  <div class="{{#if addInputField}}input-field{{/if}} col {{colSize this}} afFieldContainer-{{this.name}}">
+  <div class="{{#if addInputField}}input-field{{/if}} col {{colSize this}} afFieldContainer-{{safeClass this.name}}">
     {{#if this.afFieldInputAtts.icon}}
       {{> afIcon_materialize this.afFieldInputAtts}}
     {{/if}}

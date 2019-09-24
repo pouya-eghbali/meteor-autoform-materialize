@@ -4,8 +4,8 @@ import './afObjectField.html'
 import { flattenSchema } from '../../utilities/flattenSchema'
 
 Template.afObjectField_materialize.helpers({
-  getClassForName: function (name) {
-    return name.replace(/\.\d+/g, '-array').replace(/\./g, '-')
+  safeClass: function (name) {
+    return name.replace(/\./g, '-dot-');
   },
   colSize: function (name) {
     let schema = AutoForm.getFormSchema()._schema;
