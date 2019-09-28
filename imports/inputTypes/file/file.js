@@ -5,8 +5,6 @@ import './file.html';
 
 Template.afInputFile_materialize.helpers({
   getButtonText() {
-    console.log(this);
-
     return this.atts.buttonText || 'File'
   }
 })
