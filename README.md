@@ -84,6 +84,8 @@ Here's a list of what's been changed:
 * **Select element enhancements**:
   * `enableSearch`:
       Set `enableSearch` to `true` to render a search bar inside select elements.
+  * `searchPlaceholder`:
+      Placeholder for search. Defaults to `Search...`
   * `enableSelectAll`:
       Adds a select all option inside select-multiple elements.
   * `selectAllText`:
