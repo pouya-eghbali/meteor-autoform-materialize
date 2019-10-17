@@ -10,7 +10,7 @@ import './search.css'
 // worker functions
 function isEmptySelect(value) {
   const valueIsEmptyArray = _.isArray(value) &&
-      (value.length === 1) && (_.isEmpty(_.first(value)))
+    (value.length === 1) && (_.isEmpty(_.first(value)))
   if (_.isEmpty(value) || valueIsEmptyArray) {
     return true
   }
@@ -30,7 +30,7 @@ function placeholder(data) {
 }
 
 function hasPlaceholder(data) {
-  return data.atts.firstOption || data.atts.placeholder?true:false
+  return data.atts.firstOption || data.atts.placeholder ? true : false
 }
 
 function createItems(data) {
@@ -71,7 +71,7 @@ function createItems(data) {
     if (_.contains(selectedValues, item.value)) {
 
       // push selected item
-      items.push(_.extend(item, {selected: true}))
+      items.push(_.extend(item, { selected: true }))
     }
 
     // else
@@ -165,8 +165,9 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       // search bar
 
       if (data.atts.enableSearch) {
+        const placeholder = data.atts.searchPlaceholder || 'Search...'
         const ul = $(instance.selectInstance.dropdownOptions)
-        const search = $(`<input placeholder="Search...">`)
+        const search = $(`<input placeholder="${placeholder}">`)
         const searchBar = $(`<div class="afSelectSearchBar afNotAnActualSelectItem"></div>`)
         const children = ul.children().not('.afNotAnActualSelectItem').toArray().map(child => {
           return { el: child, content: child.innerText.toLowerCase() }
@@ -203,9 +204,9 @@ Template.afSelectMultiple_materialize.onRendered(() => {
 Template.afSelectMultiple_materialize.helpers({
   atts: attsToggleInvalidClass,
   optionAtts(option) {
-    const atts = {value: option.value}
-    if (option.selected) {atts.selected = true}
-    if (option.disabled) {atts.disabled = true}
+    const atts = { value: option.value }
+    if (option.selected) { atts.selected = true }
+    if (option.disabled) { atts.disabled = true }
     // console.log(`optionAtts for option ${option.label}`, atts)
     return atts
   },

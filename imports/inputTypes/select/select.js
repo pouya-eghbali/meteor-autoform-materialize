@@ -81,8 +81,9 @@ Template.afSelect_materialize.onRendered(() => {
 
       function maybeMakeSearchBar() {
         if (data.atts.enableSearch) {
+          const placeholder = data.atts.searchPlaceholder || 'Search...'
           const ul = $(instance.selectInstance.dropdownOptions)
-          const search = $(`<input placeholder="Search...">`)
+          const search = $(`<input placeholder="${placeholder}">`)
           const searchBar = $(`<div class="afSelectSearchBar"></div>`)
           const children = ul.children().toArray().map(child => {
             return { el: child, content: child.innerText.toLowerCase() }
@@ -141,9 +142,9 @@ Template.afSelect_materialize_items.helpers({
 
   // get DOM attributes for an option
   optionAtts(option) {
-    const atts = {value: option.value}
-    if (option.selected) {atts.selected = ''}
-    if (option.disabled) {atts.disabled = ''}
+    const atts = { value: option.value }
+    if (option.selected) { atts.selected = '' }
+    if (option.disabled) { atts.disabled = '' }
     if (option.atts && option.atts.htmlAttributes) {
       _.extend(atts, option.atts.htmlAttributes)
     }
