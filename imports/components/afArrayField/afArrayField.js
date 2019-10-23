@@ -189,6 +189,15 @@ Template.afArrayField_materialize.events({
     // open the modal
     instance.$(event.target).closest('.collapsible-header').find('.afArrayItemRemoveDialog').modal().modal('open');
   },
+  'click .noCollapsible .afArrayItemRemoveButton': function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const instance = Template.instance();
+    // prevent the item from opening/closing
+    instance.$(event.target).closest('.array-item-buttons').click();
+    // open the modal
+    instance.$(event.target).closest('.array-item-buttons').find('.afArrayItemRemoveDialog').modal().modal('open');
+  },
   'click .modal-close': function (event) {
     event.preventDefault();
     event.stopPropagation();
@@ -213,6 +222,13 @@ Template.afArrayField_materialize.events({
     const instance = Template.instance();
     // remove the item
     instance.$(event.target).closest('.collapsible-header').find('.autoform-remove-item').click();
+  },
+  'click .noCollapsible .modal-confirm': function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const instance = Template.instance();
+    // remove the item
+    instance.$(event.target).closest('.array-item-buttons').find('.autoform-remove-item').click();
   },
   'click .autoform-add-item': function (event) {
     const instance = Template.instance();

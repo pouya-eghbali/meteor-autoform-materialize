@@ -19,26 +19,26 @@
       <div class="row">
         <div class="col s12">
           {{#if this.atts.saveButton}}
-          <button type="submit" id="afSaveButton" class="btn waves-effect waves-light">
-            {{this.atts.saveButton}}
-          </button>
+            <button type="submit" id="afSaveButton" class="btn waves-effect waves-light">
+              {{this.atts.saveButton}}
+            </button>
           {{/if}}
           <button type="submit" id="afSubmitButton" {{submitButtonAtts}}>
             {{#with ../atts.buttonContent}}
               {{this}}
-            {{else}}
-              Submit
+    {{else}}
+      Submit
             {{/with}}
           </button>
           {{#if this.atts.cancelButton}}
-          <button type="submit" id="afCancelButton" class="btn waves-effect waves-light">
-            {{this.atts.cancelButton}}
-          </button>
+            <button type="submit" id="afCancelButton" class="btn waves-effect waves-light">
+              {{this.atts.cancelButton}}
+            </button>
           {{/if}}
           {{#if this.atts.removeButton}}
-          <button type="submit" id="afRemoveButton" class="btn red waves-effect waves-light">
-            {{this.atts.removeButton}}
-          </button>
+            <button type="submit" id="afRemoveButton" class="btn red waves-effect waves-light">
+              {{this.atts.removeButton}}
+            </button>
           {{/if}}
         </div>
       </div>

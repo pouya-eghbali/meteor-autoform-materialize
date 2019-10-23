@@ -29,6 +29,14 @@ Here's a list of what's been changed:
 
 * **Arrays**
   * `noTitle`: If set to `true`, title will not be rendered
+  * `addTooltip`: Add button tooltip text, defaults to "Add"
+  * `moveTooltip`: Move handle tooltip for array items
+  * `editTooltop`: Edit icon tooltip for array items
+  * `removeTooltip`: Remove button tooltip text, defaults to "Remove"
+  * `removeModalHeader`: Header for array item removal modal
+  * `removeModalBody`: Body for array item removal modal
+  * `removeModalNo`: No button text for item removal modal
+  * `removeModalYes`: Yes button text for item removal modal
 
 * **Objects**
   * `noTitle`: If set to `true`, title will not be rendered

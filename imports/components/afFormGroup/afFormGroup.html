@@ -6,18 +6,18 @@
     {{#if skipLabel}}
       {{> afFieldInput this.afFieldInputAtts}}
     {{else}}
-    {{> afFieldInput this.afFieldInputAtts}}
+      {{> afFieldInput this.afFieldInputAtts}}
       {{#if needsLabel}}
         {{>afLabel_materialize this}}
       {{/if}}
     {{/if}}
     {{# if getHelp}}
       {{>afHelp_materialize (getHelp)}}
-    {{/if}}
-    {{#if afFieldIsInvalid name=this.name}}
-      <div class="red-text">
-        <i class="mdi-alert-warning"></i> {{{afFieldMessage name=this.name}}}
-      </div>
-    {{/if}}
+      {{/if}}
+      {{#if afFieldIsInvalid name=this.name}}
+        <div class="red-text">
+          <i class="mdi-alert-warning"></i> {{{afFieldMessage name=this.name}}}
+        </div>
+      {{/if}}
   </div>
 </template>

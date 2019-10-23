@@ -23,3 +23,6 @@
 .autoform-array-item > * {
   margin: .5em;
 }
+.noCollapsible .afArrayItemRemoveButton {
+  margin-top: 25px;
+}

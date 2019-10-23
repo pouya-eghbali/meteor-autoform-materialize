@@ -9,52 +9,52 @@ Template.afFormGroup_materialize.helpers({
   needsLabel() {
     const type = AutoForm.getInputType(this);
     const noLabelTypes = [
-          'file', 'fileUpload'
-      ]
+      'file', 'fileUpload'
+    ]
     return !noLabelTypes.includes(type)
   },
   colSize(context) {
     return this.afFieldInputAtts.size || 's12'
   },
   getHelp() {
-    return (this.afFieldInputAtts.data||{}).help
+    return (this.afFieldInputAtts.data || {}).help
   },
-  addInputField: function() {
-      var result, skipInputType, type
-      skipInputType = [
-          /*'checkbox',
-          'checkbox-group',
-          'boolean-checkbox',
-          'flowtext',
-          'boolean-radios',
-          'toggle',
-          'switch',
-          'javascript'*/
-      ]
-      type = AutoForm.getInputType(this)
-      result = !_.contains(skipInputType, type)
-      return result
+  addInputField: function () {
+    var result, skipInputType, type
+    skipInputType = [
+      /*'checkbox',
+      'checkbox-group',
+      'boolean-checkbox',
+      'flowtext',
+      'boolean-radios',
+      'toggle',
+      'switch',
+      'javascript'*/
+    ]
+    type = AutoForm.getInputType(this)
+    result = !_.contains(skipInputType, type)
+    return result
   },
-  skipLabel: function() {
-      var result, skipLabelTypes, type
-      skipLabelTypes = [
-          'medium',
-          'checkbox',
-          'checkbox-group',
-          'boolean-checkbox',
-          'boolean-radios',
-          'flowtext',
-          'toggle',
-          'switch',
-          'javascript'
-      ]
-      type = AutoForm.getInputType(this)
-      result = this.skipLabel || _.contains(skipLabelTypes, type)
-      return result
+  skipLabel: function () {
+    var result, skipLabelTypes, type
+    skipLabelTypes = [
+      'medium',
+      'checkbox',
+      'checkbox-group',
+      'boolean-checkbox',
+      'boolean-radios',
+      'flowtext',
+      'toggle',
+      'switch',
+      'javascript'
+    ]
+    type = AutoForm.getInputType(this)
+    result = this.skipLabel || _.contains(skipLabelTypes, type)
+    return result
   }
 })
 
-Template.afFormGroup_materialize.rendered = function() {
+Template.afFormGroup_materialize.rendered = function () {
   var formId
   formId = AutoForm.getFormId()
 
@@ -84,8 +84,8 @@ Template.afFormGroup_materialize.rendered = function() {
     'date'
   ]
 
-  this.autorun((function(_this) {
-    return function() {
+  this.autorun((function (_this) {
+    return function () {
       var $input = $(`[data-schema-key="${_this.data.name}"]`)
       var value = AutoForm.getFieldValue(_this.data.name, formId, false)
       var inputValue = AutoForm.getInputValue($input[0])
