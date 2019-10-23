@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating'
 import './afArrayField.html'
 import { Sortable } from '@shopify/draggable'
 import { _ } from 'meteor/underscore'
+import './afArrayField.css'
 
 const repackFields = (instance, fieldName, safeDragClass) => {
 
@@ -113,6 +114,8 @@ Template.afArrayField_materialize.onRendered(() => {
 
   const options = {}
   const afOptions = context.defs.autoform || {};
+
+  if (afOptions.collapsible == false) return
 
   options.accordion = afOptions.accordion ? true : false;
 

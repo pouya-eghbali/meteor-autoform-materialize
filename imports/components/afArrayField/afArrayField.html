@@ -1,74 +1,121 @@
 <template name="afArrayField_materialize">
-
-  <div class="col {{colSize atts}} afFieldContainer-{{safeDragClass atts.name}}">
-    <ul class="collection js-autoform-array collapsible draggable-container-{{safeDragClass atts.name}}">
-
-      <!-- header row -->
-      <li class="collection-item dragHeader">
-
-        <span class="array-collection-header">{{afFieldLabelText name=atts.name}}</span>
-
-        <!-- if there are less items than the maximum -->
-        {{#if afArrayFieldHasLessThanMaximum name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
-
-        <!-- show add button  -->
-        <a href="#!" class="secondary-content autoform-add-item" data-autoform-field="{{atts.name}}"
-          data-autoform-minCount="{{atts.minCount}}" data-autoform-maxCount="{{atts.maxCount}}">
-          {{> tooltippedIcon icon="add" iconClass="" text="Add" position="left"}}
-        </a>
-        {{/if}}
-      </li>
-
-      <!-- if array is invalid -->
-      {{#if afFieldIsInvalid name=atts.name}}
-
-      <!-- show error reason text to user -->
-      <li class="collection-item">
-        <span class="red-text">{{{afFieldMessage name=atts.name}}}</span>
-      </li>
-      {{/if}}
-
-      <!-- for each item -->
-      {{#afEachArrayItem name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
-                          arrayItemTemplate=atts.arrayItemTemplate}}
-
-      <!-- safe class to avoid draggable conflicts -->
-      <li class="draggable-item-{{safeDragClass ../atts.name}}">
-        <!-- collapsible header -->
-        <div class="collapsible-header collapsible-header-{{safeDragClass this.name}}" style="display: flex">
-
-          <!-- show the drag handle -->
-          <a href="#" class="secondary-content drag-handle-{{safeDragClass ../atts.name}}">
-            {{> tooltippedIcon icon="drag_handle" iconClass="" text="Move" position="left"}}
-          </a>
-
-          <!-- if custom array header template is provided -->
-          {{#if ../atts.arrayHeaderTemplate}}
-            <!-- show dynamic template -->
-            {{#with template=../atts.arrayHeaderTemplate data=(packValues ../atts afOptionsFromSchema this.name)}}
-              {{> Template.dynamic template=template data=data}}
-            {{/with}}
-          {{else}}
-            <div class="afArrayHeader" style="flex-grow: 1"> </div>
+  {{#unless collapsible}}
+    <div class="col {{colSize atts}} afFieldContainer-{{safeDragClass atts.name}}">
+      <div class="card">
+        <div class="afArrayAddBtnContainer">
+          {{#if afArrayFieldHasLessThanMaximum name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+            <!-- show add button  -->
+            <a href="#!" class="secondary-content autoform-add-item btn-floating waves-effect waves"
+              data-autoform-field="{{atts.name}}" data-autoform-minCount="{{atts.minCount}}"
+              data-autoform-maxCount="{{atts.maxCount}}">
+              {{> tooltippedIcon icon="add" iconClass="" text="Add" position="center"}}
+            </a>
           {{/if}}
-
-          <!-- show the edit icon -->
-          <a href="#" class="secondary-content" onclick="return false" style="margin-right: -1rem">
-            {{> tooltippedIcon icon="edit" iconClass="" text="Edit" position="left"}}
-          </a>
-
-          <!-- if there are more than the minimum of items in the array -->
-          {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
-
-          <!-- show the remove button -->
-          <a href="#" class="secondary-content afArrayItemRemoveButton" style="margin-right: -1rem">
-            {{> tooltippedIcon icon="delete" iconClass="" text="Remove" position="left"}}
-          </a>
-          <a href="#" class="hide autoform-remove-item"></a>
-
-          <div class="modal afArrayItemRemoveDialog">
-            <div class="modal-content">
-              <h4>Do you want to remove the following item?</h4>
+        </div>
+        <div class="card-content afArrayFieldContent">
+          {{#unless atts.noTitle}}
+            <div class="row">
+              <div class="col s12">
+                <span class="array-title">{{afFieldLabelText name=atts.name}}</span>
+              </div>
+            </div>
+          {{/unless}}
+          <!-- if array is invalid -->
+          {{#if afFieldIsInvalid name=atts.name}}
+            <!-- show error reason text to user -->
+            <div class="row">
+              <span class="red-text">{{{afFieldMessage name=atts.name}}}</span>
+            </div>
+          {{/if}}
+          <!-- for each item -->
+          {{#afEachArrayItem name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
+                                    arrayItemTemplate=atts.arrayItemTemplate}}
+            <div class="row array-item-{{safeDragClass ../atts.name}} autoform-array-item">
+              <!-- collapsible header -->
+              <div class="array-item-buttons array-item-buttons-{{safeDragClass this.name}}" style="display: flex">
+                <!-- if there are more than the minimum of items in the array -->
+                {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
+                  <!-- show the remove button -->
+                  <a href="#" class="secondary-content afArrayItemRemoveButton" style="margin-right: -1rem">
+                    {{> tooltippedIcon icon="delete" iconClass="" text="Remove" position="left"}}
+                  </a>
+                  <a href="#" class="hide autoform-remove-item"></a>
+                  <div class="modal afArrayItemRemoveDialog">
+                    <div class="modal-content">
+                      <h4>Do you want to remove the following item?</h4>
+                      <!-- if custom array header template is provided -->
+                      {{#if ../atts.arrayHeaderTemplate}}
+                        <!-- show dynamic template -->
+                        {{#with template=../atts.arrayHeaderTemplate data=(packValues ../atts afOptionsFromSchema this.name)}}
+                          {{> Template.dynamic template=template data=data}}
+                        {{/with}}
+                      {{else}}
+                        <div class="afArrayHeader" style="flex-grow: 1"> </div>
+                      {{/if}}
+                      <div>This action cannot be undone.</div>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+                      <a href="#!" class="modal-close modal-confirm waves-effect waves-green btn-flat">Yes</a>
+                    </div>
+                  </div>
+                {{/if}}
+              </div>
+              <div class="array-item-body array-item-body-{{safeDragClass this.name}}">
+                <!-- if custom array template is provided -->
+                {{#if ../atts.arrayItemTemplate}}
+                  <!-- {{#if false}} -->
+                  <!-- show dynamic template -->
+                  <!-- Template {{../atts.arrayItemTemplate}}, Name {{this.name}} -->
+                  {{#with template=../atts.arrayItemTemplate data=(pack ../atts afOptionsFromSchema this.name)}}
+                    {{> Template.dynamic template=template data=data}}
+                  {{/with}}
+                  <!-- {{> Template.dynamic template=(../atts.arrayItemTemplate)}} -->
+                  <!-- {{> Template.dynamic template="profileItemForm"}} -->
+                  <!-- else  -->
+                {{else}}
+                  <!-- show as quickfield -->
+                  {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
+                {{/if}}
+              </div>
+            </div>
+          {{/afEachArrayItem}}
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <div class="col {{colSize atts}} afFieldContainer-{{safeDragClass atts.name}}">
+      <ul class="collection js-autoform-array collapsible draggable-container-{{safeDragClass atts.name}}">
+        <!-- header row -->
+        <li class="collection-item dragHeader">
+          <span class="array-collection-header">{{afFieldLabelText name=atts.name}}</span>
+          <!-- if there are less items than the maximum -->
+          {{#if afArrayFieldHasLessThanMaximum name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount}}
+            <!-- show add button  -->
+            <a href="#!" class="secondary-content autoform-add-item" data-autoform-field="{{atts.name}}"
+              data-autoform-minCount="{{atts.minCount}}" data-autoform-maxCount="{{atts.maxCount}}">
+              {{> tooltippedIcon icon="add" iconClass="" text="Add" position="left"}}
+            </a>
+          {{/if}}
+        </li>
+        <!-- if array is invalid -->
+        {{#if afFieldIsInvalid name=atts.name}}
+          <!-- show error reason text to user -->
+          <li class="collection-item">
+            <span class="red-text">{{{afFieldMessage name=atts.name}}}</span>
+          </li>
+        {{/if}}
+        <!-- for each item -->
+        {{#afEachArrayItem name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
+                          arrayItemTemplate=atts.arrayItemTemplate}}
+          <!-- safe class to avoid draggable conflicts -->
+          <li class="draggable-item-{{safeDragClass ../atts.name}}">
+            <!-- collapsible header -->
+            <div class="collapsible-header collapsible-header-{{safeDragClass this.name}}" style="display: flex">
+              <!-- show the drag handle -->
+              <a href="#" class="secondary-content drag-handle-{{safeDragClass ../atts.name}}">
+                {{> tooltippedIcon icon="drag_handle" iconClass="" text="Move" position="left"}}
+              </a>
               <!-- if custom array header template is provided -->
               {{#if ../atts.arrayHeaderTemplate}}
                 <!-- show dynamic template -->
@@ -78,50 +125,60 @@
               {{else}}
                 <div class="afArrayHeader" style="flex-grow: 1"> </div>
               {{/if}}
-              <div>This action cannot be undone.</div>
+              <!-- show the edit icon -->
+              <a href="#" class="secondary-content" onclick="return false" style="margin-right: -1rem">
+                {{> tooltippedIcon icon="edit" iconClass="" text="Edit" position="left"}}
+              </a>
+              <!-- if there are more than the minimum of items in the array -->
+              {{#if afArrayFieldHasMoreThanMinimum name=../atts.name minCount=../atts.minCount maxCount=../atts.maxCount}}
+                <!-- show the remove button -->
+                <a href="#" class="secondary-content afArrayItemRemoveButton" style="margin-right: -1rem">
+                  {{> tooltippedIcon icon="delete" iconClass="" text="Remove" position="left"}}
+                </a>
+                <a href="#" class="hide autoform-remove-item"></a>
+                <div class="modal afArrayItemRemoveDialog">
+                  <div class="modal-content">
+                    <h4>Do you want to remove the following item?</h4>
+                    <!-- if custom array header template is provided -->
+                    {{#if ../atts.arrayHeaderTemplate}}
+                      <!-- show dynamic template -->
+                      {{#with template=../atts.arrayHeaderTemplate data=(packValues ../atts afOptionsFromSchema this.name)}}
+                        {{> Template.dynamic template=template data=data}}
+                      {{/with}}
+                    {{else}}
+                      <div class="afArrayHeader" style="flex-grow: 1"> </div>
+                    {{/if}}
+                    <div>This action cannot be undone.</div>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+                    <a href="#!" class="modal-close modal-confirm waves-effect waves-green btn-flat">Yes</a>
+                  </div>
+                </div>
+              {{/if}}
             </div>
-            <div class="modal-footer">
-              <a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
-              <a href="#!" class="modal-close modal-confirm waves-effect waves-green btn-flat">Yes</a>
-            </div>
-          </div>
-
-          {{/if}}
-
-        </div>
-        <div class="collapsible-body js-autoform-array-item">
-          <div class="primary-content row">
-            <!-- if custom array template is provided -->
-            {{#if ../atts.arrayItemTemplate}}
-            <!-- {{#if false}} -->
-
-            <!-- show dynamic template -->
-            <div class="card" style="margin: 0px;" name="{{this.name}}">
-              <div class="card-content">
-                <!-- Template {{../atts.arrayItemTemplate}}, Name {{this.name}} -->
-                {{#with template=../atts.arrayItemTemplate data=(pack ../atts afOptionsFromSchema this.name)}}
-                {{> Template.dynamic template=template data=data}}
-                {{/with}}
-
-                <!-- {{> Template.dynamic template=(../atts.arrayItemTemplate)}} -->
-                <!-- {{> Template.dynamic template="profileItemForm"}} -->
+            <div class="collapsible-body js-autoform-array-item">
+              <div class="primary-content row">
+                <!-- if custom array template is provided -->
+                {{#if ../atts.arrayItemTemplate}}
+                  <!-- {{#if false}} -->
+                  <!-- show dynamic template -->
+                  <!-- Template {{../atts.arrayItemTemplate}}, Name {{this.name}} -->
+                  {{#with template=../atts.arrayItemTemplate data=(pack ../atts afOptionsFromSchema this.name)}}
+                    {{> Template.dynamic template=template data=data}}
+                  {{/with}}
+                  <!-- {{> Template.dynamic template=(../atts.arrayItemTemplate)}} -->
+                  <!-- {{> Template.dynamic template="profileItemForm"}} -->
+                  <!-- else  -->
+                {{else}}
+                  <!-- show as quickfield -->
+                  {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
+                {{/if}}
               </div>
             </div>
-
-            <!-- else  -->
-            {{else}}
-
-            <!-- show as quickfield -->
-            {{> afQuickField name=this.name label=false options=afOptionsFromSchema}}
-
-            {{/if}}
-          </div>
-        </div>
-      </li>
-
-      {{/afEachArrayItem}}
-
-    </ul>
-  </div>
-
+          </li>
+        {{/afEachArrayItem}}
+      </ul>
+    </div>
+  {{/unless}}
 </template>

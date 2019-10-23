@@ -25,6 +25,14 @@ Here's a list of what's been changed:
   * `arrayHeaderFieldCallback`: Process the value of the array item and return appropriate header.
   * `arrayHeaderTemplate`: Use a template to render the array header.
   * `allOpen`: Initialize the collapsible with all items open.
+  * `collapsible`: Set to `false` to disable collapsible
+
+* **Arrays**
+  * `noTitle`: If set to `true`, title will not be rendered
+
+* **Objects**
+  * `noTitle`: If set to `true`, title will not be rendered
+  * `noCard`: If set to `true`, object won't be rendered in a card
 
 * **Column size control**:
       Instead of applying `s12` to all fields, you can now control the size class by providing a `size`
