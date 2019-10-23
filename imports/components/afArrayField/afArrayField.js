@@ -176,6 +176,9 @@ Template.afArrayField_materialize.helpers({
   },
   colSize(atts) {
     return atts.size || 's12';
+  },
+  isFalse(term) {
+    return term === false
   }
 })
 

@@ -1,5 +1,5 @@
 <template name="afArrayField_materialize">
-  {{#unless collapsible}}
+  {{#if isFalse atts.collapsible}}
     <div class="col {{colSize atts}} afFieldContainer-{{safeDragClass atts.name}}">
       <div class="card">
         <div class="afArrayAddBtnContainer">
@@ -253,5 +253,5 @@
         {{/afEachArrayItem}}
       </ul>
     </div>
-  {{/unless}}
+  {{/if}}
 </template>
