@@ -43,7 +43,7 @@ Template.afSelect_materialize.onRendered(() => {
       if (instance.selectInstance) {
 
         // get selected values
-        selectedValues = AutoForm.getFieldValue(data.atts.name)
+        selectedValues = AutoForm.getFieldValue(data.atts.name, null, null, null, false)
 
         // normalise selected values (for multiple select)
         if (!_.isArray(selectedValues)) {

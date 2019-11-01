@@ -9,7 +9,7 @@ const TIME_FORMAT = 'HH:mm'
 // add autoform input
 AutoForm.addInputType('pickatime', {
   template: 'afInputPickatime_materialize',
-  valueOut: function() {
+  valueOut: function () {
     return this.val()
   }
 })
@@ -20,7 +20,7 @@ Template.afInputPickatime_materialize.onCreated(() => {
 
   // if value was provided
   let value;
-  if(instance.data.value) {
+  if (instance.data.value) {
 
     // use provided value as value
     value = instance.data.value
@@ -39,9 +39,9 @@ Template.afInputPickatime_materialize.onRendered(() => {
 
   // initialise timepicker
   let options
-  if(instance.data.atts.pickerOptions) {
+  if (instance.data.atts.pickerOptions) {
     options = _.clone(instance.data.atts.pickerOptions)
-    if(value) {
+    if (value) {
       options.defaultTime = value
       instance.$('input').val(value)
       instance.$('input').parent().find('label').addClass('active')
@@ -49,7 +49,7 @@ Template.afInputPickatime_materialize.onRendered(() => {
   }
   else {
     options = {}
-    if(value) {
+    if (value) {
       options.defaultTime = value
       instance.$('input').val(value)
       instance.$('input').parent().find('label').addClass('active')
@@ -64,7 +64,7 @@ Template.afInputPickatime_materialize.onRendered(() => {
   instance.$('.timepicker').on('change', function () {
     const value = instance.$('.timepicker').val()
     instance.value.set(value)
-    if(value) {
+    if (value) {
       instance.$('.timepicker').parent().find('label').addClass('active')
     }
     else {
@@ -80,10 +80,10 @@ Template.afInputPickatime_materialize.helpers({
     const atts = instance.data.atts
     const val = instance.value.get()
     return {
-      'id'                : atts.id,
-      'data-schema-key'   : atts['data-schema-key'],
-      'data-value'        : val,
-      'value'             : val
+      'id': atts.id,
+      'data-schema-key': atts['data-schema-key'],
+      'data-value': val,
+      'value': val
     }
   },
   value() {

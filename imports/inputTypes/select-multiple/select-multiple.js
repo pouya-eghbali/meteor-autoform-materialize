@@ -37,7 +37,7 @@ function createItems(data) {
   const items = []
 
   // get selected values
-  let selectedValues = AutoForm.getFieldValue(data.atts.name)
+  let selectedValues = AutoForm.getFieldValue(data.atts.name, null, null, null, false)
 
   // normalise selected values (for multiple select)
   if (!_.isArray(selectedValues)) {
