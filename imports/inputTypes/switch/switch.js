@@ -8,12 +8,12 @@ AutoForm.addInputType('switch', {
   valueIn: (value) => {
     return value;
   },
-  valueOut: function() {
+  valueOut: function () {
     let ref, result;
     const input = this[0];
     const checked = input.checked;
     if (checked) {
-      if(_.isUndefined(input.attributes.truevalue)) {
+      if (_.isUndefined(input.attributes.truevalue)) {
         result = true;
       }
       else {
@@ -21,7 +21,7 @@ AutoForm.addInputType('switch', {
       }
     }
     else {
-      if(_.isUndefined(input.attributes.falsevalue)) {
+      if (_.isUndefined(input.attributes.falsevalue)) {
         result = false;
       }
       else {
