@@ -84,6 +84,7 @@ Template.afArrayField_materialize.onRendered(() => {
     const headerFieldName = options.arrayHeaderField || defaultField;
     const defaultHeader = options.arrayHeaderDefault || 'Click here to edit this item';
     const items = template.$(`.draggable-item-${safeDragClass}`).children('.collapsible-header');
+    const headerMode = options.arrayHeaderMode || 'text'
 
     items.each(function (index) {
       const item = template.$(this);
@@ -106,7 +107,9 @@ Template.afArrayField_materialize.onRendered(() => {
         header = context.defs.autoform.arrayHeaderFieldCallback(header);
       }
 
-      item.find('.afArrayHeader').text(header);
+      headerMode == 'text' ?
+        item.find('.afArrayHeader').text(header) :
+        item.find('.afArrayHeader').html(header)
     });
   })
 

@@ -24,6 +24,7 @@ Here's a list of what's been changed:
       This value can be later processed with `arrayHeaderFieldCallback` option.
   * `arrayHeaderFieldCallback`: Process the value of the array item and return appropriate header.
   * `arrayHeaderTemplate`: Use a template to render the array header.
+  * `arrayHeaderMode`: `text` or `html`, use together with `arrayHeaderFieldCallback`
   * `allOpen`: Initialize the collapsible with all items open.
   * `collapsible`: Set to `false` to disable collapsible
 
