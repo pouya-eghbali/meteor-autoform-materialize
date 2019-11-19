@@ -3,6 +3,9 @@ import './afFormGroup.html'
 import { flattenSchema } from '../../utilities/flattenSchema'
 
 Template.afFormGroup_materialize.helpers({
+  fieldType() {
+    return AutoForm.getInputType(this)
+  },
   safeClass(name) {
     return name.replace(/\./g, '-dot-');
   },
