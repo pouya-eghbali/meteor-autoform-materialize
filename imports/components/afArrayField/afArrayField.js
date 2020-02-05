@@ -86,9 +86,7 @@ Template.afArrayField_materialize.onRendered(() => {
     const headerFieldName = options.arrayHeaderField || defaultField;
     const defaultHeader =
       options.arrayHeaderDefault || "Click here to edit this item";
-    const items = template
-      .$(`.draggable-item-${safeDragClass}`)
-      .children(".collapsible-header");
+    const items = template.$(`.array-header-${safeDragClass}`);
     const headerMode = options.arrayHeaderMode || "text";
 
     items.each(function(index) {
@@ -137,7 +135,7 @@ Template.afArrayField_materialize.onRendered(() => {
   if (afOptions.allOpen) {
     const items = template
       .$(`.draggable-item-${safeDragClass}`)
-      .children(".collapsible-header");
+      .children(".array-header");
     for (let index = 1; index <= items.length; index++) {
       collapsible.open(index);
     }
@@ -189,8 +187,17 @@ Template.afArrayField_materialize.helpers({
   colSize(atts) {
     return atts.size || "s12";
   },
+  cardSize(atts) {
+    return atts.cardSize || "s12";
+  },
   isFalse(term) {
     return term === false;
+  },
+  isTrue(term) {
+    return term === true;
+  },
+  getCardsContainerClass(atts) {
+    return atts.cardsContainerClass || "";
   }
 });
 
@@ -202,12 +209,12 @@ Template.afArrayField_materialize.events({
     // prevent the item from opening/closing
     instance
       .$(event.target)
-      .closest(".collapsible-header")
+      .closest(".array-header")
       .click();
     // open the modal
     instance
       .$(event.target)
-      .closest(".collapsible-header")
+      .closest(".array-header")
       .find(".afArrayItemRemoveDialog")
       .modal()
       .modal("open");
@@ -229,6 +236,18 @@ Template.afArrayField_materialize.events({
       .modal()
       .modal("open");
   },
+  "click .cardMode .afArrayItemRemoveButton": function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const instance = Template.instance();
+    // open the modal
+    instance
+      .$(event.target)
+      .closest(".array-item-buttons")
+      .find(".afArrayItemRemoveDialog")
+      .modal()
+      .modal("open");
+  },
   "click .modal-close": function(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -236,12 +255,12 @@ Template.afArrayField_materialize.events({
     // prevent the item from opening/closing
     instance
       .$(event.target)
-      .closest(".collapsible-header")
+      .closest(".array-header")
       .click();
     // close the modal
     instance
       .$(event.target)
-      .closest(".collapsible-header")
+      .closest(".array-header")
       .find(".afArrayItemRemoveDialog")
       .modal()
       .modal("close");
@@ -253,12 +272,12 @@ Template.afArrayField_materialize.events({
     // prevent the item from opening/closing
     instance
       .$(event.target)
-      .closest(".collapsible-header")
+      .closest(".array-header")
       .click();
     // close the modal
     instance
       .$(event.target)
-      .closest(".collapsible-header")
+      .closest(".array-header")
       .find(".afArrayItemRemoveDialog")
       .modal()
       .modal("close");
@@ -270,11 +289,22 @@ Template.afArrayField_materialize.events({
     // remove the item
     instance
       .$(event.target)
-      .closest(".collapsible-header")
+      .closest(".array-header")
       .find(".autoform-remove-item")
       .click();
   },
   "click .noCollapsible .modal-confirm": function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const instance = Template.instance();
+    // remove the item
+    instance
+      .$(event.target)
+      .closest(".array-item-buttons")
+      .find(".autoform-remove-item")
+      .click();
+  },
+  "click .cardMode .modal-confirm": function(event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
@@ -299,7 +329,7 @@ Template.afArrayField_materialize.events({
       setTimeout(() => {
         const items = instance
           .$(`.draggable-item-${safeDragClass}`)
-          .children(".collapsible-header");
+          .children(".array-header");
         for (let index = 1; index <= items.length; index++) {
           instance.collapsible.open(index);
         }

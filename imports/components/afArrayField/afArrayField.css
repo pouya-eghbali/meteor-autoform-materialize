@@ -21,8 +21,17 @@
   flex: 1;
 }
 .autoform-array-item > * {
-  margin: .5em;
+  margin: 0.5em;
 }
 .noCollapsible .afArrayItemRemoveButton {
   margin-top: 25px;
+}
+.afArrayFieldCardMode > .afArrayAddBtnContainer a {
+  margin-right: -4px;
+}
+.afArrayFieldCardMode > .afArrayAddBtnContainer {
+  z-index: 3;
+}
+.afArrayFieldCardMode > .afArrayFieldContent > .row > .autoform-array-item {
+  padding: 0;
 }
