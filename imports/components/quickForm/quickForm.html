@@ -26,8 +26,8 @@
           <button type="submit" {{submitButtonAtts}}>
             {{#with ../atts.buttonContent}}
               {{this}}
-            {{else}}
-              Submit
+    {{else}}
+      Submit
             {{/with}}
           </button>
           {{#if this.atts.cancelButton}}
@@ -40,6 +40,11 @@
               {{this.atts.removeButton}}
             </button>
           {{/if}}
+          {{#each this.atts.otherButtons}}
+            <button type="submit" class="btn waves-effect waves-light {{this.classes}}">
+              {{this.contents}}
+            </button>
+          {{/each}}
         </div>
       </div>
     {{/if}}
