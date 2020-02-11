@@ -1,20 +1,48 @@
 <template name="quickForm_materialize">
   {{#autoForm this.qfAutoFormContext}}
-    {{#each group in groupped (afFieldNames) this}}
-      <div class="{{group.name}}-group row">
-        {{#if group.title}}
-          <h5 class="group-title">{{group.title}}</h5>
-        {{/if}}
-        {{#if group.help}}
-          <div class="col s12 group-help">{{group.help}}</div>
-        {{/if}}
-        <div class="group-fields {{group.gclass}}">
-          {{#each group.fields}}
-            {{> afQuickField name=this.name options=afOptionsFromSchema}}
+    {{#if (tabbed afFieldNames)}}
+      <ul class="tabs afTabHeader">
+        {{#each tab in (tabbed afFieldNames)}}
+          <li class="tab"><a href="#tab-{{tab.name}}">{{tab.title}}</a></li>
+        {{/each}}
+      </ul>
+
+      {{#each tab in (tabbed afFieldNames)}}
+        <div id="tab-{{tab.name}}" class="afTabContent">
+          {{#each group in tab.groups}}
+            <div class="{{group.name}}-group row">
+              {{#if group.title}}
+                <h5 class="group-title">{{group.title}}</h5>
+              {{/if}}
+              {{#if group.help}}
+                <div class="col s12 group-help">{{group.help}}</div>
+              {{/if}}
+              <div class="group-fields {{group.gclass}}">
+                {{#each group.fields}}
+                  {{> afQuickField name=this.name options=afOptionsFromSchema}}
+                {{/each}}
+              </div>
+            </div>
           {{/each}}
         </div>
-      </div>
-    {{/each}}
+      {{/each}}
+    {{else}}
+      {{#each group in groupped (afFieldNames) this}}
+        <div class="{{group.name}}-group row">
+          {{#if group.title}}
+            <h5 class="group-title">{{group.title}}</h5>
+          {{/if}}
+          {{#if group.help}}
+            <div class="col s12 group-help">{{group.help}}</div>
+          {{/if}}
+          <div class="group-fields {{group.gclass}}">
+            {{#each group.fields}}
+              {{> afQuickField name=this.name options=afOptionsFromSchema}}
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
+    {{/if}}
     {{#if qfShouldRenderButton}}
       <div class="row">
         <div class="col s12">
