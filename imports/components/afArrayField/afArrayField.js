@@ -178,6 +178,18 @@ Template.afArrayField_materialize.onRendered(() => {
 });
 
 Template.afArrayField_materialize.helpers({
+  shouldRenderAddButton(atts) {
+    return atts.disabled !== true;
+  },
+  shouldRenderRemoveButton(atts) {
+    return atts.disabled !== true;
+  },
+  shouldRenderDragButton(atts) {
+    return atts.disabled !== true;
+  },
+  shouldRenderEditButton(atts) {
+    return atts.disabled !== true;
+  },
   pack(atts, options, name) {
     return { atts, options, name };
   },
