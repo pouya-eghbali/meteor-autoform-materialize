@@ -93,16 +93,6 @@ Template.afSelectMultiple_materialize.onCreated(() => {
   instance.items = new ReactiveVar(createItems(instance.data));
 });
 
-function throttle(fn, limit) {
-  let timeout;
-  return function(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(function() {
-      fn(...args);
-    }, limit);
-  };
-}
-
 // on rendered
 Template.afSelectMultiple_materialize.onRendered(() => {
   const instance = Template.instance();
@@ -192,15 +182,38 @@ Template.afSelectMultiple_materialize.onRendered(() => {
 // helpers
 Template.afSelectMultiple_materialize.helpers({
   atts: attsToggleInvalidClass,
+
+  getItems() {
+    const { items } = Template.instance();
+    return items ? items.get() : [];
+  },
+
+  // get DOM attributes for an option
   optionAtts(option) {
     const atts = { value: option.value };
     if (option.selected) {
-      atts.selected = true;
+      atts.selected = "";
     }
     if (option.disabled) {
-      atts.disabled = true;
+      atts.disabled = "";
+    }
+    if (option.atts && option.atts.htmlAttributes) {
+      _.extend(atts, option.atts.htmlAttributes);
     }
     // console.log(`optionAtts for option ${option.label}`, atts)
     return atts;
+  },
+
+  // get label for an option
+  optionLabel(option) {
+    if (option._id === "AUTOFORM_EMPTY_FIRST_OPTION") {
+      if (option.atts.placeholder) {
+        return option.atts.placeholder;
+      }
+      if (option.atts.firstOption) {
+        return option.atts.firstOption;
+      }
+    }
+    return option.label;
   }
 });

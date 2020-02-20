@@ -6,16 +6,6 @@ import { attsToggleInvalidClass } from "../../utilities/attsToggleInvalidClass";
 import "./select.html";
 import "./search.css";
 
-function throttle(fn, limit) {
-  let timeout;
-  return function(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(function() {
-      fn(...args);
-    }, limit);
-  };
-}
-
 // on template rendered
 Template.afSelect_materialize.onRendered(() => {
   const instance = Template.instance();
@@ -127,39 +117,5 @@ Template.afSelect_materialize.onDestroyed(() => {
   // destory instance of materialize select
   if (instance.selectInstance) {
     instance.selectInstance.destroy();
-  }
-});
-
-// helpers
-Template.afSelect_materialize_items.helpers({
-  atts: attsToggleInvalidClass,
-
-  // get DOM attributes for an option
-  optionAtts(option) {
-    const atts = { value: option.value };
-    if (option.selected) {
-      atts.selected = "";
-    }
-    if (option.disabled) {
-      atts.disabled = "";
-    }
-    if (option.atts && option.atts.htmlAttributes) {
-      _.extend(atts, option.atts.htmlAttributes);
-    }
-    // console.log(`optionAtts for option ${option.label}`, atts)
-    return atts;
-  },
-
-  // get label for an option
-  optionLabel(option) {
-    if (option._id === "AUTOFORM_EMPTY_FIRST_OPTION") {
-      if (option.atts.placeholder) {
-        return option.atts.placeholder;
-      }
-      if (option.atts.firstOption) {
-        return option.atts.firstOption;
-      }
-    }
-    return option.label;
   }
 });
