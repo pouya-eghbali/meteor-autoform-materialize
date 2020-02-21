@@ -4,61 +4,17 @@ import { Sortable } from "@shopify/draggable";
 import { _ } from "meteor/underscore";
 import "./afArrayField.css";
 
-const repackFields = (instance, fieldName, safeDragClass) => {
-  const container = instance.$(`.draggable-container-${safeDragClass}`);
+const move = function(arr, from, to) {
+  arr.splice(to, 0, arr.splice(from, 1)[0]);
+};
 
-  // get draggable items that are children of the container
-  const draggableItems = container
-    .children(`.draggable-item-${safeDragClass}`)
-    .get();
-
-  // loop through draggable items and change all field names / schema-key
-
-  draggableItems.forEach((draggableItem, index) => {
-    draggableItem = $(draggableItem);
-    const allSchemaKeys = draggableItem.find("[data-schema-key]");
-    const allNames = draggableItem.find("[name]");
-
-    // change schema-keys:
-
-    allSchemaKeys.each(function() {
-      const schemaKey = $(this);
-      let key = schemaKey.attr("data-schema-key");
-      if (key == fieldName) {
-        return;
-      }
-      if (key.startsWith(fieldName)) {
-        // remove fieldName and the dot after
-        key = key.slice(fieldName.length + 1);
-        // remove leading number and dot after
-        key = key.replace(/^\d+\./, "");
-        // add current index and field name
-        key = `${fieldName}.${index}.${key}`;
-        // replace data-schema-key
-        schemaKey.attr("data-schema-key", key);
-      }
-    });
-
-    // change names:
-
-    allNames.each(function() {
-      const field = $(this);
-      let name = field.attr("name");
-      if (name == fieldName) {
-        return;
-      }
-      if (name.startsWith(fieldName)) {
-        // remove fieldName and the dot after
-        name = name.slice(fieldName.length + 1);
-        // remove leading number and dot after
-        name = name.replace(/^\d+\./, "");
-        // add current index and field name
-        name = `${fieldName}.${index}.${name}`;
-        // replace data-schema-key
-        field.attr("name", name);
-      }
-    });
-  });
+const repackFields = (instance, fieldName, formId) => {
+  const { newIndex, oldIndex } = instance.dragEvent;
+  const value = Tracker.nonreactive(() =>
+    AutoForm.getFieldValue(fieldName, formId)
+  );
+  move(value, oldIndex, newIndex);
+  AutoForm.setFieldValue(fieldName, value, formId);
 };
 
 Template.afArrayField_materialize.onRendered(() => {
@@ -161,6 +117,7 @@ Template.afArrayField_materialize.onRendered(() => {
   let isSorted = false;
   sortable.on("sortable:sorted", dragEvent => {
     isSorted = true;
+    instance.dragEvent = dragEvent;
   });
 
   // on sorted dag event
@@ -170,9 +127,7 @@ Template.afArrayField_materialize.onRendered(() => {
     // if the array was sorted
     if (isSorted) {
       // allow draggable to clean the DOM
-      Meteor.setTimeout(() => {
-        repackFields(template, fieldName, safeDragClass);
-      }, 0);
+      Meteor.setTimeout(() => repackFields(instance, fieldName, formId), 0);
     }
   });
 });
