@@ -96,12 +96,13 @@ Template.afSelectMultiple_materialize.onCreated(() => {
 // on rendered
 Template.afSelectMultiple_materialize.onRendered(() => {
   const instance = Template.instance();
-
-  // get select element, query
-  const selectQuery = instance.$("select");
-  const selectElement = selectQuery.get(0);
+  const { id } = instance.data.atts;
 
   const materializeSelect = () => {
+    // get select element, query
+    const selectQuery = $(`#${id}`);
+    const selectElement = selectQuery.get(0);
+
     // init materialize select
     if (!selectElement) return;
     instance.selectInstance = M.FormSelect.init(selectElement);
@@ -177,7 +178,10 @@ Template.afSelectMultiple_materialize.onRendered(() => {
 
   materializeSelect();
 
-  instance.$("select").on("DOMSubtreeModified", materializeSelect);
+  instance.autorun(function() {
+    Template.currentData();
+    materializeSelect();
+  });
 });
 
 // helpers

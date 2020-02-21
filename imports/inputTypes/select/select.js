@@ -9,11 +9,13 @@ import "./search.css";
 // on template rendered
 Template.afSelect_materialize.onRendered(() => {
   const instance = Template.instance();
+  const { id } = instance.data.atts;
 
   const materializeSelect = () => {
     // get select element, query
-    const selectQuery = instance.$("select");
+    const selectQuery = $(`#${id}`);
     const selectElement = selectQuery.get(0);
+
     if (!selectElement) return;
     instance.selectInstance = M.FormSelect.init(selectElement);
     const { data } = instance;
@@ -72,9 +74,10 @@ Template.afSelect_materialize.onRendered(() => {
     maybeMakeSearchBar();
   };
 
-  materializeSelect();
-
-  instance.$("select").on("DOMSubtreeModified", materializeSelect);
+  instance.autorun(function() {
+    Template.currentData();
+    materializeSelect();
+  });
 });
 
 // helpers
