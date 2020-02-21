@@ -10,11 +10,8 @@ const move = function(arr, from, to) {
 
 const repackFields = (instance, fieldName, formId) => {
   const { newIndex, oldIndex } = instance.dragEvent;
-  const value = Tracker.nonreactive(() =>
-    AutoForm.getFieldValue(fieldName, formId)
-  );
-  move(value, oldIndex, newIndex);
-  AutoForm.setFieldValue(fieldName, value, formId);
+  move(instance.oldValue, oldIndex, newIndex);
+  AutoForm.setFieldValue(fieldName, instance.oldValue, formId);
 };
 
 Template.afArrayField_materialize.onRendered(() => {
@@ -118,12 +115,14 @@ Template.afArrayField_materialize.onRendered(() => {
   sortable.on("sortable:sorted", dragEvent => {
     isSorted = true;
     instance.dragEvent = dragEvent;
+    instance.oldValue = Tracker.nonreactive(() =>
+      AutoForm.getFieldValue(fieldName, formId)
+    );
   });
 
   // on sorted dag event
   sortable.on("mirror:destroy", dragEvent => {
     // console.log('mirror:destroy:', dragEvent)
-
     // if the array was sorted
     if (isSorted) {
       // allow draggable to clean the DOM
