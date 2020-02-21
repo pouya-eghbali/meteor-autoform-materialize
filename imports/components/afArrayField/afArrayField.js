@@ -8,10 +8,26 @@ const move = function(arr, from, to) {
   arr.splice(to, 0, arr.splice(from, 1)[0]);
 };
 
-const repackFields = (instance, fieldName, formId) => {
-  const { newIndex, oldIndex } = instance.dragEvent;
-  move(instance.oldValue, oldIndex, newIndex);
-  AutoForm.setFieldValue(fieldName, instance.oldValue, formId);
+const repackFields = (instance, fieldName, formId, query) => {
+  // Update field names in DOM
+  const items = $(query).toArray();
+  items.forEach((item, index) => {
+    const rgx = new RegExp(`^(${fieldName}[.])(\\d+)([.].*)?$`);
+    const replace = value => value.replace(rgx, `$1${index}$3`);
+    const replaceAttr = attr =>
+      $(item)
+        .find(`[${attr}]`)
+        .each(function() {
+          const value = $(this).attr(attr);
+          $(this).attr(attr, replace(value));
+        });
+    replaceAttr("name");
+    replaceAttr("data-schema-key");
+  });
+  // Update AutoForm values
+  $(query)
+    .find("[data-schema-key]")
+    .change();
 };
 
 Template.afArrayField_materialize.onRendered(() => {
@@ -125,8 +141,12 @@ Template.afArrayField_materialize.onRendered(() => {
     // console.log('mirror:destroy:', dragEvent)
     // if the array was sorted
     if (isSorted) {
+      const query = `.draggable-item-${safeDragClass}`;
       // allow draggable to clean the DOM
-      Meteor.setTimeout(() => repackFields(instance, fieldName, formId), 0);
+      Meteor.setTimeout(
+        () => repackFields(instance, fieldName, formId, query),
+        0
+      );
     }
   });
 });
