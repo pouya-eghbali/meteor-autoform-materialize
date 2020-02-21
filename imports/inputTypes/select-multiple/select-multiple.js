@@ -157,6 +157,9 @@ Template.afSelectMultiple_materialize.onRendered(() => {
         });
       searchBar.append(search);
       ul.prepend(searchBar);
+
+      instance.selectInstance.dropdown.options.closeOnClick = false;
+
       search.on("keydown", event => event.stopImmediatePropagation());
       search.on("keyup", event => {
         const searchTerm = event.target.value.toLowerCase();
@@ -172,11 +175,9 @@ Template.afSelectMultiple_materialize.onRendered(() => {
     }
   };
 
-  instance
-    .$("select")
-    .change(materializeSelect)
-    .change()
-    .on("DOMSubtreeModified", materializeSelect);
+  materializeSelect();
+
+  instance.$("select").on("DOMSubtreeModified", materializeSelect);
 });
 
 // helpers

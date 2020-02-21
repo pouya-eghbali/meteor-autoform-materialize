@@ -48,10 +48,13 @@ Template.afSelect_materialize.onRendered(() => {
           instance.selectInstance.dropdown.options
         ) {
           instance.selectInstance.dropdown.options.closeOnClick = false;
-          search.on("keydown", event => event.stopImmediatePropagation());
           instance.selectInstance.dropdown.options.onCloseEnd = ensureSearchBar;
+          ul.children("li").on("click", event => {
+            instance.selectInstance.dropdown.close();
+          });
         }
 
+        search.on("keydown", event => event.stopImmediatePropagation());
         search.on("keyup", event => {
           const searchTerm = event.target.value.toLowerCase();
           children.forEach(child => {
@@ -69,11 +72,9 @@ Template.afSelect_materialize.onRendered(() => {
     maybeMakeSearchBar();
   };
 
-  instance
-    .$("select")
-    .change(materializeSelect)
-    .change()
-    .on("DOMSubtreeModified", materializeSelect);
+  materializeSelect();
+
+  instance.$("select").on("DOMSubtreeModified", materializeSelect);
 });
 
 // helpers
