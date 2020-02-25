@@ -94,10 +94,9 @@ Template.afSelect_materialize.helpers({
     if (option.disabled) {
       atts.disabled = "";
     }
-    if (option.atts && option.atts.htmlAttributes) {
-      _.extend(atts, option.atts.htmlAttributes);
+    if (option.htmlAtts) {
+      _.extend(atts, option.htmlAtts);
     }
-    // console.log(`optionAtts for option ${option.label}`, atts)
     return atts;
   },
 

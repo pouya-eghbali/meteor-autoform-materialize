@@ -52,9 +52,7 @@ function createItems(data) {
   if (hasPlaceholder(data)) {
     // define first option
     const firstOption = {
-      atts: {
-        htmlAttributes: {}
-      },
+      htmlAtts: {},
       label: placeholder(data),
       value: "",
       disabled: true,
@@ -203,8 +201,8 @@ Template.afSelectMultiple_materialize.helpers({
     if (option.disabled) {
       atts.disabled = "";
     }
-    if (option.atts && option.atts.htmlAttributes) {
-      _.extend(atts, option.atts.htmlAttributes);
+    if (option.htmlAtts) {
+      _.extend(atts, option.htmlAtts);
     }
     // console.log(`optionAtts for option ${option.label}`, atts)
     return atts;
