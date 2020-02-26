@@ -210,14 +210,6 @@ Template.afSelectMultiple_materialize.helpers({
 
   // get label for an option
   optionLabel(option) {
-    if (option._id === "AUTOFORM_EMPTY_FIRST_OPTION") {
-      if (option.atts.placeholder) {
-        return option.atts.placeholder;
-      }
-      if (option.atts.firstOption) {
-        return option.atts.firstOption;
-      }
-    }
     return option.label;
   }
 });
