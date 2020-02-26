@@ -78,7 +78,6 @@ Template.afSelect_materialize.onRendered(() => {
     Template.currentData();
     materializeSelect();
   });
-  $(`#${id}`).change(materializeSelect);
 });
 
 // helpers

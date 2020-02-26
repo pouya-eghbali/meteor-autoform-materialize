@@ -103,7 +103,11 @@ Template.afSelectMultiple_materialize.onRendered(() => {
 
     // init materialize select
     if (!selectElement) return;
-    instance.selectInstance = M.FormSelect.init(selectElement);
+    instance.selectInstance = M.FormSelect.init(selectElement, {
+      dropdownOptions: {
+        closeOnClick: false
+      }
+    });
     const { data } = instance;
 
     // select all options
@@ -113,7 +117,7 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       const selectNoneText = data.atts.selectNoneText || "Select none";
       const ul = $(instance.selectInstance.dropdownOptions);
       const selectAllEl = $(
-        `<li class="afSelectAllOption afNotAnActualSelectItem">
+        `<li class="afSelectAllOption">
             <span><label>${selectAllText}</label></span></li>`
       );
       ul.prepend(selectAllEl);
@@ -123,7 +127,6 @@ Template.afSelectMultiple_materialize.onRendered(() => {
           .find("label")
           .text(selectAll ? selectNoneText : selectAllText);
         ul.children("li")
-          .not(".afNotAnActualSelectItem")
           .filter(function() {
             return (
               $(this)
@@ -141,12 +144,9 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       const placeholder = data.atts.searchPlaceholder || "Search...";
       const ul = $(instance.selectInstance.dropdownOptions);
       const search = $(`<input placeholder="${placeholder}">`);
-      const searchBar = $(
-        `<div class="afSelectSearchBar afNotAnActualSelectItem"></div>`
-      );
+      const searchBar = $(`<div class="afSelectSearchBar"></div>`);
       const children = ul
         .children()
-        .not(".afNotAnActualSelectItem")
         .toArray()
         .map(child => {
           return {
@@ -156,8 +156,6 @@ Template.afSelectMultiple_materialize.onRendered(() => {
         });
       searchBar.append(search);
       ul.prepend(searchBar);
-
-      instance.selectInstance.dropdown.options.closeOnClick = false;
 
       search.on("keydown", event => event.stopImmediatePropagation());
       search.on("keyup", event => {
@@ -180,7 +178,6 @@ Template.afSelectMultiple_materialize.onRendered(() => {
     Template.currentData();
     materializeSelect();
   });
-  $(`#${id}`).change(materializeSelect);
 });
 
 // helpers
