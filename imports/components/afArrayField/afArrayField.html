@@ -294,7 +294,7 @@
           {{#afEachArrayItem name=atts.name minCount=this.atts.minCount maxCount=this.atts.maxCount
                           arrayItemTemplate=atts.arrayItemTemplate}}
             <!-- safe class to avoid draggable conflicts -->
-            <li class="draggable-item-{{safeDragClass ../atts.name}}">
+            <li class="draggable-item-{{safeDragClass ../atts.name}}" data-initial-index="{{index}}">
               <!-- collapsible header -->
               <div class="collapsible-header array-header array-header-{{safeDragClass ../atts.name}}"
                 style="display: flex">
@@ -387,7 +387,7 @@
                   {{/if}}
                 {{/if}}
               </div>
-              <div class="collapsible-body js-autoform-array-item">
+              <div class="collapsible-body js-autoform-array-item" data-array-key="{{name}}">
                 <div class="primary-content row">
                   <!-- if custom array template is provided -->
                   {{#if ../atts.arrayItemTemplate}}
@@ -402,7 +402,17 @@
                     <!-- else  -->
                   {{else}}
                     <!-- show as quickfield -->
-                    {{> afQuickField name=this.name options=afOptionsFromSchema}}
+                    {{#if ../atts.lazyArray}}
+                      {{#if expanded}}
+                        {{> afQuickField name=this.name options=afOptionsFromSchema}}
+                      {{else}}
+                        {{#each getSubfields this}}
+                          <input type="hidden" {{atts}} value="{{value}}">
+                        {{/each}}
+                      {{/if}}
+                    {{else}}
+                      {{> afQuickField name=this.name options=afOptionsFromSchema}}
+                    {{/if}}
                   {{/if}}
                 </div>
               </div>

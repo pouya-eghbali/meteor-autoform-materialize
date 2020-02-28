@@ -3,6 +3,7 @@ import "./afArrayField.html";
 import { Sortable } from "@shopify/draggable";
 import { _ } from "meteor/underscore";
 import "./afArrayField.css";
+import { afFieldInputContext } from "meteor/aldeed:autoform/components/afFieldInput/afFieldInput.js";
 
 const move = function(arr, from, to) {
   arr.splice(to, 0, arr.splice(from, 1)[0]);
@@ -23,6 +24,7 @@ const repackFields = (instance, fieldName, formId, query) => {
         });
     replaceAttr("name");
     replaceAttr("data-schema-key");
+    replaceAttr("data-array-key");
   });
   // Update AutoForm values
   $(query)
@@ -90,7 +92,25 @@ Template.afArrayField_materialize.onRendered(() => {
 
   // initialize the collapsible
 
-  const options = {};
+  const options = instance.data.atts.lazyArray
+    ? {
+        onOpenStart(el) {
+          const index = el.dataset.initialIndex;
+          instance.expandedItems.set(index, true);
+        },
+        onCloseStart(el) {
+          const key = $(el)
+            .find("[data-array-key]")
+            .get(0).dataset.arrayKey;
+          const value = AutoForm.getFieldValue(key, formId);
+          AutoForm.setFieldValue(key, value, formId);
+        },
+        onCloseEnd(el) {
+          const index = el.dataset.initialIndex;
+          instance.expandedItems.set(index, false);
+        }
+      }
+    : {};
   const afOptions = context.defs.autoform || {};
 
   if (afOptions.collapsible == false) return;
@@ -152,6 +172,16 @@ Template.afArrayField_materialize.onRendered(() => {
 });
 
 Template.afArrayField_materialize.helpers({
+  expanded() {
+    const instance = Template.instance();
+    instance.expandedItems = instance.expandedItems || new ReactiveDict();
+    return instance.expandedItems.get(this.index);
+  },
+  getSubfields(field) {
+    return Object.values(field.current).map(name =>
+      afFieldInputContext.call({ name })
+    );
+  },
   shouldRenderAddButton(atts) {
     return atts.disabled !== true;
   },
