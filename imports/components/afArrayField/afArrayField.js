@@ -91,26 +91,35 @@ Template.afArrayField_materialize.onRendered(() => {
   });
 
   // initialize the collapsible
+  const options = {};
 
-  const options = instance.data.atts.lazyArray
-    ? {
-        onOpenStart(el) {
-          const index = el.dataset.initialIndex;
-          instance.expandedItems.set(index, true);
-        },
-        onCloseStart(el) {
+  if (instance.data.atts.lazyArray) {
+    const query = `.draggable-item-${safeDragClass} > .array-header`;
+    instance.$(query).click(function(e) {
+      if (e.target.closest(".afArrayItemRemoveButton")) return;
+      const el = e.target.closest("li");
+      e.stopPropagation();
+      if (el.classList.contains("active")) {
+        const elIndex = $(el).index();
+        instance.collapsible.close(elIndex);
+        Meteor.setTimeout(() => {
           const key = $(el)
             .find("[data-array-key]")
             .get(0).dataset.arrayKey;
           const value = AutoForm.getFieldValue(key, formId);
           AutoForm.setFieldValue(key, value, formId);
-        },
-        onCloseEnd(el) {
           const index = el.dataset.initialIndex;
           instance.expandedItems.set(index, false);
-        }
+        }, 300); // animation duration
+      } else {
+        const index = el.dataset.initialIndex;
+        instance.expandedItems.set(index, true);
+        const elIndex = $(el).index();
+        Meteor.setTimeout(() => instance.collapsible.open(elIndex), 0);
       }
-    : {};
+    });
+  }
+
   const afOptions = context.defs.autoform || {};
 
   if (afOptions.collapsible == false) return;
