@@ -25,7 +25,7 @@ Template.afSelectLazy_materialize.onRendered(() => {
           Meteor.setTimeout(materializeSelect, 0);
           Meteor.setTimeout(() => instance.selectInstance.dropdown.open(), 0);
         },
-        onCloseStart() {
+        onCloseEnd() {
           instance.renderAll.set(false);
           Meteor.setTimeout(materializeSelect, 0);
         }
