@@ -34,13 +34,7 @@ function createItems(data) {
   const items = [];
 
   // get selected values
-  let selectedValues = AutoForm.getFieldValue(
-    data.atts.name,
-    null,
-    null,
-    null,
-    false
-  );
+  let selectedValues = data.value;
 
   // normalise selected values (for multiple select)
   if (!_.isArray(selectedValues)) {
@@ -88,7 +82,11 @@ function createItems(data) {
 Template.afSelectMultiple_materialize.onCreated(() => {
   const instance = Template.instance();
   // init items
-  instance.items = new ReactiveVar(createItems(instance.data));
+  instance.autorun(function() {
+    const data = Template.currentData();
+    instance.items = instance.items || new ReactiveVar();
+    instance.items.set(createItems(data));
+  });
 });
 
 // on rendered
@@ -176,7 +174,7 @@ Template.afSelectMultiple_materialize.onRendered(() => {
 
   instance.autorun(function() {
     Template.currentData();
-    materializeSelect();
+    Meteor.setTimeout(materializeSelect, 0);
   });
 });
 
