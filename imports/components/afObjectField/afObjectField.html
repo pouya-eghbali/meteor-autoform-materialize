@@ -1,11 +1,13 @@
 <template name="afObjectField_materialize">
   <div class="col {{colSize this.name}} afFieldContainer-{{safeClass this.name}}">
     {{#if this.collapsibleGroups}}
-      {{#with afFieldLabelText name=this.name}}
-        <div class="object-title" style="margin-bottom: 2em">
-          <h5>{{this}}</h5>
-        </div>
-      {{/with}}
+      {{#unless this.noTitle}}
+        {{#with afFieldLabelText name=this.name}}
+          <div class="object-title" style="margin-bottom: 2em">
+            <h5>{{this}}</h5>
+          </div>
+        {{/with}}
+      {{/unless}}
       {{#if afFieldIsInvalid name=this.name}}
         <div class="red-text">{{{afFieldMessage name=this.name}}}</div>
       {{/if}}
@@ -13,7 +15,12 @@
         {{#each group in groupped (afFieldNames name=this.name) this}}
           <li class="{{group.name}}-group">
             {{#if group.title}}
-              <div class="group-title collapsible-header">{{group.title}}</div>
+              <div class="group-title collapsible-header">
+                {{#if group.icon}}
+                  {{> afIcon_materialize icon=group.icon iconType=group.iconType}}
+                {{/if}}
+                {{group.title}}
+              </div>
             {{/if}}
             <div class="collapsible-body">
               {{#if group.help}}
@@ -50,7 +57,12 @@
           {{#each group in groupped (afFieldNames name=this.name) this}}
             <div class="{{group.name}}-group row">
               {{#if group.title}}
-                <h5 class="group-title">{{group.title}}</h5>
+                <h5 class="group-title">
+                  {{#if group.icon}}
+                    {{> afIcon_materialize icon=group.icon iconType=group.iconType}}
+                  {{/if}}
+                  {{group.title}}
+                </h5>
               {{/if}}
               {{#if group.help}}
                 <div class="col s12 group-help">{{group.help}}</div>
@@ -77,7 +89,12 @@
             {{#each group in groupped (afFieldNames name=this.name) this}}
               <div class="{{group.name}}-group row">
                 {{#if group.title}}
-                  <h5 class="group-title">{{group.title}}</h5>
+                  <h5 class="group-title">
+                    {{#if group.icon}}
+                      {{> afIcon_materialize icon=group.icon iconType=group.iconType}}
+                    {{/if}}
+                    {{group.title}}
+                  </h5>
                 {{/if}}
                 {{#if group.help}}
                   <div class="col s12 group-help">{{group.help}}</div>

@@ -36,6 +36,8 @@ Template.quickForm_materialize.helpers({
       const group = autoform.group || "default";
       const gclass = autoform.groupClass || "";
       const title = autoform.groupTitle || "";
+      const icon = autoform.groupIcon || "";
+      const iconType = autoform.groupIconType || "";
       const help = autoform.groupHelp || "";
       const gorder =
         autoform.groupOrder != undefined ? autoform.groupOrder : 999;
@@ -45,6 +47,8 @@ Template.quickForm_materialize.helpers({
       groups[group].order = groups[group].order || gorder;
       groups[group].help = groups[group].help || help;
       groups[group].title = groups[group].title || title;
+      groups[group].icon = groups[group].icon || icon;
+      groups[group].iconType = groups[group].iconType || iconType;
       groups[group].gclass = groups[group].gclass || gclass;
       field.order = order;
     });
@@ -71,6 +75,8 @@ Template.quickForm_materialize.helpers({
         groupTab.slice(0, 1).toUpperCase() + groupTab.slice(1);
       const gclass = autoform.groupClass || "";
       const title = autoform.groupTitle || "";
+      const icon = autoform.groupIcon || "";
+      const iconType = autoform.groupIcon || "";
       const help = autoform.groupHelp || "";
       const gorder =
         autoform.groupOrder != undefined ? autoform.groupOrder : 999;
@@ -80,6 +86,8 @@ Template.quickForm_materialize.helpers({
       groups[group].order = groups[group].order || gorder;
       groups[group].help = groups[group].help || help;
       groups[group].title = groups[group].title || title;
+      groups[group].icon = groups[group].icon || icon;
+      groups[group].iconType = groups[group].iconType || iconType;
       groups[group].gclass = groups[group].gclass || gclass;
       groups[group].groupTab = groups[group].groupTab || groupTab;
       groups[group].groupTabOrder =

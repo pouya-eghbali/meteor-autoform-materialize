@@ -24,6 +24,8 @@ Template.afObjectField_materialize.helpers({
       let autoform = schema[field.name.replace(/\.\d+/g, ".$")].autoform || {};
       const group = autoform.group || "default";
       const title = autoform.groupTitle || "";
+      const icon = autoform.groupIcon || "";
+      const iconType = autoform.groupIconType || "";
       const help = autoform.groupHelp || "";
       const gorder =
         autoform.groupOrder != undefined ? autoform.groupOrder : 999;
@@ -34,6 +36,8 @@ Template.afObjectField_materialize.helpers({
       groups[group].order = groups[group].order || gorder;
       groups[group].help = groups[group].help || help;
       groups[group].title = groups[group].title || title;
+      groups[group].icon = groups[group].icon || icon;
+      groups[group].iconType = groups[group].icon || iconType;
       groups[group].gclass = groups[group].gclass || gclass;
       field.order = order;
     });

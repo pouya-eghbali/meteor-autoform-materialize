@@ -12,7 +12,12 @@
           {{#each group in tab.groups}}
             <div class="{{group.name}}-group row">
               {{#if group.title}}
-                <h5 class="group-title">{{group.title}}</h5>
+                <h5 class="group-title">
+                  {{#if group.icon}}
+                    {{> afIcon_materialize icon=group.icon iconType=group.iconType}}
+                  {{/if}}
+                  {{group.title}}
+                </h5>
               {{/if}}
               {{#if group.help}}
                 <div class="col s12 group-help">{{group.help}}</div>
@@ -30,7 +35,12 @@
       {{#each group in groupped (afFieldNames) this}}
         <div class="{{group.name}}-group row">
           {{#if group.title}}
-            <h5 class="group-title">{{group.title}}</h5>
+            <h5 class="group-title">
+              {{#if group.icon}}
+                {{> afIcon_materialize icon=group.icon iconType=group.iconType}}
+              {{/if}}
+              {{group.title}}
+            </h5>
           {{/if}}
           {{#if group.help}}
             <div class="col s12 group-help">{{group.help}}</div>
