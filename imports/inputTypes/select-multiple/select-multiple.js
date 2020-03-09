@@ -105,7 +105,7 @@ Template.afSelectMultiple_materialize.onRendered(() => {
     instance.selectInstance = M.FormSelect.init(selectElement, {
       ...selectOptions,
       dropdownOptions: {
-        ...dropdownOptions
+        ...dropdownOptions,
         closeOnClick: false
       }
     });
