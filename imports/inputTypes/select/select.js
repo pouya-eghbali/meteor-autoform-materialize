@@ -9,7 +9,7 @@ import "./search.css";
 // on template rendered
 Template.afSelect_materialize.onRendered(() => {
   const instance = Template.instance();
-  const { id } = instance.data.atts;
+  const { id, selectOptions = {} } = instance.data.atts;
 
   const materializeSelect = () => {
     // get select element, query
@@ -17,7 +17,7 @@ Template.afSelect_materialize.onRendered(() => {
     const selectElement = selectQuery.get(0);
 
     if (!selectElement) return;
-    instance.selectInstance = M.FormSelect.init(selectElement);
+    instance.selectInstance = M.FormSelect.init(selectElement, selectOptions);
     const { data } = instance;
 
     function ensureSearchBar() {

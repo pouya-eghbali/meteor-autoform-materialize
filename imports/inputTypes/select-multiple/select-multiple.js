@@ -92,7 +92,8 @@ Template.afSelectMultiple_materialize.onCreated(() => {
 // on rendered
 Template.afSelectMultiple_materialize.onRendered(() => {
   const instance = Template.instance();
-  const { id } = instance.data.atts;
+  const { id, selectOptions = {} } = instance.data.atts;
+  const { dropdownOptions = {} } = selectOptions;
 
   const materializeSelect = () => {
     // get select element, query
@@ -102,7 +103,9 @@ Template.afSelectMultiple_materialize.onRendered(() => {
     // init materialize select
     if (!selectElement) return;
     instance.selectInstance = M.FormSelect.init(selectElement, {
+      ...selectOptions,
       dropdownOptions: {
+        ...dropdownOptions
         closeOnClick: false
       }
     });
