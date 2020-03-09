@@ -9,7 +9,10 @@ import "./search.css";
 // on template rendered
 Template.afSelect_materialize.onRendered(() => {
   const instance = Template.instance();
-  const { id, selectOptions = {} } = instance.data.atts;
+  const { id } = instance.data.atts;
+  const { materialize = {} } = instance.data;
+  const { selectOptions = {} } =
+    typeof materialize == "function" ? materialize() : materialize;
 
   const materializeSelect = () => {
     // get select element, query

@@ -92,7 +92,10 @@ Template.afSelectMultiple_materialize.onCreated(() => {
 // on rendered
 Template.afSelectMultiple_materialize.onRendered(() => {
   const instance = Template.instance();
-  const { id, selectOptions = {} } = instance.data.atts;
+  const { id } = instance.data.atts;
+  const { materialize = {} } = instance.data;
+  const { selectOptions = {} } =
+    typeof materialize == "function" ? materialize() : materialize;
   const { dropdownOptions = {} } = selectOptions;
 
   const materializeSelect = () => {
