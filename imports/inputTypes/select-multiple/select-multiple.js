@@ -78,6 +78,14 @@ function createItems(data) {
   return items;
 }
 
+const throttle = (fn, limit = 300) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn(...args), limit);
+  };
+};
+
 // on created
 Template.afSelectMultiple_materialize.onCreated(() => {
   const instance = Template.instance();
@@ -177,10 +185,11 @@ Template.afSelectMultiple_materialize.onRendered(() => {
   };
 
   materializeSelect();
+  const materializeSelectThrottle = throttle(materializeSelect);
 
   instance.autorun(function() {
     Template.currentData();
-    Meteor.setTimeout(materializeSelect, 0);
+    materializeSelectThrottle();
   });
 });
 
