@@ -6,6 +6,14 @@ import { attsToggleInvalidClass } from "../../utilities/attsToggleInvalidClass";
 import "./select.html";
 import "./search.css";
 
+const throttle = (fn, limit = 300) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn(...args), limit);
+  };
+};
+
 // on template rendered
 Template.afSelect_materialize.onRendered(() => {
   const instance = Template.instance();
@@ -74,9 +82,11 @@ Template.afSelect_materialize.onRendered(() => {
     maybeMakeSearchBar();
   };
 
+  const materializeSelectThrottled = throttle(materializeSelect);
+
   instance.autorun(function() {
     Template.currentData();
-    materializeSelect();
+    materializeSelectThrottled();
   });
 });
 
