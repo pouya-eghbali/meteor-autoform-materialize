@@ -47,10 +47,10 @@ Template.afSelect_materialize.onRendered(() => {
         const children = ul
           .children()
           .toArray()
-          .map(child => {
+          .map((child) => {
             return {
               el: child,
-              content: child.innerText.toLowerCase()
+              content: child.innerText.toLowerCase(),
             };
           });
         searchBar.append(search);
@@ -62,15 +62,15 @@ Template.afSelect_materialize.onRendered(() => {
         ) {
           instance.selectInstance.dropdown.options.closeOnClick = false;
           instance.selectInstance.dropdown.options.onCloseEnd = ensureSearchBar;
-          ul.children("li").on("click", event => {
+          ul.children("li").on("click", (event) => {
             instance.selectInstance.dropdown.close();
           });
         }
 
-        search.on("keydown", event => event.stopImmediatePropagation());
-        search.on("keyup", event => {
+        search.on("keydown", (event) => event.stopImmediatePropagation());
+        search.on("keyup", (event) => {
           const searchTerm = event.target.value.toLowerCase();
-          children.forEach(child => {
+          children.forEach((child) => {
             const { el, content } = child;
             if (content.includes(searchTerm)) {
               el.style.display = "list-item";
@@ -85,9 +85,9 @@ Template.afSelect_materialize.onRendered(() => {
     maybeMakeSearchBar();
   };
 
-  const materializeSelectThrottled = throttle(materializeSelect);
+  const materializeSelectThrottled = throttle(materializeSelect, 1000);
 
-  instance.autorun(function() {
+  instance.autorun(function () {
     Template.currentData();
     materializeSelectThrottled();
   });
@@ -115,7 +115,7 @@ Template.afSelect_materialize.helpers({
   // get label for an option
   optionLabel(option) {
     return option.label;
-  }
+  },
 });
 
 // on destroyed

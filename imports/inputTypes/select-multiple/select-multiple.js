@@ -51,7 +51,7 @@ function createItems(data) {
       value: "",
       disabled: true,
       selected: false,
-      _id: "AUTOFORM_EMPTY_FIRST_OPTION"
+      _id: "AUTOFORM_EMPTY_FIRST_OPTION",
     };
 
     // add first item
@@ -90,7 +90,7 @@ const throttle = (fn, limit = 300) => {
 Template.afSelectMultiple_materialize.onCreated(() => {
   const instance = Template.instance();
   // init items
-  instance.autorun(function() {
+  instance.autorun(function () {
     const data = Template.currentData();
     instance.items = instance.items || new ReactiveVar();
     instance.items.set(createItems(data));
@@ -117,8 +117,8 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       ...selectOptions,
       dropdownOptions: {
         ...dropdownOptions,
-        closeOnClick: false
-      }
+        closeOnClick: false,
+      },
     });
     const { data } = instance;
 
@@ -133,18 +133,14 @@ Template.afSelectMultiple_materialize.onRendered(() => {
             <span><label>${selectAllText}</label></span></li>`
       );
       ul.prepend(selectAllEl);
-      selectAllEl.click(event => {
+      selectAllEl.click((event) => {
         const selectAll = selectAllEl.find("label").text() == selectAllText;
         selectAllEl
           .find("label")
           .text(selectAll ? selectNoneText : selectAllText);
         ul.children("li")
-          .filter(function() {
-            return (
-              $(this)
-                .find("input")
-                .prop("checked") != selectAll
-            );
+          .filter(function () {
+            return $(this).find("input").prop("checked") != selectAll;
           })
           .click();
       });
@@ -160,19 +156,19 @@ Template.afSelectMultiple_materialize.onRendered(() => {
       const children = ul
         .children()
         .toArray()
-        .map(child => {
+        .map((child) => {
           return {
             el: child,
-            content: child.innerText.toLowerCase()
+            content: child.innerText.toLowerCase(),
           };
         });
       searchBar.append(search);
       ul.prepend(searchBar);
 
-      search.on("keydown", event => event.stopImmediatePropagation());
-      search.on("keyup", event => {
+      search.on("keydown", (event) => event.stopImmediatePropagation());
+      search.on("keyup", (event) => {
         const searchTerm = event.target.value.toLowerCase();
-        children.forEach(child => {
+        children.forEach((child) => {
           const { el, content } = child;
           if (content.includes(searchTerm)) {
             el.style.display = "list-item";
@@ -185,9 +181,9 @@ Template.afSelectMultiple_materialize.onRendered(() => {
   };
 
   materializeSelect();
-  const materializeSelectThrottle = throttle(materializeSelect);
+  const materializeSelectThrottle = throttle(materializeSelect, 1000);
 
-  instance.autorun(function() {
+  instance.autorun(function () {
     Template.currentData();
     materializeSelectThrottle();
   });
@@ -221,5 +217,5 @@ Template.afSelectMultiple_materialize.helpers({
   // get label for an option
   optionLabel(option) {
     return option.label;
-  }
+  },
 });
