@@ -30,6 +30,7 @@ import "./select-checkbox";
 import "./select-checkbox-inline";
 import "./select-lazy";
 import "./select-multiple";
+import "./select-multiple-lazy";
 import "./select-radio";
 import "./select-radio-inline";
 import "./submit";

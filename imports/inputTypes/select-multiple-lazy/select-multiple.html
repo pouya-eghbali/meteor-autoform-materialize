@@ -1,0 +1,15 @@
+<template name="afSelectMultipleLazy_materialize">
+  <select {{atts}} multiple>
+    {{#each item in getItems}}
+      {{#if item.optgroup}}
+        <optgroup label="{{item.optgroup}}">
+          {{#each optGroupItem in items}}
+            <option {{optionAtts optGroupItem}}>{{optGroupItem.label}}</option>
+          {{/each}}
+        </optgroup>
+      {{else}}
+        <option {{optionAtts item}}>{{optionLabel item}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+</template>
