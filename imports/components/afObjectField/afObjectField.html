@@ -24,7 +24,13 @@
             {{/if}}
             <div class="collapsible-body">
               {{#if group.help}}
-                <div class="row group-help">{{group.help}}</div>
+                <div class="row group-help">
+                  {{#if group.helpIsHTML}}
+                    {{{group.help}}}
+                  {{else}}
+                    {{group.help}}
+                  {{/if}}
+                </div>
               {{/if}}
               <div class="group-fields row {{group.gclass}}">
                 {{#each group.fields}}
@@ -65,7 +71,13 @@
                 </h5>
               {{/if}}
               {{#if group.help}}
-                <div class="col s12 group-help">{{group.help}}</div>
+                <div class="col s12 group-help">
+                  {{#if group.helpIsHTML}}
+                    {{{group.help}}}
+                  {{else}}
+                    {{group.help}}
+                  {{/if}}
+                </div>
               {{/if}}
               <div class="group-fields {{group.gclass}}">
                 {{#each group.fields}}
@@ -97,7 +109,13 @@
                   </h5>
                 {{/if}}
                 {{#if group.help}}
-                  <div class="col s12 group-help">{{group.help}}</div>
+                  <div class="col s12 group-help">
+                    {{#if group.helpIsHTML}}
+                      {{{group.help}}}
+                    {{else}}
+                      {{group.help}}
+                    {{/if}}
+                  </div>
                 {{/if}}
                 <div class="group-fields {{group.gclass}}">
                   {{#each group.fields}}

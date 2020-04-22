@@ -13,11 +13,11 @@ Template.quickForm_materialize.events({
   },
   "click .afSubmitButton"(event) {
     Session.set("afUsedFormButton", "submit");
-  }
+  },
 });
 
 Template.quickForm_materialize.helpers({
-  submitButtonAtts: function() {
+  submitButtonAtts: function () {
     var atts, qfAtts;
     qfAtts = this.atts;
     atts = {};
@@ -28,10 +28,10 @@ Template.quickForm_materialize.helpers({
     }
     return atts;
   },
-  groupped: function(fields, options) {
+  groupped: function (fields, options) {
     let schema = AutoForm.getFormSchema()._schema;
     let groups = {};
-    fields.forEach(function(field) {
+    fields.forEach(function (field) {
       let autoform = schema[field.name.replace(/\.\d+/g, ".$")].autoform || {};
       const group = autoform.group || "default";
       const gclass = autoform.groupClass || "";
@@ -39,6 +39,7 @@ Template.quickForm_materialize.helpers({
       const icon = autoform.groupIcon || "";
       const iconType = autoform.groupIconType || "";
       const help = autoform.groupHelp || "";
+      const helpIsHTML = autoform.groupHelpIsHTML || false;
       const gorder =
         autoform.groupOrder != undefined ? autoform.groupOrder : 999;
       const order = autoform.order != undefined ? autoform.order : 999;
@@ -46,13 +47,14 @@ Template.quickForm_materialize.helpers({
       groups[group].fields.push(field);
       groups[group].order = groups[group].order || gorder;
       groups[group].help = groups[group].help || help;
+      groups[group].helpIsHTML = groups[group].helpIsHTML || helpIsHTML;
       groups[group].title = groups[group].title || title;
       groups[group].icon = groups[group].icon || icon;
       groups[group].iconType = groups[group].iconType || iconType;
       groups[group].gclass = groups[group].gclass || gclass;
       field.order = order;
     });
-    Object.values(groups).forEach(function(group) {
+    Object.values(groups).forEach(function (group) {
       group.fields = group.fields.sort((a, b) => {
         return a.order - b.order;
       });
@@ -61,11 +63,11 @@ Template.quickForm_materialize.helpers({
       return a.order - b.order;
     });
   },
-  tabbed: function(fields, options) {
+  tabbed: function (fields, options) {
     let schema = AutoForm.getFormSchema()._schema;
     let groups = {};
     let tabs = {};
-    fields.forEach(function(field) {
+    fields.forEach(function (field) {
       let autoform = schema[field.name.replace(/\.\d+/g, ".$")].autoform || {};
       const group = autoform.group || "default";
       const groupTab = autoform.groupTab || "main";
@@ -78,6 +80,7 @@ Template.quickForm_materialize.helpers({
       const icon = autoform.groupIcon || "";
       const iconType = autoform.groupIcon || "";
       const help = autoform.groupHelp || "";
+      const helpIsHTML = autoform.helpIsHTML || false;
       const gorder =
         autoform.groupOrder != undefined ? autoform.groupOrder : 999;
       const order = autoform.order != undefined ? autoform.order : 999;
@@ -85,6 +88,7 @@ Template.quickForm_materialize.helpers({
       groups[group].fields.push(field);
       groups[group].order = groups[group].order || gorder;
       groups[group].help = groups[group].help || help;
+      groups[group].helpIsHTML = groups[group].helpIsHTML || helpIsHTML;
       groups[group].title = groups[group].title || title;
       groups[group].icon = groups[group].icon || icon;
       groups[group].iconType = groups[group].iconType || iconType;
@@ -107,12 +111,12 @@ Template.quickForm_materialize.helpers({
     }
     if (Object.keys(tabs).length == 1 && Object.keys(tabs)[0] == "main")
       return false;
-    Object.values(groups).forEach(function(group) {
+    Object.values(groups).forEach(function (group) {
       group.fields = group.fields.sort((a, b) => {
         return a.order - b.order;
       });
     });
-    Object.values(tabs).forEach(function(tab) {
+    Object.values(tabs).forEach(function (tab) {
       tab.groups = tab.groups.sort((a, b) => {
         return groups[a].order - groups[b].order;
       });
@@ -121,15 +125,15 @@ Template.quickForm_materialize.helpers({
       .sort((a, b) => {
         return a.order - b.order;
       })
-      .map(tab => {
+      .map((tab) => {
         return {
           ...tab,
-          groups: tab.groups.map(group => groups[group])
+          groups: tab.groups.map((group) => groups[group]),
         };
       });
-  }
+  },
 });
 
-Template.quickForm_materialize.onRendered(function() {
+Template.quickForm_materialize.onRendered(function () {
   this.$(".tabs").tabs();
 });
