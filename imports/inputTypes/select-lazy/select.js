@@ -34,8 +34,8 @@ Template.afSelectLazy_materialize.onRendered(() => {
         onCloseEnd() {
           instance.renderAll.set(false);
           Meteor.setTimeout(materializeSelect, 0);
-        }
-      }
+        },
+      },
     });
     const { data } = instance;
 
@@ -55,10 +55,10 @@ Template.afSelectLazy_materialize.onRendered(() => {
         const children = ul
           .children()
           .toArray()
-          .map(child => {
+          .map((child) => {
             return {
               el: child,
-              content: child.innerText.toLowerCase()
+              content: child.innerText.toLowerCase(),
             };
           });
         searchBar.append(search);
@@ -70,15 +70,15 @@ Template.afSelectLazy_materialize.onRendered(() => {
         ) {
           instance.selectInstance.dropdown.options.closeOnClick = false;
           instance.selectInstance.dropdown.options.onCloseEnd = ensureSearchBar;
-          ul.children("li").on("click", event => {
+          ul.children("li").on("click", (event) => {
             instance.selectInstance.dropdown.close();
           });
         }
 
-        search.on("keydown", event => event.stopImmediatePropagation());
-        search.on("keyup", event => {
+        search.on("keydown", (event) => event.stopImmediatePropagation());
+        search.on("keyup", (event) => {
           const searchTerm = event.target.value.toLowerCase();
-          children.forEach(child => {
+          children.forEach((child) => {
             const { el, content } = child;
             if (content.includes(searchTerm)) {
               el.style.display = "list-item";
@@ -124,13 +124,15 @@ Template.afSelectLazy_materialize.helpers({
   getItems() {
     const instance = Template.instance();
     instance.renderAll = instance.renderAll || new ReactiveVar(false);
+    const currValue = AutoForm.getFieldValue(instance.data.name);
+    const value = currValue != undefined ? currValue : this.value;
     const renderAll = instance.renderAll.get();
     const { firstOption: label = "(Select One)" } = this.atts;
     const firstOption = { label, value: "" };
     if (renderAll) return [firstOption, ...this.selectOptions];
-    if (!this.value) return [firstOption];
-    return this.selectOptions.filter(item => item.value == this.value);
-  }
+    if (!value) return [firstOption];
+    return this.selectOptions.filter((item) => item.value == value);
+  },
 });
 
 // on destroyed
@@ -146,7 +148,7 @@ Template.afSelectLazy_materialize.onDestroyed(() => {
 //add autoform input
 AutoForm.addInputType("select-lazy", {
   template: "afSelectLazy_materialize",
-  valueOut: function() {
+  valueOut: function () {
     return this.val();
-  }
+  },
 });

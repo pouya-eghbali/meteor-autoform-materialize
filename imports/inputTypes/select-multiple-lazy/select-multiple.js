@@ -30,10 +30,9 @@ function hasPlaceholder(data) {
   return data.atts.firstOption || data.atts.placeholder ? true : false;
 }
 
-function createItems(data) {
+function createItems(data, selectedValues) {
   const items = [];
   // get selected values
-  let selectedValues = data.value;
 
   // normalise selected values (for multiple select)
   if (!_.isArray(selectedValues)) {
@@ -92,7 +91,9 @@ Template.afSelectMultipleLazy_materialize.onCreated(() => {
   instance.autorun(function () {
     const data = Template.currentData();
     instance.items = instance.items || new ReactiveVar();
-    instance.items.set(createItems(data));
+    const currValue = AutoForm.getFieldValue(instance.data.name);
+    const value = currValue != undefined ? currValue : this.value;
+    instance.items.set(createItems(data, value));
   });
 });
 
@@ -200,13 +201,15 @@ Template.afSelectMultipleLazy_materialize.helpers({
     const instance = Template.instance();
     const { items } = instance;
     instance.renderAll = instance.renderAll || new ReactiveVar(false);
+    const currValue = AutoForm.getFieldValue(instance.data.name);
+    const value = currValue != undefined ? currValue : this.value;
     const renderAll = instance.renderAll.get();
     const { firstOption: label = "(Select One)" } = this.atts;
     const firstOption = { label, value: "", disabled: true };
     const allItems = items ? items.get() : [firstOption];
     if (renderAll) return allItems;
-    if (!this.value || !this.value.length) return [firstOption];
-    return allItems.filter((item) => this.value.includes(item.value));
+    if (!value || !value.length) return [firstOption];
+    return allItems.filter((item) => value.includes(item.value));
   },
 
   // get DOM attributes for an option
