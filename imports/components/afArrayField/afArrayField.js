@@ -5,7 +5,7 @@ import { _ } from "meteor/underscore";
 import "./afArrayField.css";
 import { afFieldInputContext } from "meteor/aldeed:autoform/components/afFieldInput/afFieldInput.js";
 
-const move = function(arr, from, to) {
+const move = function (arr, from, to) {
   arr.splice(to, 0, arr.splice(from, 1)[0]);
 };
 
@@ -14,11 +14,11 @@ const repackFields = (instance, fieldName, formId, query) => {
   const items = $(query).toArray();
   items.forEach((item, index) => {
     const rgx = new RegExp(`^(${fieldName}[.])(\\d+)([.].*)?$`);
-    const replace = value => value.replace(rgx, `$1${index}$3`);
-    const replaceAttr = attr =>
+    const replace = (value) => value.replace(rgx, `$1${index}$3`);
+    const replaceAttr = (attr) =>
       $(item)
         .find(`[${attr}]`)
-        .each(function() {
+        .each(function () {
           const value = $(this).attr(attr);
           $(this).attr(attr, replace(value));
         });
@@ -27,9 +27,7 @@ const repackFields = (instance, fieldName, formId, query) => {
     replaceAttr("data-array-key");
   });
   // Update AutoForm values
-  $(query)
-    .find("[data-schema-key]")
-    .change();
+  $(query).find("[data-schema-key]").change();
 };
 
 Template.afArrayField_materialize.onRendered(() => {
@@ -46,7 +44,7 @@ Template.afArrayField_materialize.onRendered(() => {
 
   // headers!
 
-  instance.autorun(function() {
+  instance.autorun(function () {
     const options = context.defs.autoform || {};
     const fieldValue = AutoForm.getFieldValue(fieldName, formId) || [];
     const defaultField = Object.keys(fieldValue[0] || {}).sort((a, b) =>
@@ -60,7 +58,7 @@ Template.afArrayField_materialize.onRendered(() => {
     const items = template.$(`.array-header-${safeDragClass}`);
     const headerMode = options.arrayHeaderMode || "text";
 
-    items.each(function(index) {
+    items.each(function (index) {
       const item = template.$(this);
 
       let header;
@@ -95,27 +93,24 @@ Template.afArrayField_materialize.onRendered(() => {
 
   if (instance.data.atts.lazyArray) {
     const query = `.draggable-item-${safeDragClass} > .array-header`;
-    instance.$(query).click(function(e) {
+    $("body").on("click", query, function (e) {
       if (e.target.closest(".afArrayItemRemoveButton")) return;
       const el = e.target.closest("li");
-      e.stopPropagation();
+      e.stopImmediatePropagation();
+      const elIndex = $(el).index();
       if (el.classList.contains("active")) {
-        const elIndex = $(el).index();
         instance.collapsible.close(elIndex);
+        const index = el.dataset.initialIndex;
+        instance.expandedItems.set(index, true);
+        Meteor.setTimeout(() => instance.collapsible.open(elIndex), 100);
+      } else {
         Meteor.setTimeout(() => {
-          const key = $(el)
-            .find("[data-array-key]")
-            .get(0).dataset.arrayKey;
+          const key = $(el).find("[data-array-key]").get(0).dataset.arrayKey;
           const value = AutoForm.getFieldValue(key, formId);
           AutoForm.setFieldValue(key, value, formId);
           const index = el.dataset.initialIndex;
           instance.expandedItems.set(index, false);
         }, 300); // animation duration
-      } else {
-        const index = el.dataset.initialIndex;
-        instance.expandedItems.set(index, true);
-        const elIndex = $(el).index();
-        Meteor.setTimeout(() => instance.collapsible.open(elIndex), 0);
       }
     });
   }
@@ -150,14 +145,14 @@ Template.afArrayField_materialize.onRendered(() => {
     handle: `.drag-handle-${safeDragClass}`,
     appendTo: "body",
     mirror: {
-      constrainDimensions: true
+      constrainDimensions: true,
     },
-    delay: 250
+    delay: 250,
   });
 
   // on sorted dag event
   let isSorted = false;
-  sortable.on("sortable:sorted", dragEvent => {
+  sortable.on("sortable:sorted", (dragEvent) => {
     isSorted = true;
     instance.dragEvent = dragEvent;
     instance.oldValue = Tracker.nonreactive(() =>
@@ -166,7 +161,7 @@ Template.afArrayField_materialize.onRendered(() => {
   });
 
   // on sorted dag event
-  sortable.on("mirror:destroy", dragEvent => {
+  sortable.on("mirror:destroy", (dragEvent) => {
     // console.log('mirror:destroy:', dragEvent)
     // if the array was sorted
     if (isSorted) {
@@ -187,7 +182,7 @@ Template.afArrayField_materialize.helpers({
     return instance.expandedItems.get(this.index);
   },
   getSubfields(field) {
-    return Object.values(field.current).map(name =>
+    return Object.values(field.current).map((name) =>
       afFieldInputContext.call({ name })
     );
   },
@@ -223,19 +218,16 @@ Template.afArrayField_materialize.helpers({
   },
   getCardsContainerClass(atts) {
     return atts.cardsContainerClass || "";
-  }
+  },
 });
 
 Template.afArrayField_materialize.events({
-  "click .afArrayItemRemoveButton": function(event) {
+  "click .afArrayItemRemoveButton": function (event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
     // prevent the item from opening/closing
-    instance
-      .$(event.target)
-      .closest(".array-header")
-      .click();
+    instance.$(event.target).closest(".array-header").click();
     // open the modal
     instance
       .$(event.target)
@@ -244,15 +236,12 @@ Template.afArrayField_materialize.events({
       .modal()
       .modal("open");
   },
-  "click .noCollapsible .afArrayItemRemoveButton": function(event) {
+  "click .noCollapsible .afArrayItemRemoveButton": function (event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
     // prevent the item from opening/closing
-    instance
-      .$(event.target)
-      .closest(".array-item-buttons")
-      .click();
+    instance.$(event.target).closest(".array-item-buttons").click();
     // open the modal
     instance
       .$(event.target)
@@ -261,7 +250,7 @@ Template.afArrayField_materialize.events({
       .modal()
       .modal("open");
   },
-  "click .cardMode .afArrayItemRemoveButton": function(event) {
+  "click .cardMode .afArrayItemRemoveButton": function (event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
@@ -273,15 +262,12 @@ Template.afArrayField_materialize.events({
       .modal()
       .modal("open");
   },
-  "click .modal-close": function(event) {
+  "click .modal-close": function (event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
     // prevent the item from opening/closing
-    instance
-      .$(event.target)
-      .closest(".array-header")
-      .click();
+    instance.$(event.target).closest(".array-header").click();
     // close the modal
     instance
       .$(event.target)
@@ -290,15 +276,12 @@ Template.afArrayField_materialize.events({
       .modal()
       .modal("close");
   },
-  "click .modal-overlay": function(event) {
+  "click .modal-overlay": function (event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
     // prevent the item from opening/closing
-    instance
-      .$(event.target)
-      .closest(".array-header")
-      .click();
+    instance.$(event.target).closest(".array-header").click();
     // close the modal
     instance
       .$(event.target)
@@ -307,7 +290,7 @@ Template.afArrayField_materialize.events({
       .modal()
       .modal("close");
   },
-  "click .modal-confirm": function(event) {
+  "click .modal-confirm": function (event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
@@ -318,7 +301,7 @@ Template.afArrayField_materialize.events({
       .find(".autoform-remove-item")
       .click();
   },
-  "click .noCollapsible .modal-confirm": function(event) {
+  "click .noCollapsible .modal-confirm": function (event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
@@ -329,7 +312,7 @@ Template.afArrayField_materialize.events({
       .find(".autoform-remove-item")
       .click();
   },
-  "click .cardMode .modal-confirm": function(event) {
+  "click .cardMode .modal-confirm": function (event) {
     event.preventDefault();
     event.stopPropagation();
     const instance = Template.instance();
@@ -340,7 +323,7 @@ Template.afArrayField_materialize.events({
       .find(".autoform-remove-item")
       .click();
   },
-  "click .autoform-add-item": function(event) {
+  "click .autoform-add-item": function (event) {
     const instance = Template.instance();
 
     const context = AutoForm.Utility.getComponentContext(
@@ -360,5 +343,5 @@ Template.afArrayField_materialize.events({
         }
       }, 0);
     }
-  }
+  },
 });
