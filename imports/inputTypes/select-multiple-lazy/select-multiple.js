@@ -91,7 +91,9 @@ Template.afSelectMultipleLazy_materialize.onCreated(() => {
   instance.autorun(function () {
     const data = Template.currentData();
     instance.items = instance.items || new ReactiveVar();
-    const currValue = AutoForm.getFieldValue(instance.data.name);
+    instance.selected = instance.selected || new ReactiveVar(null);
+    const currValue =
+      instance.selected.get() || AutoForm.getFieldValue(instance.data.name);
     const value = currValue != undefined ? currValue : this.value;
     instance.items.set(createItems(data, value));
   });
@@ -100,6 +102,7 @@ Template.afSelectMultipleLazy_materialize.onCreated(() => {
 // on rendered
 Template.afSelectMultipleLazy_materialize.onRendered(() => {
   const instance = Template.instance();
+  instance.selected = instance.selected || new ReactiveVar(null);
   const { id } = instance.data.atts;
   const { materialize = {} } = instance.data;
   const { selectOptions = {} } =
@@ -127,6 +130,8 @@ Template.afSelectMultipleLazy_materialize.onRendered(() => {
         onCloseEnd() {
           instance.renderAll.set(false);
           Meteor.setTimeout(materializeSelect, 0);
+          const selected = instance.selectInstance.getSelectedValues();
+          instance.selected.set(selected);
         },
       },
     });
@@ -201,7 +206,9 @@ Template.afSelectMultipleLazy_materialize.helpers({
     const instance = Template.instance();
     const { items } = instance;
     instance.renderAll = instance.renderAll || new ReactiveVar(false);
-    const currValue = AutoForm.getFieldValue(instance.data.name);
+    instance.selected = instance.selected || new ReactiveVar(null);
+    const currValue =
+      instance.selected.get() || AutoForm.getFieldValue(instance.data.name);
     const value = currValue != undefined ? currValue : this.value;
     const renderAll = instance.renderAll.get();
     const { firstOption: label = "(Select One)" } = this.atts;

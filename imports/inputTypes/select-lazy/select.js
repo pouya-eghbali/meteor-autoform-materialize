@@ -9,6 +9,7 @@ import "./search.css";
 // on template rendered
 Template.afSelectLazy_materialize.onRendered(() => {
   const instance = Template.instance();
+  instance.selected = instance.selected || new ReactiveVar(null);
   const { id } = instance.data.atts;
   const { materialize = {} } = instance.data;
   const { selectOptions = {} } =
@@ -34,6 +35,8 @@ Template.afSelectLazy_materialize.onRendered(() => {
         onCloseEnd() {
           instance.renderAll.set(false);
           Meteor.setTimeout(materializeSelect, 0);
+          const selected = instance.selectInstance.getSelectedValues();
+          instance.selected.set(selected[0] || "");
         },
       },
     });
@@ -123,8 +126,11 @@ Template.afSelectLazy_materialize.helpers({
   // get items
   getItems() {
     const instance = Template.instance();
+    instance.selected = instance.selected || new ReactiveVar(null);
     instance.renderAll = instance.renderAll || new ReactiveVar(false);
-    const currValue = AutoForm.getFieldValue(instance.data.name);
+    const selected = instance.selected.get();
+    const currValue =
+      selected == null ? AutoForm.getFieldValue(instance.data.name) : selected;
     const value = currValue != undefined ? currValue : this.value;
     const renderAll = instance.renderAll.get();
     const { firstOption: label = "(Select One)" } = this.atts;
