@@ -33,10 +33,11 @@ Template.afSelectLazy_materialize.onRendered(() => {
           Meteor.setTimeout(() => instance.selectInstance.dropdown.open(), 0);
         },
         onCloseEnd() {
-          instance.renderAll.set(false);
-          Meteor.setTimeout(materializeSelect, 0);
-          const selected = instance.selectInstance.getSelectedValues();
-          instance.selected.set(selected[0] || "");
+          Meteor.setTimeout(() => {
+            instance.selected.set(selectElement.value);
+            instance.renderAll.set(false);
+            Meteor.setTimeout(materializeSelect, 0);
+          }, 0);
         },
       },
     });
