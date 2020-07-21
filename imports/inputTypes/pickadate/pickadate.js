@@ -14,6 +14,7 @@ AutoForm.addInputType("pickadate", {
   // default value out is converted from display format to string format
   valueOut: function () {
     // console.log(`valueOut this`, this)
+    if (!this.get(0).value) return null;
     const instance = Blaze.getView(this.get(0)).templateInstance() || {};
     return instance.selectedDate;
   },
