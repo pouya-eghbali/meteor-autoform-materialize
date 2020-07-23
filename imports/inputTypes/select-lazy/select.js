@@ -68,6 +68,16 @@ Template.afSelectLazy_materialize.onRendered(() => {
         searchBar.append(search);
         ul.prepend(searchBar);
 
+        $("body").click(function (e) {
+          const { target } = e;
+          const { M_Dropdown = {} } = target;
+          if (
+            M_Dropdown.id != instance.selectInstance.dropdown.id &&
+            !target.closest(`#${instance.selectInstance.dropdown.id}`)
+          )
+            instance.selectInstance.dropdown.close();
+        });
+
         if (
           instance.selectInstance.dropdown &&
           instance.selectInstance.dropdown.options

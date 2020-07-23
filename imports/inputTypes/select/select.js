@@ -43,7 +43,9 @@ Template.afSelect_materialize.onRendered(() => {
         const placeholder = data.atts.searchPlaceholder || "Search...";
         const ul = $(instance.selectInstance.dropdownOptions);
         const search = $(`<input placeholder="${placeholder}">`);
-        const searchBar = $(`<div class="afSelectSearchBar"></div>`);
+        const searchBar = $(
+          `<div class="afSelectSearchBar" data-for-field="${id}"></div>`
+        );
         const children = ul
           .children()
           .toArray()
@@ -66,6 +68,16 @@ Template.afSelect_materialize.onRendered(() => {
             instance.selectInstance.dropdown.close();
           });
         }
+
+        $("body").click(function (e) {
+          const { target } = e;
+          const { M_Dropdown = {} } = target;
+          if (
+            M_Dropdown.id != instance.selectInstance.dropdown.id &&
+            !target.closest(`#${instance.selectInstance.dropdown.id}`)
+          )
+            instance.selectInstance.dropdown.close();
+        });
 
         search.on("keydown", (event) => event.stopImmediatePropagation());
         search.on("keyup", (event) => {

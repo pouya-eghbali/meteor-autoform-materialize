@@ -180,6 +180,16 @@ Template.afSelectMultipleLazy_materialize.onRendered(() => {
       searchBar.append(search);
       ul.prepend(searchBar);
 
+      $("body").click(function (e) {
+        const { target } = e;
+        const { M_Dropdown = {} } = target;
+        if (
+          M_Dropdown.id != instance.selectInstance.dropdown.id &&
+          !target.closest(`#${instance.selectInstance.dropdown.id}`)
+        )
+          instance.selectInstance.dropdown.close();
+      });
+
       search.on("keydown", (event) => event.stopImmediatePropagation());
       search.on("keyup", (event) => {
         const searchTerm = event.target.value.toLowerCase();
